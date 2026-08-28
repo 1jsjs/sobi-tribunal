@@ -2,18 +2,28 @@
 *.pem
 *.key
 *.p12
+*.ppk
+id_rsa*
 .env
 .env.*
+*.env
+.envrc
+secrets.*
 *credentials*
 *_accounts*.xlsx
 hackathon_team_accounts*
 
-# ═══ 데이터베이스 (런타임 생성물) ═══
+# ═══ 데이터베이스 (런타임 생성물 — 실사용자 이메일·판결 기록 포함) ═══
 *.db
 *.sqlite
 *.sqlite3
 *.db-wal
 *.db-shm
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.dump
+*.sql
 
 # ═══ Python ═══
 __pycache__/
@@ -36,18 +46,32 @@ downloaded_context.txt
 node_modules/
 dist/
 
-# ═══ OS / 에디터 ═══
+# ═══ OS / 에디터 / 백업 잔재 ═══
 .DS_Store
+._*
 Thumbs.db
 .idea/
 .vscode/
 *.swp
+*.swo
+*.bak
+*~
+*.orig
+*.rej
+.ipynb_checkpoints/
+
+# ═══ 런타임 업로드·임시 (현재 코드는 S3 직행이지만 예방) ═══
+uploads/
+tmp/
 
 # ⚠️ .kiro/ 폴더는 대회 제출 요건이므로 절대 무시하지 말 것 (커밋 대상)
 
 # ⚠️ 실제 개인 거래내역 — 절대 커밋 금지 (실명·송금내역·생활동선 포함)
-# 테스트용으로 로컬에 두는 건 괜찮지만 리포에는 올리지 말 것.
-# 데모·테스트는 samples/카드내역_*.xlsx, samples/계좌내역_*.pdf(합성 데이터)를 쓴다.
+# 테스트용으로 로컬에 두는 건 괜찮지만 리포에는 올리지 말 것. 경로 무관 전역 차단.
+# 합성 데모 파일이 필요하면 카드내역_* 접두사(합성)를 쓰면 안 걸린다.
+*실거래*
+거래내역*
+계좌내역*
 samples/거래내역서.pdf
 samples/*실거래*
 samples/거래내역*
