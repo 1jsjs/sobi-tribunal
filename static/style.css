@@ -43,7 +43,7 @@ body::before {
      오버레이로 배경 명도를 낮춰 카드·글씨 대비를 올린다(배경은 알아볼 정도로 남긴다). */
   background:
     linear-gradient(rgba(8, 10, 16, 0.45), rgba(8, 10, 16, 0.45)),
-    url("/static/assets/bg.svg") center bottom / 100% auto no-repeat,
+    url("/static/assets/bg.svg") center bottom / cover no-repeat,
     var(--bg);
   pointer-events: none;
 }
