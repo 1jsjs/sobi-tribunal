@@ -93,8 +93,8 @@
     <line x1="650" y1="512" x2="670" y2="556"/>
   </g>
 
-  <!-- ===== 판사석(+판사) 전체 50px 아래로 이동 ===== -->
-  <g transform="translate(0,50)">
+  <!-- ===== 판사석(+판사) 전체 80px 아래로 이동 ===== -->
+  <g transform="translate(0,80)">
   <!-- judge bench: upper tier (keep top edge simple for character) -->
   <g stroke="#1a120c" stroke-linejoin="round">
     <!-- bench top slab -->
@@ -132,5 +132,5 @@
     <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
   </g>
   </g>
-  <!-- ===== /50px 이동 끝 ===== -->
+  <!-- ===== /80px 이동 끝 ===== -->
 </svg>
