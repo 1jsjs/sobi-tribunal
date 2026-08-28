@@ -141,26 +141,42 @@
 
     <!-- 5. 판결 -->
     <section class="screen" data-screen="verdict" hidden>
+      <button class="btn-skip" id="btn-skip-verdict" hidden>연출 건너뛰기 »</button>
+
+      <!-- ① 의사봉 쿵쿵쿵 → ② 도장 쾅 -->
       <div class="verdict-stage">
+        <img class="gavel-knock" id="verdict-gavel" src="/static/assets/gavel.svg" alt="" hidden />
         <img class="stamp" id="verdict-stamp" alt="판결 도장" hidden />
-        <p class="verdict-label serif" id="verdict-label"></p>
+        <p class="verdict-label serif" id="verdict-label" hidden></p>
       </div>
 
-      <article class="paper" id="verdict-paper">
+      <!-- ③ 판결문 양피지 -->
+      <article class="paper reveal" id="verdict-paper" hidden>
         <h2 class="serif">판결문</h2>
-        <p id="verdict-text"></p>
-        <p class="sentence" id="verdict-sentence"></p>
+        <div id="verdict-text"></div>
       </article>
 
-      <div class="card type-card" id="type-card">
-        <div class="type-emoji" id="type-emoji"></div>
-        <div class="type-name serif" id="type-name"></div>
-        <div class="type-code" id="type-code"></div>
+      <!-- ④ 유형 카드 -->
+      <div class="type-card reveal" id="type-card" hidden>
+        <div class="type-frame">
+          <div class="type-emoji" id="type-emoji"></div>
+          <div class="type-code" id="type-code"></div>
+          <div class="type-name serif" id="type-name"></div>
+        </div>
         <p class="muted small type-source">유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)</p>
       </div>
 
-      <button class="btn-primary" id="btn-to-records">전과 기록 보기</button>
-      <button class="btn-ghost" id="btn-new-trial">다른 소비를 기소하오</button>
+      <!-- ⑤ 형량 + 회당 단가 -->
+      <div class="sentence-box reveal" id="sentence-box" hidden>
+        <p class="sentence-label">주문</p>
+        <p class="sentence-text" id="verdict-sentence"></p>
+        <span class="cost-tag" id="cost-tag" hidden></span>
+      </div>
+
+      <div class="verdict-actions reveal" id="verdict-actions" hidden>
+        <button class="btn-primary" id="btn-to-records">전과 기록 보기</button>
+        <button class="btn-ghost" id="btn-new-trial">다른 건도 자수하겠소</button>
+      </div>
     </section>
 
     <!-- 6. 전과 기록 -->
@@ -168,13 +184,35 @@
       <div class="card">
         <p class="eyebrow">전과 기록</p>
         <h2 class="serif">피고인의 소비 이력</h2>
-        <p class="muted small">본 법정은 피고인의 양심을 믿소.</p>
+        <p class="muted small records-summary" id="records-summary"></p>
         <ul class="record-list" id="record-list"></ul>
-        <p class="muted small" id="records-empty" hidden>아직 전과가 없소.</p>
+        <div class="records-empty-box" id="records-empty" hidden>
+          <p class="muted">전과가 없소. 아직은.</p>
+          <button class="btn-primary" id="btn-records-empty-go">자수하러 가기</button>
+        </div>
       </div>
       <button class="btn-ghost" id="btn-records-new">새 재판을 여시오</button>
     </section>
   </main>
+
+  <!-- 전과 상세 모달 -->
+  <div class="modal" id="record-modal" hidden>
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-sheet" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modal-close" aria-label="닫기">✕</button>
+      <div class="modal-stamp-row">
+        <img class="modal-stamp" id="modal-stamp" alt="" />
+        <div>
+          <div class="modal-item serif" id="modal-item"></div>
+          <div class="muted small" id="modal-meta"></div>
+        </div>
+      </div>
+      <div class="modal-type" id="modal-type"></div>
+      <article class="paper modal-paper"><div id="modal-verdict-text"></div></article>
+      <div class="sentence-box"><p class="sentence-text" id="modal-sentence"></p></div>
+      <p class="modal-plea muted small" id="modal-plea" hidden></p>
+    </div>
+  </div>
 
   <!-- 로딩 오버레이 -->
   <div class="overlay" id="overlay" hidden>

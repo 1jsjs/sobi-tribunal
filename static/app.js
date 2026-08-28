@@ -225,43 +225,102 @@ document.getElementById("summon-form").addEventListener("submit", (e) => {
   showScreen("intake");
 });
 
-/* ── 전과 기록 로드 (F305에서 상세·사진 확장) ─────────── */
+/* ── 전과 기록 로드 ────────────────────────────────────── */
 async function loadRecords() {
   showScreen("records");
   const listEl = document.getElementById("record-list");
   const emptyEl = document.getElementById("records-empty");
+  const summaryEl = document.getElementById("records-summary");
   listEl.innerHTML = "";
   emptyEl.hidden = true;
+  summaryEl.textContent = "";
   try {
-    const rows = await api(
-      "/api/records?email=" + encodeURIComponent(state.email)
-    );
+    const rows = await api("/api/records?email=" + encodeURIComponent(state.email));
     if (!rows.length) {
       emptyEl.hidden = false;
       return;
     }
+    // 요약: 개수 세기만 (금액 합산·재계산 금지)
+    const guiltyCount = rows.filter((r) => r.guilt === "GUILTY").length;
+    summaryEl.textContent = `전과 ${rows.length}건 · 유죄 ${guiltyCount}건`;
     rows.forEach((r) => listEl.appendChild(renderRecordItem(r)));
   } catch (err) {
     handleError(err);
   }
 }
 
+/* 카테고리 이모지 폴백은 CATEGORY_EMOJI 재사용 (F303에서 정의) */
+function recordThumb(r) {
+  if (r.photoUrl) {
+    return `<img class="r-thumb" src="${escapeHtml(r.photoUrl)}" alt="" />`;
+  }
+  const emo = (typeof CATEGORY_EMOJI !== "undefined" && CATEGORY_EMOJI[r.category]) || "📦";
+  return `<span class="r-thumb r-thumb-emoji">${emo}</span>`;
+}
+
 function renderRecordItem(r) {
   const li = document.createElement("li");
   li.className = "record-item";
+  const date = (r.createdAt || "").slice(0, 10);
   li.innerHTML = `
-    <span class="r-emoji">${r.typeEmoji || "⚖️"}</span>
+    ${recordThumb(r)}
     <span class="r-main">
       <div class="r-item">${escapeHtml(r.itemName || "물건")} · ${won(r.price)}</div>
-      <div class="r-sub">${escapeHtml(r.typeName || "")}</div>
+      <div class="r-sub">${escapeHtml(r.typeName || "")}${date ? " · " + date : ""}</div>
     </span>
-    <span class="badge ${r.guilt}">${escapeHtml(r.guiltLabel || "")}</span>`;
-  li.addEventListener("click", () => {
-    // 상세는 F305에서. 지금은 사건번호만 알린다.
-    toast(`사건 #${r.id} — ${r.guiltLabel}`, { judge: false });
-  });
+    <span class="mini-stamp ${r.guilt}">${escapeHtml(r.guiltLabel || "")}</span>`;
+  li.addEventListener("click", () => openRecordModal(r.id));
   return li;
 }
+
+/* ── 전과 상세 모달 ────────────────────────────────────── */
+async function openRecordModal(id) {
+  try {
+    const d = await api("/api/records/" + encodeURIComponent(id));
+    const stamp = document.getElementById("modal-stamp");
+    stamp.src = `/static/assets/stamp-${STAMP_FILE[d.guilt] || "guilty"}.svg`;
+    document.getElementById("modal-item").textContent = `${d.itemName || "물건"} · ${won(d.price)}`;
+    const date = (d.createdAt || "").slice(0, 10);
+    document.getElementById("modal-meta").textContent =
+      `${d.guiltLabel || ""}${date ? " · " + date : ""}`;
+    document.getElementById("modal-type").textContent =
+      `${d.typeEmoji || ""} ${d.typeName || ""} (${d.axisCode || ""})`;
+
+    const vt = document.getElementById("modal-verdict-text");
+    vt.innerHTML = "";
+    String(d.verdictText || "")
+      .split(/\n{1,}|(?<=[.。])\s{2,}/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .forEach((para) => {
+        const p = document.createElement("p");
+        p.textContent = para;
+        vt.appendChild(p);
+      });
+
+    document.getElementById("modal-sentence").textContent = d.sentence || "";
+    const pleaEl = document.getElementById("modal-plea");
+    if (d.plea) {
+      pleaEl.textContent = `최후 변론: "${d.plea}"`;
+      pleaEl.hidden = false;
+    } else {
+      pleaEl.hidden = true;
+    }
+    document.getElementById("record-modal").hidden = false;
+  } catch (err) {
+    handleError(err);
+  }
+}
+
+function closeRecordModal() {
+  document.getElementById("record-modal").hidden = true;
+}
+document.getElementById("modal-close").addEventListener("click", closeRecordModal);
+document.getElementById("modal-backdrop").addEventListener("click", closeRecordModal);
+document.getElementById("btn-records-empty-go").addEventListener("click", () => {
+  resetTrialState();
+  showScreen("intake");
+});
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
@@ -825,37 +884,160 @@ async function submitVerdict(plea) {
         body: JSON.stringify(payload),
       });
       state.verdict = data;
-      // 판결 렌더는 F305. 훅이 있으면 넘기고, 없으면 최소 표시.
-      if (window.tribunal && typeof window.tribunal.onVerdict === "function") {
-        window.tribunal.onVerdict();
-      } else {
-        renderVerdictMinimal(data);
-      }
+      playVerdict(data);
     } catch (err) {
       handleError(err);
     }
   });
 }
 
-/* F305 전까지 최소 렌더 (완전 렌더는 F305) */
-function renderVerdictMinimal(v) {
+/* ══════════════════════════════════════════════════════════
+ *  판결 연출 (순서 + 스킵)
+ * ══════════════════════════════════════════════════════════ */
+const STAMP_FILE = { GUILTY: "guilty", PROBATION: "probation", INNOCENT: "innocent" };
+let verdictTimers = [];
+
+function clearVerdictTimers() {
+  verdictTimers.forEach((t) => clearTimeout(t));
+  verdictTimers = [];
+}
+
+function playVerdict(v) {
+  clearVerdictTimers();
   showScreen("verdict");
-  const set = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  };
-  set("verdict-label", v.guiltLabel || "");
-  set("verdict-text", v.verdictText || "");
-  set("verdict-sentence", v.sentence || "");
-  set("type-emoji", v.typeEmoji || "");
-  set("type-name", v.typeName || "");
-  set("type-code", v.axisCode || "");
+
+  const gavel = document.getElementById("verdict-gavel");
   const stamp = document.getElementById("verdict-stamp");
-  if (stamp) {
-    const map = { GUILTY: "guilty", PROBATION: "probation", INNOCENT: "innocent" };
-    stamp.src = `/static/assets/stamp-${map[v.guilt] || "guilty"}.svg`;
+  const label = document.getElementById("verdict-label");
+  const paper = document.getElementById("verdict-paper");
+  const typeCard = document.getElementById("type-card");
+  const sentenceBox = document.getElementById("sentence-box");
+  const actions = document.getElementById("verdict-actions");
+  const skipBtn = document.getElementById("btn-skip-verdict");
+
+  // 초기 상태: 전부 숨김
+  [gavel, stamp, label, paper, typeCard, sentenceBox, actions].forEach((el) => {
+    if (el) el.hidden = true;
+  });
+  skipBtn.hidden = false;
+
+  // 도장/유형 준비
+  stamp.src = `/static/assets/stamp-${STAMP_FILE[v.guilt] || "guilty"}.svg`;
+  label.textContent = v.guiltLabel || "";
+
+  const at = (ms, fn) => verdictTimers.push(setTimeout(fn, ms));
+
+  // ① 의사봉 쿵쿵쿵
+  gavel.hidden = false;
+  gavel.classList.remove("go"); void gavel.offsetWidth; gavel.classList.add("go");
+
+  // ② 도장 쾅 (1.1s 후)
+  at(1100, () => {
+    gavel.hidden = true;
     stamp.hidden = false;
+    stamp.classList.remove("go"); void stamp.offsetWidth; stamp.classList.add("go");
+    label.hidden = false;
+  });
+
+  // ③ 판결문 (2.0s) + TTS
+  at(2000, () => {
+    renderVerdictText(v.verdictText || "");
+    paper.hidden = false;
+    speak(v.verdictText || "");
+  });
+
+  // ④ 유형 카드 (2.5s)
+  at(2500, () => {
+    document.getElementById("type-emoji").textContent = v.typeEmoji || "";
+    document.getElementById("type-name").textContent = v.typeName || "";
+    document.getElementById("type-code").textContent = v.axisCode || "";
+    typeCard.hidden = false;
+  });
+
+  // ⑤ 형량 + 회당 단가 (3.0s)
+  at(3000, () => {
+    document.getElementById("verdict-sentence").textContent = v.sentence || "";
+    const costTag = document.getElementById("cost-tag");
+    if (v.costPerUse != null) {
+      costTag.textContent = `회당 단가 ${won(v.costPerUse)}`;
+      costTag.hidden = false;
+    } else {
+      costTag.hidden = true;
+    }
+    sentenceBox.hidden = false;
+    actions.hidden = false;
+    skipBtn.hidden = true;
+  });
+}
+
+/* verdictText를 문단별로 표시 */
+function renderVerdictText(text) {
+  const box = document.getElementById("verdict-text");
+  box.innerHTML = "";
+  String(text)
+    .split(/\n{1,}|(?<=[.。])\s{2,}/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .forEach((para) => {
+      const p = document.createElement("p");
+      p.textContent = para;
+      box.appendChild(p);
+    });
+  if (!box.childNodes.length) {
+    const p = document.createElement("p");
+    p.textContent = text || "";
+    box.appendChild(p);
   }
+}
+
+/* 연출 스킵: 모든 요소 즉시 표시 */
+function skipVerdict() {
+  clearVerdictTimers();
+  stopSpeaking();
+  const v = state.verdict || {};
+  const gavel = document.getElementById("verdict-gavel");
+  if (gavel) gavel.hidden = true;
+
+  const stamp = document.getElementById("verdict-stamp");
+  stamp.src = `/static/assets/stamp-${STAMP_FILE[v.guilt] || "guilty"}.svg`;
+  stamp.hidden = false;
+  document.getElementById("verdict-label").hidden = false;
+  document.getElementById("verdict-label").textContent = v.guiltLabel || "";
+
+  renderVerdictText(v.verdictText || "");
+  document.getElementById("verdict-paper").hidden = false;
+
+  document.getElementById("type-emoji").textContent = v.typeEmoji || "";
+  document.getElementById("type-name").textContent = v.typeName || "";
+  document.getElementById("type-code").textContent = v.axisCode || "";
+  document.getElementById("type-card").hidden = false;
+
+  document.getElementById("verdict-sentence").textContent = v.sentence || "";
+  const costTag = document.getElementById("cost-tag");
+  if (v.costPerUse != null) {
+    costTag.textContent = `회당 단가 ${won(v.costPerUse)}`;
+    costTag.hidden = false;
+  } else {
+    costTag.hidden = true;
+  }
+  document.getElementById("sentence-box").hidden = false;
+  document.getElementById("verdict-actions").hidden = false;
+  document.getElementById("btn-skip-verdict").hidden = true;
+}
+
+document.getElementById("btn-skip-verdict").addEventListener("click", skipVerdict);
+document.getElementById("btn-new-trial").addEventListener("click", () => {
+  resetTrialState();
+  showScreen("intake");
+});
+
+function resetTrialState() {
+  state.dossier = null;
+  state.intakeDossier = null;
+  state.trial = null;
+  state.answers = [];
+  state.plea = null;
+  state.verdict = null;
 }
 
 document.getElementById("btn-plea-done").addEventListener("click", () => {
@@ -876,10 +1058,8 @@ document.getElementById("btn-to-records").addEventListener("click", () => {
   if (state.email) loadRecords();
   else showScreen("summon");
 });
-document.getElementById("btn-new-trial").addEventListener("click", () => {
-  showScreen("intake");
-});
 document.getElementById("btn-records-new").addEventListener("click", () => {
+  resetTrialState();
   showScreen("intake");
 });
 

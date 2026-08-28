@@ -54,16 +54,8 @@
       font-size="21" font-weight="800" fill="#2a1f18" letter-spacing="2">판결: 소비 유형</text>
   </g>
 
-  <!-- 유형 코드 4글자 -->
-  <text x="180" y="352" text-anchor="middle"
-    font-family="'Avenir Next','Helvetica Neue',Arial,sans-serif"
-    font-size="52" font-weight="800" fill="#2a1f18" letter-spacing="10">GIFD</text>
+  <!-- 유형 코드·유형명 자리는 비워둔다 — HTML 오버레이가 채운다 (코드 y≈352, 이름 y≈392) -->
   <rect x="96" y="362" width="168" height="4" rx="2" fill="#d4af37"/>
-
-  <!-- 유형명 한 줄 -->
-  <text x="180" y="392" text-anchor="middle"
-    font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
-    font-size="16" font-weight="700" fill="#3d2b1f">낭만과 감성을 아는 기분파 활동가</text>
 
   <!-- 하단 죄수 번호판 바 -->
   <g>
