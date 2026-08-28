@@ -4,3 +4,4 @@ boto3
 pytest
 httpx
 python-multipart
+google-genai  # 로컬 Gemini 검증용 (AI_PROVIDER=gemini). 서버에선 미사용.
