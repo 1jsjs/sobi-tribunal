@@ -47,6 +47,17 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return fail("BAD_REQUEST", "요청 형식이 올바르지 않소.", status=400)
 
 
+# ── 정적 파일 no-cache: 배포 후 수정본이 참가자 브라우저 캐시에 막히는 사고 방지
+# (etag 재검증이라 304로 여전히 빠르다. 로컬 검증에서 실제로 두 번 당했다.)
+@app.middleware("http")
+async def no_cache_static(request: Request, call_next):
+    response = await call_next(request)
+    path = request.url.path
+    if path == "/" or path.startswith("/static"):
+        response.headers["Cache-Control"] = "no-cache"
+    return response
+
+
 # ── 헬스 체크 (고정 경로) ───────────────────────────────────────────
 @app.get("/api/health")
 def health():
