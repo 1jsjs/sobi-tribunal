@@ -1,58 +1,55 @@
-<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="유죄 — 죄수 돼지">
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="유죄 — 죄수복의 피고인">
   <defs>
-    <linearGradient id="pgG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f6c2cc"/>
-      <stop offset="1" stop-color="#efa3b2"/>
+    <linearGradient id="skinG1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
     </linearGradient>
   </defs>
-  <!-- 배경 원 (어두운 감방 느낌) -->
+  <!-- 배경 원 (어두운 감방) -->
   <circle cx="200" cy="200" r="200" fill="#141c30"/>
   <circle cx="200" cy="200" r="160" fill="#0f1420" opacity="0.7"/>
   <!-- 창살 -->
   <g stroke="#2a1f18" stroke-width="14" opacity="0.85">
-    <line x1="80" y1="0" x2="80" y2="400"/>
-    <line x1="320" y1="0" x2="320" y2="400"/>
+    <line x1="78" y1="0" x2="78" y2="400"/>
+    <line x1="322" y1="0" x2="322" y2="400"/>
   </g>
 
   <!-- 죄수복 상의 (줄무늬) -->
-  <path d="M92 400 L102 320 Q116 286 158 278 L242 278 Q284 286 298 320 L308 400 Z"
+  <path d="M96 400 L106 322 Q120 288 160 280 L240 280 Q280 288 294 322 L304 400 Z"
         fill="#f2ead8" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
   <g fill="#2a1f18">
-    <path d="M96 340 L304 340 L306 362 L94 362 Z"/>
-    <path d="M100 300 L300 300 Q296 288 288 296 L110 296 Q104 292 100 300 Z"/>
-    <path d="M92 388 L308 388 L309 400 L91 400 Z"/>
+    <path d="M100 340 L300 340 L302 362 L98 362 Z"/>
+    <path d="M104 302 L296 302 Q292 292 286 298 L112 298 Q108 294 104 302 Z"/>
+    <path d="M96 388 L304 388 L305 400 L95 400 Z"/>
   </g>
+  <!-- 수인 번호판 -->
+  <rect x="154" y="330" width="92" height="26" rx="5" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="349" text-anchor="middle" font-family="'Courier New',monospace" font-size="15" font-weight="700" fill="#2a1f18">NO. 0829</text>
 
-  <!-- 죄수 번호판 -->
-  <rect x="152" y="330" width="96" height="26" rx="5" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
-  <text x="200" y="349" text-anchor="middle" font-family="'Courier New',monospace" font-size="16" font-weight="700" fill="#2a1f18">NO. 0829</text>
-
-  <!-- 머리 -->
-  <circle cx="200" cy="180" r="92" fill="url(#pgG)" stroke="#1a120c" stroke-width="6"/>
-  <!-- 귀 -->
-  <path d="M134 116 Q118 84 140 72 Q164 80 162 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M266 116 Q282 84 260 72 Q236 80 238 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
-
+  <!-- 얼굴 -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinG1)" stroke="#1a120c" stroke-width="6"/>
   <!-- 죄수 모자 (줄무늬 빵모자) -->
-  <path d="M138 108 Q200 66 262 108 L258 92 Q200 52 142 92 Z" fill="#f2ead8" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M147 96 Q200 62 253 96" fill="none" stroke="#2a1f18" stroke-width="9"/>
-  <rect x="136" y="102" width="128" height="14" rx="7" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <path d="M120 142 Q126 84 200 78 Q274 84 280 142 L272 128 Q200 92 128 128 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M132 122 Q200 90 268 122" fill="none" stroke="#2a1f18" stroke-width="9"/>
+  <rect x="120" y="132" width="160" height="14" rx="7" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <!-- 모자 밖 옆머리 -->
+  <path d="M118 150 q-4 26 6 44 l10 -6 q-8 -18 -4 -36 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <path d="M282 150 q4 26 -6 44 l-10 -6 q8 -18 4 -36 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
 
   <!-- 슬픈 눈썹 -->
-  <path d="M148 142 Q164 150 178 146" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
-  <path d="M252 142 Q236 150 222 146" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
-  <!-- 처진 눈 -->
-  <path d="M154 164 A9 9 0 0 0 172 164 Z" fill="#1a120c" transform="rotate(8 163 164)"/>
-  <path d="M228 164 A9 9 0 0 0 246 164 Z" fill="#1a120c" transform="rotate(-8 237 164)"/>
+  <path d="M150 154 Q164 162 176 158" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M250 154 Q236 162 224 158" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- 점 눈 -->
+  <circle cx="166" cy="176" r="7" fill="#1a120c"/>
+  <circle cx="234" cy="176" r="7" fill="#1a120c"/>
   <!-- 눈물 -->
-  <path d="M167 176 q10 16 0 24 q-11 -8 0 -24 Z" fill="#7ec3e8" stroke="#1a120c" stroke-width="3.5"/>
-
+  <path d="M167 190 q10 15 0 23 q-10 -8 0 -23 Z" fill="#7ec3e8" stroke="#1a120c" stroke-width="3.5"/>
   <!-- 코 -->
-  <ellipse cx="200" cy="202" rx="44" ry="30" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
-  <ellipse cx="200" cy="202" rx="44" ry="30" fill="#b3261e" opacity="0.10"/>
-  <ellipse cx="186" cy="202" rx="6" ry="10" fill="#1a120c"/>
-  <ellipse cx="214" cy="202" rx="6" ry="10" fill="#1a120c"/>
-
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" fill="none" stroke-linecap="round"/>
   <!-- 시무룩 입 -->
-  <path d="M172 248 Q200 236 228 248" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M176 232 Q200 222 224 232" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- 볼터치 -->
+  <ellipse cx="150" cy="206" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="206" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
 </svg>

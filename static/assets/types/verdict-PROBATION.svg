@@ -1,8 +1,8 @@
-<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="집행유예 — 반성하는 돼지">
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="집행유예 — 반성하는 피고인">
   <defs>
-    <linearGradient id="pgP" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f6c2cc"/>
-      <stop offset="1" stop-color="#efa3b2"/>
+    <linearGradient id="skinG3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
     </linearGradient>
   </defs>
   <!-- 배경 원 (앰버 경고 톤) -->
@@ -10,37 +10,38 @@
   <circle cx="200" cy="200" r="160" fill="#b8952c" opacity="0.14"/>
 
   <!-- 몸 (수수한 셔츠) -->
-  <path d="M100 400 L110 324 Q124 292 164 284 L236 284 Q276 292 290 324 L300 400 Z"
+  <path d="M102 400 L112 322 Q126 290 164 282 L236 282 Q274 290 288 322 L298 400 Z"
         fill="#e8dcc2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
 
-  <!-- 맹세하는 발굽 (오른손 들어 선서) -->
-  <path d="M290 306 Q312 286 314 250 L296 242 Q292 276 272 292 Z"
+  <!-- 선서하는 오른손 -->
+  <path d="M288 306 Q310 286 312 250 L294 242 Q290 276 270 292 Z"
         fill="#e8dcc2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
-  <circle cx="306" cy="244" r="19" fill="url(#pgP)" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="304" cy="244" r="16" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
 
-  <!-- 머리 -->
-  <circle cx="200" cy="180" r="92" fill="url(#pgP)" stroke="#1a120c" stroke-width="6"/>
-  <!-- 귀 -->
-  <path d="M134 116 Q118 84 140 72 Q164 80 162 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
-  <path d="M266 116 Q282 84 260 72 Q236 80 238 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 얼굴 -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinG3)" stroke="#1a120c" stroke-width="6"/>
+  <!-- 머리카락 (반원 뱅) -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 168 q-4 24 6 40 l10 -6 q-8 -16 -4 -34 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <path d="M286 168 q4 24 -6 40 l-10 -6 q8 -16 4 -34 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
 
   <!-- 땀방울 -->
-  <path d="M276 132 q12 18 0 27 q-13 -9 0 -27 Z" fill="#7ec3e8" stroke="#1a120c" stroke-width="3.5"/>
+  <path d="M272 140 q11 16 0 24 q-11 -8 0 -24 Z" fill="#7ec3e8" stroke="#1a120c" stroke-width="3.5"/>
 
-  <!-- 걱정 눈썹 (안쪽 올라감) -->
-  <path d="M148 140 Q164 132 178 140" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(10 163 140)"/>
-  <path d="M222 140 Q238 132 252 140" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(-10 237 140)"/>
-  <!-- 또렷 반성 눈 -->
-  <circle cx="163" cy="162" r="8" fill="#1a120c"/>
-  <circle cx="237" cy="162" r="8" fill="#1a120c"/>
-  <circle cx="166" cy="159" r="2.6" fill="#f5e9d0"/>
-  <circle cx="240" cy="159" r="2.6" fill="#f5e9d0"/>
-
+  <!-- 걱정 눈썹 -->
+  <path d="M150 152 Q164 146 178 152" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none" transform="rotate(9 164 152)"/>
+  <path d="M222 152 Q236 146 250 152" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none" transform="rotate(-9 236 152)"/>
+  <!-- 점 눈 + 하이라이트 -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="168.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <circle cx="236.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
   <!-- 코 -->
-  <ellipse cx="200" cy="200" rx="44" ry="30" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
-  <ellipse cx="186" cy="200" rx="6" ry="10" fill="#1a120c"/>
-  <ellipse cx="214" cy="200" rx="6" ry="10" fill="#1a120c"/>
-
-  <!-- 앙다문 입 (반성) -->
-  <path d="M176 244 Q200 250 224 244" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- 앙다문 입 -->
+  <path d="M178 228 Q200 234 222 228" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- 볼터치 -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
 </svg>
