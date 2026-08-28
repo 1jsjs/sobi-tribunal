@@ -53,6 +53,18 @@ MEDIA_TYPES = {
     "image/webp": "webp",
 }
 
+# 비전이 지어내는 정크 품목명 — 이런 이름이면 후보 기각(빈 조서 → 프론트 실패 분기).
+# 비교는 공백 전부 제거 + 소문자로 정규화해서 한다.
+_JUNK_NAMES = {
+    "알수없음", "미상", "없음", "unknown", "n/a", "-", "확인불가", "물품", "상품",
+}
+
+
+def _normalize_name(s: str) -> str:
+    """공백(스페이스·탭 등) 전부 제거 + 소문자 — 정크 비교용."""
+    return "".join(s.split()).lower()
+
+
 # docs/03 §4 목 candidates
 MOCK_CANDIDATES = [
     {
@@ -75,6 +87,10 @@ def _clean_candidate(raw) -> dict | None:
         return None
     name = name.strip()[:15]  # 15자 잘라내기
 
+    # 정크 품목명(비전이 지어낸 "알 수 없음" 류)이면 기각
+    if _normalize_name(name) in _JUNK_NAMES:
+        return None
+
     # price 정수화, 음수→0
     price = raw.get("price", 0)
     try:
@@ -93,6 +109,10 @@ def _clean_candidate(raw) -> dict | None:
         merchant = None
     else:
         merchant = merchant.strip()
+
+    # 아무 정보도 못 읽은 케이스: price 0 + merchant·boughtAt 모두 null → 기각
+    if price == 0 and merchant is None and bought_at is None:
+        return None
 
     category = raw.get("category")
     if category not in CATEGORIES:  # 6종 외 → OTHER

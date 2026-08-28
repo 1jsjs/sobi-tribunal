@@ -69,3 +69,56 @@ def test_intake_bad_mime_400():
     )
     assert res.status_code == 400
     assert res.json()["error"]["code"] == "INVALID_FILE"
+
+
+# ── B309: 정크 품목명 필터 (_clean_candidate 유닛) ──
+from services.intake_service import _clean_candidate  # noqa: E402
+
+
+def _cand(**over):
+    base = {
+        "itemName": "무선 이어폰",
+        "price": 219000,
+        "boughtAt": "2026-08-14",
+        "merchant": "쿠팡",
+        "category": "DIGITAL_APPLIANCE",
+    }
+    base.update(over)
+    return base
+
+
+def test_clean_rejects_unknown_name():
+    assert _clean_candidate(_cand(itemName="알 수 없음")) is None
+
+
+def test_clean_rejects_unknown_name_no_space_and_trailing():
+    assert _clean_candidate(_cand(itemName="알수없음  ")) is None
+
+
+def test_clean_rejects_unknown_variants():
+    for junk in ["미상", "없음", "unknown", "N/A", "-", "확인 불가", "물품", "상품", "UNKNOWN"]:
+        assert _clean_candidate(_cand(itemName=junk)) is None, junk
+
+
+def test_clean_passes_normal_candidate():
+    c = _clean_candidate(_cand())
+    assert c is not None
+    assert c["itemName"] == "무선 이어폰"
+    assert c["price"] == 219000
+
+
+def test_clean_rejects_zero_price_and_null_merchant_and_date():
+    # 아무 정보도 못 읽은 케이스
+    assert _clean_candidate(_cand(price=0, merchant=None, boughtAt=None)) is None
+
+
+def test_clean_passes_zero_price_when_merchant_present():
+    c = _clean_candidate(_cand(price=0, merchant="쿠팡", boughtAt=None))
+    assert c is not None
+    assert c["price"] == 0
+    assert c["merchant"] == "쿠팡"
+
+
+def test_clean_passes_zero_price_when_date_present():
+    c = _clean_candidate(_cand(price=0, merchant=None, boughtAt="2026-08-14"))
+    assert c is not None
