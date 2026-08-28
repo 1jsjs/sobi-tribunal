@@ -651,3 +651,40 @@ textarea#plea-text:focus { border-color: var(--gold); }
   html { font-size: 21px; }
   :root { --col: 840px; }
 }
+
+/* ── 증거물: 골드 액자 SVG에 사진을 끼워 오른쪽에 건다 (팀 피드백 8/29, 직접 수정) ──
+   액자 내부 투명창 = viewBox(300x380)의 x38..262 / y38..342 → 12.6%/10%, 74.7%x80% */
+.evidence-frame {
+  position: relative;
+  width: 52%;
+  max-width: 230px;
+  aspect-ratio: 300 / 380;
+  background: url("/static/assets/evidence-frame.svg") center / contain no-repeat;
+}
+.evidence-frame img {
+  position: absolute;
+  left: 12.6%;
+  top: 10%;
+  width: 74.7%;
+  height: 80%;
+  object-fit: cover;
+  aspect-ratio: auto;
+  border: none;
+  border-radius: 2px;
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.25);
+}
+.evidence-frame figcaption { display: none; } /* 리본("증거물 제1호")이 SVG에 있음 */
+/* 넓은 화면: 오른쪽 벽에 고정으로 건다 (스크롤해도 벽에 걸려 있음) */
+@media (min-width: 1350px) {
+  .evidence-frame {
+    position: fixed;
+    right: 2vw;
+    top: 140px;
+    width: 240px;
+    max-width: none;
+    margin: 0;
+    z-index: 5;
+  }
+  .courtroom-top { justify-content: center; }
+}

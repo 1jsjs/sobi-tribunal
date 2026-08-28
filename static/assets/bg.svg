@@ -111,9 +111,9 @@
     <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
     <!-- gold base molding -->
     <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
-    <!-- pedestal to floor -->
-    <rect x="268" y="500" width="264" height="52" rx="10" fill="#2a1f18" stroke-width="6"/>
-    <rect x="268" y="544" width="264" height="14" rx="7" fill="#3d2b1f" stroke-width="4"/>
+    <!-- pedestal: 캔버스 바닥까지 연장 — 화면에서 판사석이 말풍선 높이까지 내려온다 (팀 피드백) -->
+    <rect x="252" y="500" width="296" height="104" rx="10" fill="#2a1f18" stroke-width="6"/>
+    <rect x="252" y="562" width="296" height="14" rx="7" fill="#3d2b1f" stroke-width="4"/>
   </g>
 
   <!-- gold trim line across bench front -->
