@@ -58,7 +58,7 @@ def test_e2e_start_verdict_records():
     # 2) verdict → 201
     r = c.post(
         "/api/trial/verdict",
-        json={"email": "pjs@jbnu.ac.kr", "dossier": DOSSIER, "answers": GUILTY_ANSWERS,
+        json={"email": "pjs@example.com", "dossier": DOSSIER, "answers": GUILTY_ANSWERS,
               "plea": "월급날이었단 말입니다"},
     )
     assert r.status_code == 201, r.text
@@ -79,7 +79,7 @@ def test_e2e_start_verdict_records():
     record_id = v["recordId"]
 
     # 3) records 목록에 반영
-    r = c.get("/api/records", params={"email": "pjs@jbnu.ac.kr"})
+    r = c.get("/api/records", params={"email": "pjs@example.com"})
     assert r.status_code == 200
     rows = r.json()["data"]
     assert len(rows) == 1
@@ -132,11 +132,11 @@ def test_email_uppercase_normalized_to_lowercase():
     # 대문자·공백 이메일로 판결
     r = c.post(
         "/api/trial/verdict",
-        json={"email": "  PJS@JBNU.AC.KR  ", "dossier": DOSSIER, "answers": GUILTY_ANSWERS},
+        json={"email": "  PJS@EXAMPLE.COM  ", "dossier": DOSSIER, "answers": GUILTY_ANSWERS},
     )
     assert r.status_code == 201
     # 소문자로 조회된다
-    r = c.get("/api/records", params={"email": "pjs@jbnu.ac.kr"})
+    r = c.get("/api/records", params={"email": "pjs@example.com"})
     assert r.status_code == 200
     assert len(r.json()["data"]) == 1
 

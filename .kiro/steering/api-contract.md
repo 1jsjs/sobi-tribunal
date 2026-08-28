@@ -74,7 +74,7 @@ OTHER              기타
 
 ## answers (POST /api/trial/verdict 요청)
 ```
-{"email": "pjs@jbnu.ac.kr", "dossier": {...},
+{"email": "pjs@example.com", "dossier": {...},
  "answers": [{"questionId": "USE", "choiceIndex": 2}, ...],
  "plea": "월급날이었단 말입니다" | 생략}
 ```
