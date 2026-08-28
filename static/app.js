@@ -1426,6 +1426,10 @@ boot();
 (() => {
   const paper = document.getElementById("verdict-paper");
   if (paper) {
-    paper.addEventListener("click", () => paper.classList.toggle("collapsed"));
+    paper.addEventListener("click", () => {
+      const nowCollapsed = paper.classList.toggle("collapsed");
+      // 접을 때: 읽다 내려간 스크롤 때문에 판결문이 화면 밖으로 사라져 "안 닫힌 듯" 보이는 것 방지
+      if (nowCollapsed) paper.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
   }
 })();

@@ -797,3 +797,16 @@ body.with-judge .courtroom-top { justify-content: flex-end; }
   width: min(280px, 82%) !important;
   margin: 10px auto 14px;
 }
+
+
+/* 펼친 상태에도 접기 안내를 보여준다 */
+.verdict-doc:not(.collapsed)::after {
+  content: "\25B2  접기";
+  display: block;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(61, 43, 31, 0.35);
+  text-align: center;
+  font-weight: 700;
+  color: var(--stamp);
+}
