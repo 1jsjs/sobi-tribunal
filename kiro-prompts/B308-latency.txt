@@ -1,0 +1,23 @@
+[B308] 지연 단축 3종 — boto3 싱글톤 + thinking 비활성 + 비전·S3 병렬
+
+목표: 기소(비전)·재판 시작(스타일링) 지연 단축. 판정 로직·응답 계약은 한 글자도 안 바뀐다.
+
+1. boto3 클라이언트 싱글톤:
+   - llm_service의 bedrock-runtime 클라이언트, intake_service의 s3 클라이언트를
+     모듈 전역 lazy 싱글톤으로 (매 호출 boto3.client() 생성 제거 → 커넥션 재사용).
+   - 로컬(자격증명 없음)에서 임포트만으로 예외가 나면 안 된다 — 생성은 첫 호출 시점에.
+2. thinking 비활성 (스타일링·비전만 — 판결문은 유지):
+   - call_text/call_vision에 use_thinking: bool = True 인자 추가.
+   - False면 bedrock body에 "thinking": {"type": "disabled"} 추가. gemini 경로는 무시.
+   - trial_service.style_questions와 intake_service 비전 호출만 use_thinking=False로.
+     verdict_service는 기본값(유지).
+   - ⚠️ 이 파라미터는 temperature 사건과 같은 클래스다(모델이 거부하면 조용히 폴백 → AI 실종).
+     로컬로 검증 불가 — 완료 보고에 "배포 후 app.log 실측 필요"를 명시할 것.
+     tech-constraints §5 사다리 ③ 항목에 이 검증을 추가해둘 것.
+3. 비전·S3 병렬 (intake_service.process_intake):
+   - 지금 순차(비전 → S3 put+presign)를 concurrent.futures.ThreadPoolExecutor 등으로 동시 실행.
+   - S3 실패 시 photoKey/photoUrl null 강하(기존 동작 유지), 비전 실패 시 candidates [] (동일).
+   - 응답 형태·필드 불변.
+4. tests: 기존 35개 회귀 유지 + thinking 인자 분기 유닛(바디에 thinking 키 유무) 1~2개.
+
+완료 기준: MOCK_AI=1 pytest 전체 green. 계약·판정 diff 0.
