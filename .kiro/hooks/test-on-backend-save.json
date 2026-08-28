@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Backend save → pytest",
+      "trigger": "PostFileSave",
+      "description": "백엔드 파일(services/, routes/, constants.py, db.py) 저장 시 MOCK_AI=1로 전체 pytest를 자동 실행해 회귀를 잡는다.",
+      "matcher": "(services/|routes/|constants\\.py|db\\.py)",
+      "action": {
+        "type": "command",
+        "command": "MOCK_AI=1 appenv/bin/python -m pytest tests/ -q"
+      }
+    }
+  ]
+}
