@@ -28,7 +28,7 @@ MODEL_ID = "global.anthropic.claude-sonnet-5"
 ANTHROPIC_VERSION = "bedrock-2023-05-31"
 MAX_TOKENS = 2048
 
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
+DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"
 
 
 class MockAIError(Exception):

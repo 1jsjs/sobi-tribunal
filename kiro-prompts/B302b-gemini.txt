@@ -13,7 +13,7 @@ B302에서 만든 services/bedrock_service.py는 잘 됐다. 여기에 제공자
    - "mock" → MockAIError (기존과 동일)
    - "bedrock" → 기존 _invoke 경로 그대로 (로그 문구 "Bedrock 호출 실패: ..."도 그대로 —
      서버 운영 grep이 이 문자열에 걸려 있다)
-   - "gemini" → google-genai 패키지, 모델 env GEMINI_MODEL(기본 "gemini-2.5-flash"),
+   - "gemini" → google-genai 패키지, 모델 env GEMINI_MODEL(기본 "gemini-3.6-flash"),
      GOOGLE_API_KEY 없으면 즉시 RuntimeError("GOOGLE_API_KEY not set").
      system_instruction=system, contents=user(비전은 이미지 파트+텍스트)로 호출해
      response.text 반환. **JSON 모드·response_schema 쓰지 말 것** — Bedrock과 같은
