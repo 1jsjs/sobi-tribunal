@@ -502,6 +502,7 @@ function renderCandidatePicker(candidates, baseDossier) {
       picker.querySelectorAll(".candidate").forEach((el) => el.classList.remove("selected"));
       btn.classList.add("selected");
       fillDossierForm(merged);
+      fireSpeculativeTrial(); // dossier 통째로 바뀜 → 재발사
     });
     listWrap.appendChild(btn);
   });
@@ -526,11 +527,12 @@ function startManualEntry() {
   showScreen("dossier");
 }
 
-/* 조서 확인 화면으로: 폼 채우고 전환 */
+/* 조서 확인 화면으로: 폼 채우고 전환 + 투기 발사 */
 function goToDossier(dossier) {
   fillCategorySelect();
   fillDossierForm(dossier);
   showScreen("dossier");
+  fireSpeculativeTrial(); // 조서 보는 동안 재판 미리 준비
 }
 
 /* 금액 콤마 표기 유틸 */
@@ -622,6 +624,50 @@ function buildDossierFromForm() {
 
 const openTrialBtn = document.getElementById("btn-open-trial");
 
+/* ── 투기적 재판 준비 (speculative /api/trial/start) ──────────────
+ * 조서를 보는 동안 미리 trial/start를 발사해 "판사님 입장 중..." 체감 제거.
+ * 세대 번호(gen)로 최신 요청만 채택. 낡은 응답은 늦게 와도 절대 안 쓴다.
+ * 폼 스냅샷(key)으로 확정 시점 폼과 발사 시점 dossier가 일치하는지 검증. */
+const spec = { gen: 0, latest: null, debounceTimer: null };
+
+/* dossier를 비교용 안정 문자열로 (trial/start에 영향 주는 필드 전부) */
+function dossierKey(d) {
+  return JSON.stringify([
+    d.itemName, d.price, d.boughtAt, d.merchant, d.category, d.usage, d.story, d.photoKey,
+  ]);
+}
+
+/* 유효한 dossier인지 (품목명·정수 금액) — 무효면 발사 안 함 */
+function dossierFireable(d) {
+  return !!d.itemName && Number.isInteger(d.price) && d.price >= 0;
+}
+
+/* 투기 발사: 현재 폼 값으로 trial/start를 백그라운드 fetch. await 하지 않는다. */
+function fireSpeculativeTrial() {
+  const dossier = buildDossierFromForm();
+  if (!dossierFireable(dossier)) return; // 아직 확정 못 할 조서면 발사 보류
+  const key = dossierKey(dossier);
+  // 이미 같은 조서로 유효 발사가 떠 있으면 재발사 안 함 (연타·중복 방지)
+  if (spec.latest && spec.latest.key === key && spec.latest.status !== "error") return;
+
+  const myGen = ++spec.gen;
+  const record = { gen: myGen, key: key, dossier: dossier, status: "pending", promise: null };
+  record.promise = api("/api/trial/start", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ dossier: dossier }),
+  })
+    .then((data) => { record.status = "done"; return data; })
+    .catch((err) => { record.status = "error"; throw err; });
+  spec.latest = record;
+}
+
+/* debounce 400ms 재발사 (폼 수정 시) */
+function scheduleSpeculative() {
+  clearTimeout(spec.debounceTimer);
+  spec.debounceTimer = setTimeout(fireSpeculativeTrial, 400);
+}
+
 async function confirmIndictment() {
   const dossier = buildDossierFromForm();
   if (!dossier.itemName) {
@@ -633,7 +679,57 @@ async function confirmIndictment() {
     return;
   }
   state.dossier = dossier;
+  const key = dossierKey(dossier);
 
+  // 보관된 투기 Promise가 현재 폼과 같은 조서면 그걸 재사용, 아니면 새로 발사
+  let record = spec.latest;
+  const reusable =
+    record && record.key === key && record.status !== "error";
+  if (!reusable) {
+    fireSpeculativeTrial();      // 최신 폼 기준으로 새로 발사
+    record = spec.latest;
+    // 발사 자체가 불가(무효 조서)면 record가 갱신 안 됐을 수 있음 → 직접 호출로 폴백
+    if (!record || record.key !== key) {
+      return startTrialDirect(dossier);
+    }
+  }
+
+  const useGen = record.gen;
+  // 이미 끝난 응답이면 오버레이 없이 즉시, 아직이면 오버레이 표시
+  const showOverlay = record.status === "pending";
+  try {
+    const runner = async () => {
+      const data = await record.promise;
+      // 채택 가드: 그 사이 더 최신 발사가 없었고, 폼도 안 바뀌었을 때만 채택
+      if (record.gen !== spec.gen) throw new Error("STALE");
+      return data;
+    };
+    let data;
+    if (showOverlay) {
+      data = await withBusy(openTrialBtn, "판사님 입장 중...", runner);
+    } else {
+      // 이미 응답이 와 있음: 오버레이 없이 즉시, 그래도 버튼은 잠가 이중 클릭 방지
+      openTrialBtn.disabled = true;
+      try {
+        data = await runner();
+      } finally {
+        openTrialBtn.disabled = false;
+      }
+    }
+    adoptTrial(data);
+  } catch (err) {
+    if (err && err.message === "STALE") {
+      // 낡은 세대 — 최신 폼으로 새로 시작
+      return startTrialDirect(buildDossierFromForm());
+    }
+    handleError(err);
+    showRetryStart();
+  }
+}
+
+/* 폼 최종 값으로 직접 새 호출 (투기 폴백·재시도용) */
+async function startTrialDirect(dossier) {
+  state.dossier = dossier;
   await withBusy(openTrialBtn, "판사님 입장 중...", async () => {
     try {
       const data = await api("/api/trial/start", {
@@ -641,25 +737,37 @@ async function confirmIndictment() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dossier: dossier }),
       });
-      state.trial = data; // {opening, questions, source}
-      state.answers = [];
-      // 법정 진행은 F304. 훅이 있으면 넘기고, 없으면 화면만 전환.
-      if (window.tribunal && typeof window.tribunal.onTrialStarted === "function") {
-        window.tribunal.onTrialStarted();
-      } else {
-        showScreen("courtroom");
-        const op = document.getElementById("trial-opening");
-        if (op) op.textContent = data.opening || "";
-      }
+      adoptTrial(data);
     } catch (err) {
       handleError(err);
-      // 재시도 버튼 노출 (dossier 유지)
       showRetryStart();
     }
   });
 }
 
+/* 받은 trial 데이터를 상태에 싣고 법정 진입 */
+function adoptTrial(data) {
+  state.trial = data; // {opening, questions, source}
+  state.answers = [];
+  if (window.tribunal && typeof window.tribunal.onTrialStarted === "function") {
+    window.tribunal.onTrialStarted();
+  } else {
+    showScreen("courtroom");
+    const op = document.getElementById("trial-opening");
+    if (op) op.textContent = data.opening || "";
+  }
+}
+
 openTrialBtn.addEventListener("click", confirmIndictment);
+
+/* 조서 폼 수정 → debounce 재발사 (모든 입력 필드) */
+["d-itemName", "d-price", "d-boughtAt", "d-merchant", "d-category", "d-usage", "d-story"]
+  .forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const evt = el.tagName === "SELECT" ? "change" : "input";
+    el.addEventListener(evt, scheduleSpeculative);
+  });
 
 /* 시작 실패 시 재시도 버튼 (dossier 유지) */
 function showRetryStart() {
@@ -675,12 +783,20 @@ function showRetryStart() {
   openTrialBtn.insertAdjacentElement("afterend", btn);
 }
 
+/* 투기 상태 초기화 — 새 사건으로 넘어갈 때 낡은 record 재사용 방지 */
+function resetSpec() {
+  clearTimeout(spec.debounceTimer);
+  spec.gen += 1;      // 진행 중 발사가 있어도 STALE 처리되게 세대 올림
+  spec.latest = null;
+}
+
 /* 증거를 다시 제출하겠소 → 기소 화면으로, 조서 상태 초기화 */
 document.getElementById("btn-retry-intake").addEventListener("click", () => {
   state.dossier = null;
   state.intakeDossier = null;
   state.trial = null;
   state.answers = [];
+  resetSpec();
   const retry = document.getElementById("btn-retry-start");
   if (retry) retry.remove();
   document.getElementById("candidate-picker").hidden = true;
@@ -1096,6 +1212,7 @@ function resetTrialState() {
   state.answers = [];
   state.plea = null;
   state.verdict = null;
+  if (typeof resetSpec === "function") resetSpec();
 }
 
 document.getElementById("btn-plea-done").addEventListener("click", () => {
