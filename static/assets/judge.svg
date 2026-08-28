@@ -18,11 +18,7 @@
     </linearGradient>
   </defs>
 
-  <!-- 배경 -->
-  <rect x="0" y="0" width="400" height="400" fill="url(#bgGrad)"/>
-  <!-- 후광 원 -->
-  <circle cx="200" cy="180" r="150" fill="#d4af37" opacity="0.08"/>
-  <circle cx="200" cy="180" r="115" fill="#e8c96a" opacity="0.07"/>
+  <!-- 배경 없음: 투명 — 판사가 배경의 판사석에 직접 앉는다 (팀 피드백 8/29) -->
 
   <!-- 땅땅 효과선 -->
   <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round" opacity="0.9">
