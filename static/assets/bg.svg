@@ -98,8 +98,8 @@
     <!-- bench top slab -->
     <rect x="228" y="316" width="344" height="26" rx="10" fill="#3d2b1f" stroke-width="6"/>
     <rect x="216" y="308" width="368" height="18" rx="9" fill="#d4af37" stroke-width="5"/>
-    <!-- bench front body -->
-    <rect x="236" y="338" width="328" height="150" rx="12" fill="url(#woodFront)" stroke-width="6"/>
+    <!-- bench front body: 캔버스 바닥까지 — 판사 아래가 끊기지 않고 말풍선 뒤까지 이어진다 -->
+    <rect x="236" y="338" width="328" height="266" rx="12" fill="url(#woodFront)" stroke-width="6"/>
     <!-- paneling -->
     <rect x="258" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
     <rect x="460" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
@@ -109,11 +109,13 @@
     <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
     <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
     <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
-    <!-- gold base molding -->
+    <!-- gold molding (중간 띠) -->
     <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
-    <!-- pedestal: 캔버스 바닥까지 연장 — 화면에서 판사석이 말풍선 높이까지 내려온다 (팀 피드백) -->
-    <rect x="252" y="500" width="296" height="104" rx="10" fill="#2a1f18" stroke-width="6"/>
-    <rect x="252" y="562" width="296" height="14" rx="7" fill="#3d2b1f" stroke-width="4"/>
+    <!-- 하단 패널 2열 (몰딩 아래 몸통 장식) -->
+    <rect x="258" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="460" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="258" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <rect x="460" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
   </g>
 
   <!-- gold trim line across bench front -->

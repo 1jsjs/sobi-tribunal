@@ -680,8 +680,8 @@ textarea#plea-text:focus { border-color: var(--gold); }
   .evidence-frame {
     position: fixed;
     right: 2vw;
-    top: 140px;
-    width: 240px;
+    top: 120px;
+    width: 320px;
     max-width: none;
     margin: 0;
     z-index: 5;
