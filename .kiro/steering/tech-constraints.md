@@ -39,7 +39,10 @@ inclusion: always
 
 ### 1. Bedrock 응답에서 `content[0]["text"]`를 꺼내지 말 것
 Claude Sonnet 5는 content 첫 블록으로 **thinking**을 반환할 수 있다. KeyError → 조용히 폴백
-→ AI 실종(화면은 멀쩡). 반드시 `type == "text"` 블록을 찾아 쓸 것. max_tokens은 2048 이상.
+→ AI 실종(화면은 멀쩡). 반드시 `type == "text"` 블록을 찾아 쓸 것.
+- **max_tokens은 4096** — 2048이면 질문 8문 한국어 재작성 응답이 잘려 JSON이 깨진다(서버 실측).
+- JSON 파싱은 `json.loads(..., strict=False)` — Claude가 문자열 값 안에 실제 개행문자를
+  넣어서 기본 파서가 거부한다(서버 실측). 이 두 개도 로컬 MOCK/Gemini로는 안 잡혔다.
 
 ### 2. Bedrock 요청에 `temperature`·`top_p`를 넣지 말 것
 Sonnet 5가 거부한다(`ValidationException: deprecated for this model`). 파라미터 없음만 OK.

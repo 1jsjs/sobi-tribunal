@@ -26,7 +26,7 @@ logger = logging.getLogger("bedrock")
 
 MODEL_ID = "global.anthropic.claude-sonnet-5"
 ANTHROPIC_VERSION = "bedrock-2023-05-31"
-MAX_TOKENS = 2048
+MAX_TOKENS = 4096  # 2048은 8문 한국어 재작성이 잘려 JSON이 깨짐 (서버 실측)
 
 DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"
 
@@ -190,6 +190,6 @@ def extract_json(raw: str) -> dict:
         raise ValueError("응답에서 JSON 객체를 찾지 못했소")
     snippet = raw[start : end + 1]
     try:
-        return json.loads(snippet)
+        return json.loads(snippet, strict=False)  # Claude가 문자열 안에 실제 개행을 넣음 (서버 실측)
     except json.JSONDecodeError as e:
         raise ValueError(f"JSON 파싱 실패: {e}") from e
