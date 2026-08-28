@@ -659,7 +659,14 @@ textarea#plea-text:focus { border-color: var(--gold); }
   width: 52%;
   max-width: 230px;
   aspect-ratio: 300 / 380;
+}
+/* 액자를 사진 "앞" 레이어로 — 리본(증거물 제1호)·금테가 사진 가장자리를 덮는다 */
+.evidence-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: url("/static/assets/evidence-frame.svg") center / contain no-repeat;
+  pointer-events: none;
 }
 .evidence-frame img {
   position: absolute;
@@ -688,3 +695,15 @@ textarea#plea-text:focus { border-color: var(--gold); }
   }
   .courtroom-top { justify-content: center; }
 }
+
+
+/* ── 배경 2단계: 재판 시작부터 판사가 판사석에 앉은 배경으로 전환 ── */
+body.with-judge::before {
+  background:
+    linear-gradient(rgba(8, 10, 16, 0.35), rgba(8, 10, 16, 0.35)),
+    url("/static/assets/bg-judge.svg") center bottom / cover no-repeat,
+    var(--bg);
+}
+body.with-judge .judge { display: none; } /* 판사는 배경에 있음 — 콘텐츠 판사 숨김 */
+body.with-judge .stage { padding-top: clamp(280px, 44vh, 430px); } /* 판사가 보이게 내용은 아래부터 */
+body.with-judge .courtroom-top { justify-content: flex-end; }

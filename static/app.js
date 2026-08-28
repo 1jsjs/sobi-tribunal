@@ -14,6 +14,8 @@ function showScreen(name) {
     const el = document.querySelector(`[data-screen="${s}"]`);
     if (el) el.hidden = s !== name;
   });
+  // 배경 2단계: 재판(법정~판결) 동안은 판사가 판사석에 앉은 배경으로 (팀 피드백 8/29)
+  document.body.classList.toggle("with-judge", ["courtroom", "plea", "verdict"].includes(name));
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
 
