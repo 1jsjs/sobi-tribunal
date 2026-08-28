@@ -154,20 +154,21 @@ input:focus, select:focus { border-color: var(--gold); }
 .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
 .btn-primary:not(:disabled):active { transform: translateY(1px); }
 .btn-ghost {
-  background: transparent;
+  background: var(--wood);
   color: var(--gold);
-  border: 1px solid var(--gold);
+  border: 1.5px solid var(--gold);
 }
 .btn-ghost:active { transform: translateY(1px); }
 .btn-skip {
   display: block;
-  margin: 0 0 8px auto;
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--ink-dim);
-  padding: 6px 12px;
+  margin: 0 0 10px auto;
+  background: var(--wood);
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 16px;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -194,29 +195,43 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 
 /* ── 법정 ────────────────────────────────────────────── */
+/* 판사 가운데·크게, 증거물 액자는 오른쪽에 크게 (겹치지 않게 세로 스택 기반) */
 .courtroom-top {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
 }
-.judge { width: 40%; max-width: 170px; }
-.evidence-frame { margin: 0; width: 46%; text-align: center; }
+.judge { width: 68%; max-width: 260px; display: block; margin: 0 auto; }
+.evidence-frame {
+  margin: 0 0 0 auto;   /* 오른쪽 배치 */
+  width: 52%;
+  max-width: 220px;
+  text-align: center;
+}
 .evidence-frame img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border: 6px solid var(--wood);
+  border: 7px solid var(--wood);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.3);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 .evidence-frame figcaption {
-  margin-top: 6px;
-  font-size: 0.72rem;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--gold);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+/* 데스크톱·발표 화면: 판사 가운데, 증거물 우측 나란히 */
+@media (min-width: 481px) {
+  .courtroom-top { flex-direction: row; align-items: flex-end; justify-content: center; gap: 24px; }
+  .judge { width: 48%; margin: 0; }
+  .evidence-frame { margin: 0; width: 44%; }
 }
 
 /* 심증 게이지 */
@@ -233,32 +248,51 @@ input:focus, select:focus { border-color: var(--gold); }
   background: linear-gradient(90deg, #7a1d16, var(--stamp));
   transition: width 0.5s ease;
 }
-.gauge-label { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-dim); }
-
-.gauge-suspect { margin: 4px 0 0; color: var(--gold); }
+/* 게이지 라벨·유력 유형: 어두운 반투명 칩 + 키운 글씨 */
+.gauge-label {
+  display: inline-block;
+  margin: 10px 0 0;
+  padding: 5px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--paper);
+  background: rgba(10, 8, 6, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.gauge-suspect {
+  display: inline-block;
+  margin: 8px 0 0;
+  padding: 5px 12px;
+  font-size: 1rem;
+  color: var(--gold);
+  background: rgba(10, 8, 6, 0.72);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+}
 
 /* 판사 말풍선 */
 .judge-bubble {
   position: relative;
-  font-size: 1.12rem;
-  line-height: 1.7;
+  font-size: 1.35rem;
+  line-height: 1.65;
   color: var(--paper);
   background: rgba(212, 175, 55, 0.1);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 16px 18px;
-  margin: 0 0 14px;
+  padding: 18px 20px;
+  margin: 0 0 16px;
 }
 .judge-bubble::before {
   content: "⚖ 판사";
   display: block;
   font-family: var(--sans);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   letter-spacing: 0.15em;
   color: var(--gold);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
-.reaction { margin: 10px 0 0; color: var(--gold); font-style: italic; }
+.reaction { margin: 12px 0 0; font-size: 1.02rem; color: var(--gold); font-style: italic; }
 .choice.selected { border-color: var(--gold); background: rgba(212, 175, 55, 0.18); }
 .choice:disabled { opacity: 0.55; cursor: default; }
 
@@ -283,7 +317,8 @@ textarea#plea-text:focus { border-color: var(--gold); }
 .choices { display: flex; flex-direction: column; gap: 10px; }
 .choice {
   text-align: left;
-  padding: 14px;
+  padding: 16px;
+  font-size: 1.08rem;
   background: rgba(245, 233, 208, 0.05);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -338,7 +373,7 @@ textarea#plea-text:focus { border-color: var(--gold); }
   aspect-ratio: 360 / 520;
   margin: 0 auto 8px;
   position: relative;
-  background: url("/static/assets/type-card-frame.svg?v=2") center / contain no-repeat;
+  background: url("/static/assets/type-card-frame.svg?v=3") center / contain no-repeat;
 }
 .type-frame .type-emoji {
   position: absolute;
@@ -348,48 +383,50 @@ textarea#plea-text:focus { border-color: var(--gold); }
   font-size: 4.6rem;
   line-height: 1;
 }
-.type-frame .type-code {
-  position: absolute;
-  left: 50%;
-  top: 67.7%;
-  transform: translate(-50%, -58%);
-  font-size: 1.9rem;
-  font-weight: 800;
-  letter-spacing: 0.35em;
-  text-indent: 0.35em;
-  color: #2a1f18;
-}
+/* 유형명 한 줄 — 코드가 있던 자리(67.7%)에 크게. axisCode 표기 없음. */
 .type-frame .type-name {
   position: absolute;
   left: 50%;
-  top: 75.4%;
+  top: 67.7%;
   transform: translate(-50%, -50%);
-  width: 78%;
+  width: 90%;
   text-align: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1.25;
-  color: #3d2b1f;
+  white-space: nowrap;      /* 줄바꿈 금지 (폰트는 JS가 길이 기반 축소) */
+  font-weight: 800;
+  line-height: 1.1;
+  color: #2a1f18;
+  /* font-size는 JS(typeNameFontSize)가 지정 */
 }
 
 /* 형량 박스 + 회당 단가 딱지 */
-.sentence-box {
-  background: rgba(179, 38, 30, 0.14);
-  border: 1px solid rgba(179, 38, 30, 0.5);
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 14px;
+/* 판결문 라벨 섹션 (양피지 안) — 발표장 뒷자리 가독성 */
+.verdict-doc h2 { text-align: center; }
+.vsec { margin: 0 0 16px; }
+.vsec:last-child { margin-bottom: 0; }
+.vlabel {
+  margin: 0 0 4px;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #8a5a1c;
 }
-.sentence-label { margin: 0 0 6px; font-size: 0.72rem; letter-spacing: 0.2em; color: var(--gold); }
-.sentence-text { margin: 0; font-weight: 600; line-height: 1.6; }
+.vval { margin: 0; font-size: 1.15rem; color: #241a10; line-height: 1.6; }
+.crime-headline { font-size: 2rem; font-weight: 800; color: var(--stamp); line-height: 1.2; }
+.evidence-list { margin: 0; padding-left: 1.2em; }
+.evidence-list li { font-size: 1.1rem; color: #241a10; margin-bottom: 4px; }
+.guilt-emph { font-size: 1.3rem; color: var(--stamp); }
+
+/* 회당 단가 딱지 */
+.cost-strip { text-align: center; margin-bottom: 14px; }
 .cost-tag {
   display: inline-block;
-  margin-top: 12px;
-  padding: 5px 12px;
+  padding: 8px 16px;
   background: var(--stamp);
   color: #fff;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   transform: rotate(-3deg);
 }
 .verdict-actions { display: flex; flex-direction: column; }
@@ -444,9 +481,7 @@ textarea#plea-text:focus { border-color: var(--gold); }
 .dossier-form select:focus { border-color: #8a5a1c; }
 
 .type-card { text-align: center; }
-.type-emoji { font-size: 3rem; }
-.type-name { font-size: 1.25rem; color: var(--gold); margin: 4px 0; }
-.type-code { letter-spacing: 0.3em; color: var(--ink-dim); font-size: 0.85rem; }
+/* 유형 카드의 이모지·이름은 .type-frame 안에서만 스타일링한다 (axisCode 표기 없음) */
 .type-source { margin-top: 12px; }
 
 /* ── 전과 기록 ───────────────────────────────────────── */
@@ -562,8 +597,9 @@ textarea#plea-text:focus { border-color: var(--gold); }
 }
 .overlay[hidden] { display: none; }
 .overlay-inner { text-align: center; color: var(--gold); }
+.overlay-inner p { font-size: 1.5rem; font-weight: 600; margin-top: 16px; }
 .gavel-spin {
-  width: 64px;
+  width: 140px;
   animation: knock 0.9s ease-in-out infinite;
   transform-origin: 70% 70%;
 }

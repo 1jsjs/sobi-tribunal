@@ -150,27 +150,53 @@
         <p class="verdict-label serif" id="verdict-label" hidden></p>
       </div>
 
-      <!-- ③ 판결문 양피지 -->
-      <article class="paper reveal" id="verdict-paper" hidden>
+      <!-- ③ 판결문 양피지 — 라벨 섹션 조립 -->
+      <article class="paper verdict-doc reveal" id="verdict-paper" hidden>
         <h2 class="serif">판결문</h2>
-        <div id="verdict-text"></div>
+
+        <section class="vsec">
+          <p class="vlabel">피고인</p>
+          <p class="vval" id="v-defendant"></p>
+        </section>
+
+        <section class="vsec vsec-crime">
+          <p class="vlabel">죄명</p>
+          <p class="vval crime-headline serif" id="v-crime"></p>
+        </section>
+
+        <section class="vsec">
+          <p class="vlabel">주요 증거</p>
+          <ul class="vval evidence-list" id="v-evidence"></ul>
+        </section>
+
+        <section class="vsec">
+          <p class="vlabel">재판부 판단</p>
+          <p class="vval" id="v-reasoning"></p>
+        </section>
+
+        <section class="vsec">
+          <p class="vlabel">최종 판결</p>
+          <p class="vval"><strong class="guilt-emph" id="v-guilt"></strong> — <span id="v-sentence"></span></p>
+        </section>
+
+        <section class="vsec">
+          <p class="vlabel">최종 소비 유형</p>
+          <p class="vval" id="v-typename"></p>
+        </section>
       </article>
 
-      <!-- ④ 유형 카드 -->
+      <!-- ④ 유형 카드 (axisCode 표기 제거, 한글명 한 줄) -->
       <div class="type-card reveal" id="type-card" hidden>
         <div class="type-frame">
           <div class="type-emoji" id="type-emoji"></div>
-          <div class="type-code" id="type-code"></div>
           <div class="type-name serif" id="type-name"></div>
         </div>
         <p class="muted small type-source">유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)</p>
       </div>
 
-      <!-- ⑤ 형량 + 회당 단가 -->
-      <div class="sentence-box reveal" id="sentence-box" hidden>
-        <p class="sentence-label">주문</p>
-        <p class="sentence-text" id="verdict-sentence"></p>
-        <span class="cost-tag" id="cost-tag" hidden></span>
+      <!-- ⑤ 회당 단가 딱지 (있을 때만) -->
+      <div class="cost-strip reveal" id="cost-strip" hidden>
+        <span class="cost-tag" id="cost-tag"></span>
       </div>
 
       <div class="verdict-actions reveal" id="verdict-actions" hidden>

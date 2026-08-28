@@ -952,12 +952,12 @@ function playVerdict(v) {
   const label = document.getElementById("verdict-label");
   const paper = document.getElementById("verdict-paper");
   const typeCard = document.getElementById("type-card");
-  const sentenceBox = document.getElementById("sentence-box");
+  const costStrip = document.getElementById("cost-strip");
   const actions = document.getElementById("verdict-actions");
   const skipBtn = document.getElementById("btn-skip-verdict");
 
   // 초기 상태: 전부 숨김
-  [gavel, stamp, label, paper, typeCard, sentenceBox, actions].forEach((el) => {
+  [gavel, stamp, label, paper, typeCard, costStrip, actions].forEach((el) => {
     if (el) el.hidden = true;
   });
   skipBtn.hidden = false;
@@ -980,54 +980,80 @@ function playVerdict(v) {
     label.hidden = false;
   });
 
-  // ③ 판결문 (2.0s) + TTS
+  // ③ 판결문 라벨 섹션 (2.0s) + TTS(전문 낭독)
   at(2000, () => {
-    renderVerdictText(v.verdictText || "");
+    fillVerdictDoc(v);
     paper.hidden = false;
     speak(v.verdictText || "");
   });
 
   // ④ 유형 카드 (2.5s)
   at(2500, () => {
-    document.getElementById("type-emoji").textContent = v.typeEmoji || "";
-    document.getElementById("type-name").textContent = v.typeName || "";
-    document.getElementById("type-code").textContent = v.axisCode || "";
+    fillTypeCard(v);
     typeCard.hidden = false;
   });
 
-  // ⑤ 형량 + 회당 단가 (3.0s)
+  // ⑤ 회당 단가 + 액션 (3.0s)
   at(3000, () => {
-    document.getElementById("verdict-sentence").textContent = v.sentence || "";
-    const costTag = document.getElementById("cost-tag");
-    if (v.costPerUse != null) {
-      costTag.textContent = `회당 단가 ${won(v.costPerUse)}`;
-      costTag.hidden = false;
-    } else {
-      costTag.hidden = true;
-    }
-    sentenceBox.hidden = false;
+    fillCostStrip(v);
     actions.hidden = false;
     skipBtn.hidden = true;
   });
 }
 
-/* verdictText를 문단별로 표시 */
-function renderVerdictText(text) {
-  const box = document.getElementById("verdict-text");
-  box.innerHTML = "";
-  String(text)
-    .split(/\n{1,}|(?<=[.。])\s{2,}/)
-    .map((s) => s.trim())
-    .filter(Boolean)
-    .forEach((para) => {
-      const p = document.createElement("p");
-      p.textContent = para;
-      box.appendChild(p);
-    });
-  if (!box.childNodes.length) {
-    const p = document.createElement("p");
-    p.textContent = text || "";
-    box.appendChild(p);
+/* 판결문 라벨 섹션 채우기 (계약 6개 섹션 순서) */
+function fillVerdictDoc(v) {
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  // 피고인: 이메일 @ 앞부분
+  const who = (state.email || "").split("@")[0] || "피고인";
+  set("v-defendant", who);
+  set("v-crime", v.crime || "죄명 없음");
+
+  const evUl = document.getElementById("v-evidence");
+  evUl.innerHTML = "";
+  (Array.isArray(v.evidence) ? v.evidence : []).forEach((e) => {
+    const li = document.createElement("li");
+    li.textContent = e;
+    evUl.appendChild(li);
+  });
+
+  set("v-reasoning", v.reasoning || "");
+  set("v-guilt", v.guiltLabel || "");
+  set("v-sentence", v.sentence || "");
+  set("v-typename", v.typeName || "");
+}
+
+/* 유형 카드: 한글명 한 줄, 길이 기반 폰트 자동 축소 (줄바꿈 금지) */
+function fillTypeCard(v) {
+  document.getElementById("type-emoji").textContent = v.typeEmoji || "";
+  const nameEl = document.getElementById("type-name");
+  nameEl.textContent = v.typeName || "";
+  nameEl.style.fontSize = typeNameFontSize(v.typeName || "");
+}
+
+/* 길이 기반 축소 램프. 최장 "절제하며 패션과 스타일을 중시하는 활동가"(공백 포함 22자)가
+ * 프레임 폭(≈86%) 안에서 nowrap 한 줄로 들어가도록 잡았다. */
+function typeNameFontSize(name) {
+  const n = (name || "").length;
+  if (n <= 9) return "1.5rem";
+  if (n <= 12) return "1.25rem";
+  if (n <= 15) return "1.05rem";
+  if (n <= 18) return "0.9rem";
+  if (n <= 21) return "0.78rem";
+  return "0.68rem";
+}
+
+function fillCostStrip(v) {
+  const strip = document.getElementById("cost-strip");
+  const tag = document.getElementById("cost-tag");
+  if (v.costPerUse != null) {
+    tag.textContent = `회당 단가 ${won(v.costPerUse)}`;
+    strip.hidden = false;
+  } else {
+    strip.hidden = true;
   }
 }
 
@@ -1036,6 +1062,7 @@ function skipVerdict() {
   clearVerdictTimers();
   stopSpeaking();
   const v = state.verdict || {};
+
   const gavel = document.getElementById("verdict-gavel");
   if (gavel) gavel.hidden = true;
 
@@ -1045,23 +1072,13 @@ function skipVerdict() {
   document.getElementById("verdict-label").hidden = false;
   document.getElementById("verdict-label").textContent = v.guiltLabel || "";
 
-  renderVerdictText(v.verdictText || "");
+  fillVerdictDoc(v);
   document.getElementById("verdict-paper").hidden = false;
 
-  document.getElementById("type-emoji").textContent = v.typeEmoji || "";
-  document.getElementById("type-name").textContent = v.typeName || "";
-  document.getElementById("type-code").textContent = v.axisCode || "";
+  fillTypeCard(v);
   document.getElementById("type-card").hidden = false;
 
-  document.getElementById("verdict-sentence").textContent = v.sentence || "";
-  const costTag = document.getElementById("cost-tag");
-  if (v.costPerUse != null) {
-    costTag.textContent = `회당 단가 ${won(v.costPerUse)}`;
-    costTag.hidden = false;
-  } else {
-    costTag.hidden = true;
-  }
-  document.getElementById("sentence-box").hidden = false;
+  fillCostStrip(v);
   document.getElementById("verdict-actions").hidden = false;
   document.getElementById("btn-skip-verdict").hidden = true;
 }
