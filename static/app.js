@@ -1420,7 +1420,7 @@ function boot() {
 // 외부(F305) 연결용으로 최소한만 노출
 window.tribunal = {
   state, api, showScreen, showLoading, hideLoading, withBusy, toast, handleError,
-  won, escapeHtml, loadRecords, fillCategorySelect, tts, speak,
+  won, escapeHtml, loadRecords, fillCategorySelect, tts, speak, bgm,
   onTrialStarted, // F303 → 법정 진입
 };
 
