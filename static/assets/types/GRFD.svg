@@ -1,0 +1,74 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GRFD — cheerful beer toast">
+  <defs>
+    <linearGradient id="skinGRFD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- background circle -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="160" fill="#d4af37" opacity="0.12"/>
+  <circle cx="200" cy="200" r="120" fill="#e8c96a" opacity="0.10"/>
+
+  <!-- sparkles -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round" opacity="0.85">
+    <line x1="76" y1="110" x2="76" y2="134"/><line x1="64" y1="122" x2="88" y2="122"/>
+    <line x1="60" y1="230" x2="60" y2="250"/><line x1="50" y1="240" x2="70" y2="240"/>
+    <line x1="330" y1="250" x2="330" y2="268"/><line x1="321" y1="259" x2="339" y2="259"/>
+  </g>
+  <!-- cheer lines near mug -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round" opacity="0.9">
+    <line x1="252" y1="82" x2="262" y2="70"/>
+    <line x1="270" y1="56" x2="276" y2="42"/>
+    <line x1="244" y1="112" x2="230" y2="106"/>
+  </g>
+
+  <!-- neck -->
+  <path d="M184 252 L216 252 L216 294 L184 294 Z" fill="#eec49c" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- body (red tee, round shoulders) -->
+  <path d="M110 400 L112 340 Q118 300 156 290 L244 290 Q282 300 288 340 L290 400 Z"
+        fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M178 292 Q200 310 222 292" fill="none" stroke="#1a120c" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- resting hand -->
+  <circle cx="100" cy="330" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinGRFD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- hair -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 166 Q112 184 120 200 Q130 190 128 168 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M286 166 Q288 184 280 200 Q270 190 272 168 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- raised happy brows -->
+  <path d="M150 146 Q166 138 182 146" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M218 146 Q234 138 250 146" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- dot eyes -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="168" cy="169" r="2.4" fill="#f5e9d0"/>
+  <circle cx="236" cy="169" r="2.4" fill="#f5e9d0"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- wide open laugh -->
+  <path d="M164 222 Q200 262 236 222 Q200 240 164 222 Z" fill="#7a1a14" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="200" cy="238" rx="10" ry="4" fill="#b3261e"/>
+  <!-- blush -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- beer mug raised in toast -->
+  <path d="M334 102 Q356 116 334 132" fill="none" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+  <rect x="280" y="88" width="54" height="64" rx="6" fill="#e8c96a" stroke="#1a120c" stroke-width="6"/>
+  <path d="M294 98 L294 142" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+  <path d="M320 98 L320 142" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+  <!-- foam -->
+  <circle cx="290" cy="86" r="13" fill="#f5e9d0" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="324" cy="86" r="13" fill="#f5e9d0" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="307" cy="78" r="15" fill="#f5e9d0" stroke="#1a120c" stroke-width="6"/>
+  <!-- gripping hand -->
+  <circle cx="307" cy="156" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+</svg>

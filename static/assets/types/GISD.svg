@@ -1,0 +1,76 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylish dancer with bow tie and sparkles">
+  <defs>
+    <linearGradient id="skinGISD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- stage background -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.13"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.10"/>
+
+  <!-- sparkles -->
+  <g stroke="#e8c96a" stroke-width="6" stroke-linecap="round">
+    <line x1="72" y1="108" x2="72" y2="134"/><line x1="59" y1="121" x2="85" y2="121"/>
+    <line x1="318" y1="84" x2="318" y2="106"/><line x1="307" y1="95" x2="329" y2="95"/>
+    <line x1="336" y1="236" x2="336" y2="256"/><line x1="326" y1="246" x2="346" y2="246"/>
+  </g>
+  <path d="M330 168 L338 180 L330 192 L322 180 Z" fill="#e8c96a"/>
+  <path d="M96 60 L103 70 L96 80 L89 70 Z" fill="#d4af37"/>
+  <circle cx="62" cy="192" r="5" fill="#d4af37"/>
+
+  <!-- motion arcs by the raised hand -->
+  <path d="M58 138 Q52 158 60 176" stroke="#e8c96a" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M46 148 Q41 162 47 176" stroke="#e8c96a" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6"/>
+
+  <!-- body: dark tux jacket with parchment shirt front -->
+  <path d="M108 400 L108 344 Q108 296 156 288 L244 288 Q292 296 292 344 L292 400 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M176 290 L200 322 L224 290 L224 400 L176 400 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- gold pocket square -->
+  <path d="M136 328 L160 328 L148 348 Z" fill="#d4af37" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- one hand raised high, one swung low -->
+  <circle cx="88" cy="176" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="308" cy="310" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- ears -->
+  <ellipse cx="111" cy="192" rx="9" ry="13" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="289" cy="192" rx="9" ry="13" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinGISD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hair: side locks + bang -->
+  <path d="M120 146 Q104 178 114 212 Q122 218 130 212 Q118 182 132 150 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M280 146 Q296 178 286 212 Q278 218 270 212 Q282 182 268 150 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- brows: one raised for flair -->
+  <path d="M152 148 Q166 142 180 148" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M222 152 Q234 148 246 152" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- one open dot eye, one playful wink -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="168.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <path d="M220 172 Q234 182 248 172" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- small nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- confident grin -->
+  <path d="M172 228 Q200 254 228 228" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- blush -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- bow tie -->
+  <path d="M196 300 L160 284 L160 316 Z" fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M204 300 L240 284 L240 316 Z" fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="200" cy="300" r="10" fill="#d4af37" stroke="#1a120c" stroke-width="6"/>
+</svg>

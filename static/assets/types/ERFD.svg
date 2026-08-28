@@ -1,0 +1,78 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Disciplined energetic activist with headband and thumbs-up">
+  <defs>
+    <linearGradient id="skinERFD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background circle (navy with gold glow) -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.12"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.1"/>
+
+  <!-- gold sparkles -->
+  <g stroke="#e8c96a" stroke-width="6" stroke-linecap="round">
+    <line x1="76" y1="120" x2="76" y2="146"/><line x1="63" y1="133" x2="89" y2="133"/>
+    <line x1="322" y1="96" x2="322" y2="118"/><line x1="311" y1="107" x2="333" y2="107"/>
+    <line x1="330" y1="250" x2="330" y2="270"/><line x1="320" y1="260" x2="340" y2="260"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="184" y="250" width="32" height="46" rx="10" fill="url(#skinERFD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- body (light shirt, red V) -->
+  <path d="M100 400 L108 330 Q120 296 162 290 L238 290 Q280 296 292 330 L300 400 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M180 292 L200 320 L220 292 Z" fill="#b3261e" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinERFD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hair: bang + sides -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M116 150 Q106 186 118 208 Q130 200 124 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M284 150 Q294 186 282 208 Q270 200 276 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- red sport headband over the hair -->
+  <path d="M122 140 Q200 116 278 140 L282 160 Q200 136 118 160 Z"
+        fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M128 148 Q200 124 272 148" stroke="#e8c96a" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M278 142 L298 150 L286 166 Z" fill="#b3261e" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- confident eyebrows -->
+  <path d="M152 148 Q166 140 180 146" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M220 146 Q234 140 248 148" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- eyes -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="163.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="231.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- confident big smile -->
+  <path d="M168 226 Q200 254 232 226" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- blush -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- left hand -->
+  <circle cx="100" cy="312" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- right thumbs-up -->
+  <ellipse cx="305" cy="272" rx="8" ry="15" transform="rotate(12 305 272)"
+           fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="300" cy="298" r="17" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <!-- gold zing lines around the thumb -->
+  <g stroke="#d4af37" stroke-width="5" stroke-linecap="round">
+    <line x1="330" y1="252" x2="340" y2="242"/>
+    <line x1="316" y1="240" x2="320" y2="228"/>
+  </g>
+</svg>

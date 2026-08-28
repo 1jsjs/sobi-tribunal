@@ -1,0 +1,76 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Excited party-goer with cone hat and confetti">
+  <defs>
+    <linearGradient id="skinGIFD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- festive background -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.12"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.10"/>
+
+  <!-- confetti -->
+  <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+    <rect x="72" y="84" width="16" height="9" fill="#d4af37" transform="rotate(-24 80 88)"/>
+    <rect x="312" y="104" width="16" height="9" fill="#b3261e" transform="rotate(18 320 108)"/>
+    <rect x="62" y="214" width="15" height="9" fill="#f5e9d0" transform="rotate(30 70 218)"/>
+    <rect x="322" y="204" width="15" height="9" fill="#e8c96a" transform="rotate(-32 330 208)"/>
+    <rect x="116" y="52" width="14" height="8" fill="#b3261e" transform="rotate(40 123 56)"/>
+    <rect x="272" y="48" width="14" height="8" fill="#d4af37" transform="rotate(-38 279 52)"/>
+  </g>
+  <circle cx="60" cy="156" r="6" fill="#e8c96a"/>
+  <circle cx="342" cy="158" r="6" fill="#b3261e"/>
+  <circle cx="96" cy="120" r="5" fill="#f5e9d0"/>
+  <circle cx="308" cy="76" r="5" fill="#f5e9d0"/>
+
+  <!-- body: red party top with round shoulders -->
+  <path d="M108 400 L108 344 Q108 296 156 288 L244 288 Q292 296 292 344 L292 400 Z"
+        fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- hands thrown up high -->
+  <circle cx="92" cy="272" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="308" cy="272" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- ears -->
+  <ellipse cx="111" cy="192" rx="9" ry="13" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="289" cy="192" rx="9" ry="13" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinGIFD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hair: side locks + bang -->
+  <path d="M120 146 Q104 178 114 212 Q122 218 130 212 Q118 182 132 150 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M280 146 Q296 178 286 212 Q278 218 270 212 Q282 182 268 150 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- party cone hat -->
+  <path d="M216 34 L168 104 L258 98 Z" fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M197 61 L233 58 L240 68 L190 72 Z" fill="#e8c96a"/>
+  <path d="M180 86 L248 82 L253 91 L173 96 Z" fill="#e8c96a"/>
+  <circle cx="216" cy="34" r="12" fill="#e8c96a" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- excited raised brows -->
+  <path d="M152 148 Q166 140 180 148" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M220 148 Q234 140 248 148" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- sparkling dot eyes -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="168.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <circle cx="236.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+
+  <!-- small nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- big open laugh -->
+  <path d="M170 226 Q200 262 230 226 Z" fill="#1a120c" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="200" cy="240" rx="11" ry="5" fill="#b3261e"/>
+
+  <!-- blush -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+</svg>

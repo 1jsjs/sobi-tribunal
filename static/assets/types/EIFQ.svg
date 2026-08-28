@@ -1,0 +1,70 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calm steward holding a golden sprout pot">
+  <defs>
+    <linearGradient id="skinEIFQ" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- background circle (soft gold glow) -->
+  <circle cx="200" cy="200" r="200" fill="#141c30"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.10"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.10"/>
+
+  <!-- sparkles -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round">
+    <line x1="82" y1="112" x2="82" y2="134"/><line x1="71" y1="123" x2="93" y2="123"/>
+    <line x1="318" y1="98" x2="318" y2="118"/><line x1="308" y1="108" x2="328" y2="108"/>
+    <line x1="326" y1="242" x2="326" y2="260"/><line x1="317" y1="251" x2="335" y2="251"/>
+    <line x1="76" y1="248" x2="76" y2="264"/><line x1="68" y1="256" x2="84" y2="256"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="184" y="252" width="32" height="40" fill="url(#skinEIFQ)" stroke="#1a120c" stroke-width="6"/>
+  <!-- body (calm parchment top, round shoulders) -->
+  <path d="M112 400 Q110 332 152 302 Q174 288 200 288 Q226 288 248 302 Q290 332 288 400 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M182 290 L200 316 L218 290 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- ears -->
+  <circle cx="112" cy="186" r="11" fill="url(#skinEIFQ)" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="288" cy="186" r="11" fill="url(#skinEIFQ)" stroke="#1a120c" stroke-width="6"/>
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinEIFQ)" stroke="#1a120c" stroke-width="6"/>
+  <!-- hair (simple bang + sides) -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 164 Q110 192 120 210 Q130 192 128 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M286 164 Q290 192 280 210 Q270 192 272 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- gentle brows -->
+  <path d="M152 150 Q166 144 180 150" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M220 150 Q234 144 248 150" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- sparkling eyes -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="168.5" cy="169" r="2.4" fill="#f5e9d0"/>
+  <circle cx="236.5" cy="169" r="2.4" fill="#f5e9d0"/>
+  <g stroke="#e8c96a" stroke-width="4" stroke-linecap="round">
+    <line x1="146" y1="160" x2="146" y2="170"/><line x1="141" y1="165" x2="151" y2="165"/>
+    <line x1="254" y1="158" x2="254" y2="168"/><line x1="249" y1="163" x2="259" y2="163"/>
+  </g>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- calm smile -->
+  <path d="M176 228 Q200 244 224 228" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- cheeks -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- cherished sprout pot (held in front) -->
+  <path d="M200 326 Q198 312 200 298" stroke="#d4af37" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M200 306 Q178 302 168 282 Q194 278 202 300 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M200 300 Q222 294 234 274 Q208 272 198 294 Z" fill="#d4af37" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M172 340 L180 384 L220 384 L228 340 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="164" y="324" width="72" height="16" rx="5" fill="#2a1f18" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hands holding the pot -->
+  <circle cx="150" cy="352" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="250" cy="352" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+</svg>

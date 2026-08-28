@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confident person in black sunglasses with a gold chain">
+  <defs>
+    <linearGradient id="skinEISD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- background circle (bold gold glow) -->
+  <circle cx="200" cy="200" r="200" fill="#0f1420"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.12"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.10"/>
+
+  <!-- sparkles -->
+  <g stroke="#e8c96a" stroke-width="6" stroke-linecap="round">
+    <line x1="76" y1="120" x2="76" y2="146"/><line x1="63" y1="133" x2="89" y2="133"/>
+    <line x1="322" y1="96" x2="322" y2="118"/><line x1="311" y1="107" x2="333" y2="107"/>
+    <line x1="330" y1="250" x2="330" y2="270"/><line x1="320" y1="260" x2="340" y2="260"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="184" y="252" width="32" height="40" fill="url(#skinEISD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- body (dark jacket over bright shirt) -->
+  <path d="M112 400 Q110 332 152 302 Q174 288 200 288 Q226 288 248 302 Q290 332 288 400 Z"
+        fill="#141c30" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M176 290 L200 336 L224 290 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- gold chain with medallion -->
+  <path d="M150 296 Q200 350 250 296" fill="none" stroke="#1a120c" stroke-width="16" stroke-linecap="round"/>
+  <path d="M150 296 Q200 350 250 296" fill="none" stroke="#d4af37" stroke-width="10" stroke-linecap="round"/>
+  <path d="M150 296 Q200 350 250 296" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 10"/>
+  <circle cx="200" cy="334" r="16" fill="#d4af37" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="200" cy="334" r="8" fill="none" stroke="#e8c96a" stroke-width="4"/>
+
+  <!-- confident hands -->
+  <circle cx="102" cy="304" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="298" cy="304" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- ears -->
+  <circle cx="112" cy="186" r="11" fill="url(#skinEISD)" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="288" cy="186" r="11" fill="url(#skinEISD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- gold earring -->
+  <circle cx="112" cy="201" r="5" fill="none" stroke="#d4af37" stroke-width="4"/>
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinEISD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- hair (simple bang + sides) -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 164 Q110 192 120 210 Q130 192 128 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M286 164 Q290 192 280 210 Q270 192 272 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- black sunglasses -->
+  <line x1="140" y1="164" x2="118" y2="158" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="260" y1="164" x2="282" y2="158" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+  <path d="M192 168 Q200 160 208 168" fill="none" stroke="#1a120c" stroke-width="7" stroke-linecap="round"/>
+  <rect x="140" y="152" width="52" height="38" rx="12" fill="#141c30" stroke="#1a120c" stroke-width="6"/>
+  <rect x="208" y="152" width="52" height="38" rx="12" fill="#141c30" stroke="#1a120c" stroke-width="6"/>
+  <line x1="152" y1="162" x2="168" y2="180" stroke="#f5e9d0" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
+  <line x1="220" y1="162" x2="236" y2="180" stroke="#f5e9d0" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- confident smirk -->
+  <path d="M172 228 Q208 252 240 222" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- cheeks -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+</svg>

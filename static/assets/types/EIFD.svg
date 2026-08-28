@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pondering person with hand on chin, question mark, and wallet">
+  <defs>
+    <linearGradient id="skinEIFD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+  <!-- background circle -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="160" fill="#0f1420" opacity="0.35"/>
+  <circle cx="200" cy="200" r="120" fill="#e8c96a" opacity="0.07"/>
+
+  <!-- question mark above head -->
+  <path d="M262 74 Q262 46 287 46 Q312 46 312 71 Q312 90 291 96 L291 110"
+        fill="none" stroke="#e8c96a" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="291" cy="128" r="8" fill="#e8c96a"/>
+  <!-- small thought dots -->
+  <circle cx="252" cy="118" r="4" fill="#d4af37" opacity="0.7"/>
+  <circle cx="240" cy="104" r="3" fill="#d4af37" opacity="0.5"/>
+
+  <!-- neck -->
+  <rect x="184" y="252" width="32" height="40" fill="url(#skinEIFD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- body (bold red top, round shoulders) -->
+  <path d="M112 400 Q110 332 152 302 Q174 288 200 288 Q226 288 248 302 Q290 332 288 400 Z"
+        fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M182 290 L200 316 L218 290 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- resting hand -->
+  <circle cx="116" cy="318" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- ears -->
+  <circle cx="112" cy="186" r="11" fill="url(#skinEIFD)" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="288" cy="186" r="11" fill="url(#skinEIFD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinEIFD)" stroke="#1a120c" stroke-width="6"/>
+  <!-- hair (simple bang + sides) -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M114 164 Q110 192 120 210 Q130 192 128 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M286 164 Q290 192 280 210 Q270 192 272 158 Z" fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- puzzled brows (one raised) -->
+  <path d="M150 146 Q166 138 180 145" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M222 152 Q238 148 252 154" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <!-- eyes glancing up toward the question -->
+  <circle cx="170" cy="168" r="7" fill="#1a120c"/>
+  <circle cx="238" cy="168" r="7" fill="#1a120c"/>
+  <circle cx="172.5" cy="165" r="2.4" fill="#f5e9d0"/>
+  <circle cx="240.5" cy="165" r="2.4" fill="#f5e9d0"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- worried wavy mouth -->
+  <path d="M178 234 Q190 227 201 234 Q212 241 224 234" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- cheeks -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- hand propped on chin -->
+  <circle cx="240" cy="256" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- wallet beside -->
+  <rect x="100" y="296" width="36" height="16" rx="4" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <rect x="88" y="306" width="90" height="52" rx="10" fill="#3d2b1f" stroke="#1a120c" stroke-width="6"/>
+  <path d="M88 324 L178 324" stroke="#2a1f18" stroke-width="5"/>
+  <circle cx="162" cy="333" r="7" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+</svg>

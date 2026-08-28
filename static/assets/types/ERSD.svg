@@ -1,0 +1,72 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylish restrained activist with bow tie, winking">
+  <defs>
+    <linearGradient id="skinERSD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background circle (navy with gold arcs) -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="165" fill="#0f1420" opacity="0.5"/>
+  <circle cx="200" cy="200" r="125" fill="#d4af37" opacity="0.08"/>
+
+  <!-- gold sparkles -->
+  <g stroke="#e8c96a" stroke-width="6" stroke-linecap="round">
+    <line x1="80" y1="118" x2="80" y2="142"/><line x1="68" y1="130" x2="92" y2="130"/>
+    <line x1="324" y1="102" x2="324" y2="122"/><line x1="314" y1="112" x2="334" y2="112"/>
+    <line x1="326" y1="252" x2="326" y2="270"/><line x1="317" y1="261" x2="335" y2="261"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="184" y="250" width="32" height="46" rx="10" fill="url(#skinERSD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- body (navy blazer, parchment shirt) -->
+  <path d="M100 400 L108 330 Q120 296 162 290 L238 290 Q280 296 292 330 L300 400 Z"
+        fill="#1c2740" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M176 292 L200 318 L224 292 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- collar wings -->
+  <path d="M198 316 L168 292 L186 288 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M202 316 L232 292 L214 288 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- gold pocket square -->
+  <path d="M144 340 L166 340 L155 326 Z" fill="#d4af37" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- red bow tie with gold knot -->
+  <path d="M194 318 L160 302 L160 334 Z" fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M206 318 L240 302 L240 334 Z" fill="#b3261e" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="190" y="306" width="20" height="24" rx="5" fill="#d4af37" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinERSD)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hair: bang + sides -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M116 150 Q106 186 118 208 Q130 200 124 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M284 150 Q294 186 282 208 Q270 200 276 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- eyebrows: raised over the wink -->
+  <path d="M152 150 Q166 144 180 150" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M220 146 Q234 138 248 146" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- left eye open, right eye winking -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="163.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <path d="M222 172 Q234 182 246 172" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- confident smirk -->
+  <path d="M172 232 Q198 254 232 226" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- blush (stronger on wink side) -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.3"/>
+
+  <!-- hands: left down, right adjusting the bow tie -->
+  <circle cx="96" cy="306" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="252" cy="312" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+</svg>

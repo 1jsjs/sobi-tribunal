@@ -1,0 +1,91 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Strict self-manager with square glasses and ledger">
+  <defs>
+    <linearGradient id="skinERFQ" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7d7b5"/>
+      <stop offset="1" stop-color="#eec49c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background circle (calm navy) -->
+  <circle cx="200" cy="200" r="200" fill="#0f1420"/>
+  <circle cx="200" cy="200" r="165" fill="#1c2740" opacity="0.8"/>
+  <circle cx="200" cy="200" r="125" fill="#d4af37" opacity="0.06"/>
+
+  <!-- subtle gold sparkles -->
+  <g stroke="#d4af37" stroke-width="5" stroke-linecap="round" opacity="0.55">
+    <line x1="82" y1="112" x2="82" y2="132"/><line x1="72" y1="122" x2="92" y2="122"/>
+    <line x1="322" y1="104" x2="322" y2="122"/><line x1="313" y1="113" x2="331" y2="113"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="184" y="250" width="32" height="46" rx="10" fill="url(#skinERFQ)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- body (navy vest, parchment shirt) -->
+  <path d="M100 400 L108 330 Q120 296 162 290 L238 290 Q280 296 292 330 L300 400 Z"
+        fill="#1c2740" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M180 292 L200 320 L220 292 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- face -->
+  <circle cx="200" cy="180" r="86" fill="url(#skinERFQ)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- hair: bang + sides -->
+  <path d="M114 168 Q118 96 200 92 Q282 96 286 168 Q286 128 200 122 Q114 128 114 168 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M116 150 Q106 186 118 208 Q130 200 124 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M284 150 Q294 186 282 208 Q270 200 276 160 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- stern eyebrows -->
+  <path d="M150 140 L184 134" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M216 134 L250 140" stroke="#1a120c" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- eyes -->
+  <circle cx="166" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="163.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+  <circle cx="234" cy="172" r="7" fill="#1a120c"/>
+  <circle cx="231.5" cy="169.5" r="2.4" fill="#f5e9d0"/>
+
+  <!-- square glasses -->
+  <g stroke="#1a120c" stroke-width="6" fill="#1c2740" fill-opacity="0.1">
+    <rect x="141" y="150" width="50" height="40" rx="6"/>
+    <rect x="209" y="150" width="50" height="40" rx="6"/>
+  </g>
+  <line x1="191" y1="166" x2="209" y2="166" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="141" y1="166" x2="119" y2="160" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="259" y1="166" x2="281" y2="160" stroke="#1a120c" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- nose -->
+  <path d="M197 190 q6 8 0 14" stroke="#1a120c" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- serious straight mouth -->
+  <path d="M176 236 L224 236" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- blush -->
+  <ellipse cx="150" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+  <ellipse cx="250" cy="204" rx="11" ry="7" fill="#b3261e" opacity="0.22"/>
+
+  <!-- open ledger -->
+  <path d="M118 312 Q200 292 282 312 L282 366 Q200 348 118 366 Z"
+        fill="#3d2b1f" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M126 314 Q166 300 196 310 L196 352 Q166 344 126 358 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M274 314 Q234 300 204 310 L204 352 Q234 344 274 358 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <line x1="200" y1="310" x2="200" y2="352" stroke="#1a120c" stroke-width="4"/>
+  <!-- ruled entries -->
+  <g stroke="#1c2740" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M138 324 Q166 316 188 322"/>
+    <path d="M138 336 Q166 328 188 334"/>
+    <path d="M138 348 Q166 340 188 346"/>
+    <path d="M212 322 Q234 316 262 324"/>
+    <path d="M212 334 Q234 328 262 336"/>
+  </g>
+  <path d="M212 346 Q234 340 262 348" stroke="#b3261e" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- gold bookmark -->
+  <path d="M196 354 L200 372 L204 354 Z" fill="#d4af37" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- hands holding the ledger -->
+  <circle cx="116" cy="338" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="284" cy="338" r="15" fill="#f7d7b5" stroke="#1a120c" stroke-width="6"/>
+</svg>
