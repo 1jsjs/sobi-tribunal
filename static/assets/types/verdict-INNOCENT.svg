@@ -1,0 +1,52 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="무죄 — 행복한 돼지">
+  <defs>
+    <linearGradient id="pgI" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c2cc"/>
+      <stop offset="1" stop-color="#efa3b2"/>
+    </linearGradient>
+  </defs>
+  <!-- 배경 원 (골드 글로우) -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="165" fill="#d4af37" opacity="0.14"/>
+  <circle cx="200" cy="200" r="125" fill="#e8c96a" opacity="0.12"/>
+
+  <!-- 반짝이 -->
+  <g stroke="#e8c96a" stroke-width="6" stroke-linecap="round">
+    <line x1="76" y1="120" x2="76" y2="146"/><line x1="63" y1="133" x2="89" y2="133"/>
+    <line x1="322" y1="96" x2="322" y2="118"/><line x1="311" y1="107" x2="333" y2="107"/>
+    <line x1="330" y1="250" x2="330" y2="270"/><line x1="320" y1="260" x2="340" y2="260"/>
+  </g>
+
+  <!-- 후광 -->
+  <ellipse cx="200" cy="74" rx="74" ry="18" fill="none" stroke="#d4af37" stroke-width="9"/>
+
+  <!-- 몸 (밝은 셔츠) -->
+  <path d="M100 400 L110 324 Q124 292 164 284 L236 284 Q276 292 290 324 L300 400 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M178 286 L200 318 L222 286 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- 만세 발굽 -->
+  <circle cx="94" cy="300" r="20" fill="url(#pgI)" stroke="#1a120c" stroke-width="6"/>
+  <circle cx="306" cy="300" r="20" fill="url(#pgI)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- 머리 -->
+  <circle cx="200" cy="180" r="92" fill="url(#pgI)" stroke="#1a120c" stroke-width="6"/>
+  <!-- 귀 -->
+  <path d="M134 116 Q118 84 140 72 Q164 80 162 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M266 116 Q282 84 260 72 Q236 80 238 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- 행복 감은 눈 (∪∪) -->
+  <path d="M148 158 Q163 172 178 158" stroke="#1a120c" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M222 158 Q237 172 252 158" stroke="#1a120c" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+  <!-- 코 -->
+  <ellipse cx="200" cy="198" rx="44" ry="30" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="186" cy="198" rx="6" ry="10" fill="#1a120c"/>
+  <ellipse cx="214" cy="198" rx="6" ry="10" fill="#1a120c"/>
+
+  <!-- 활짝 웃음 -->
+  <path d="M160 236 Q200 268 240 236" stroke="#1a120c" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <!-- 볼터치 -->
+  <ellipse cx="140" cy="206" rx="14" ry="9" fill="#b3261e" opacity="0.28"/>
+  <ellipse cx="260" cy="206" rx="14" ry="9" fill="#b3261e" opacity="0.28"/>
+</svg>

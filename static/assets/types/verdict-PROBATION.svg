@@ -1,0 +1,46 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="집행유예 — 반성하는 돼지">
+  <defs>
+    <linearGradient id="pgP" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c2cc"/>
+      <stop offset="1" stop-color="#efa3b2"/>
+    </linearGradient>
+  </defs>
+  <!-- 배경 원 (앰버 경고 톤) -->
+  <circle cx="200" cy="200" r="200" fill="#1c2740"/>
+  <circle cx="200" cy="200" r="160" fill="#b8952c" opacity="0.14"/>
+
+  <!-- 몸 (수수한 셔츠) -->
+  <path d="M100 400 L110 324 Q124 292 164 284 L236 284 Q276 292 290 324 L300 400 Z"
+        fill="#e8dcc2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- 맹세하는 발굽 (오른손 들어 선서) -->
+  <path d="M290 306 Q312 286 314 250 L296 242 Q292 276 272 292 Z"
+        fill="#e8dcc2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="306" cy="244" r="19" fill="url(#pgP)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- 머리 -->
+  <circle cx="200" cy="180" r="92" fill="url(#pgP)" stroke="#1a120c" stroke-width="6"/>
+  <!-- 귀 -->
+  <path d="M134 116 Q118 84 140 72 Q164 80 162 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M266 116 Q282 84 260 72 Q236 80 238 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- 땀방울 -->
+  <path d="M276 132 q12 18 0 27 q-13 -9 0 -27 Z" fill="#7ec3e8" stroke="#1a120c" stroke-width="3.5"/>
+
+  <!-- 걱정 눈썹 (안쪽 올라감) -->
+  <path d="M148 140 Q164 132 178 140" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(10 163 140)"/>
+  <path d="M222 140 Q238 132 252 140" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(-10 237 140)"/>
+  <!-- 또렷 반성 눈 -->
+  <circle cx="163" cy="162" r="8" fill="#1a120c"/>
+  <circle cx="237" cy="162" r="8" fill="#1a120c"/>
+  <circle cx="166" cy="159" r="2.6" fill="#f5e9d0"/>
+  <circle cx="240" cy="159" r="2.6" fill="#f5e9d0"/>
+
+  <!-- 코 -->
+  <ellipse cx="200" cy="200" rx="44" ry="30" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="186" cy="200" rx="6" ry="10" fill="#1a120c"/>
+  <ellipse cx="214" cy="200" rx="6" ry="10" fill="#1a120c"/>
+
+  <!-- 앙다문 입 (반성) -->
+  <path d="M176 244 Q200 250 224 244" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+</svg>

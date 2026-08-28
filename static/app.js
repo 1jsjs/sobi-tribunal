@@ -1274,12 +1274,20 @@ function fillVerdictDoc(v) {
 function fillTypeCard(v) {
   const emojiEl = document.getElementById("type-emoji");
   emojiEl.textContent = v.typeEmoji || "";
-  // AI 생성 유형 이미지가 있으면 이모지 대신 사용 (static/assets/types/{CODE}.png, 없으면 폴백)
+  // 카드 홀 이미지 우선순위: 유형별 AI 이미지({CODE}.png) → 판결별 캐릭터(verdict-{GUILT}.svg) → 이모지
   const holeImg = document.getElementById("type-img");
-  if (holeImg && v.axisCode) {
-    holeImg.src = `/static/assets/types/${v.axisCode}.png`;
+  if (holeImg) {
+    const tryList = [];
+    if (v.axisCode) tryList.push(`/static/assets/types/${v.axisCode}.png`);
+    if (v.guilt) tryList.push(`/static/assets/types/verdict-${v.guilt}.svg`);
+    let ti = 0;
     holeImg.onload = () => { holeImg.hidden = false; emojiEl.hidden = true; };
-    holeImg.onerror = () => { holeImg.hidden = true; emojiEl.hidden = false; };
+    holeImg.onerror = () => {
+      if (ti < tryList.length) { holeImg.src = tryList[ti++]; }
+      else { holeImg.hidden = true; emojiEl.hidden = false; }
+    };
+    if (tryList.length) { holeImg.src = tryList[ti++]; }
+    else { holeImg.hidden = true; emojiEl.hidden = false; }
   }
   const nameEl = document.getElementById("type-name");
   nameEl.textContent = v.typeName || "";
