@@ -1,0 +1,22 @@
+[F305] 판결 연출 + 전과 기록
+
+api-contract.md §판결·§전과 기록 참조.
+
+1. 판결 화면 (순서 연출 — 스킵 버튼 포함):
+   ① 의사봉 아이콘 3회 쿵쿵쿵(CSS 애니메이션) ② 판결 도장 쾅
+   (guilt별 assets/stamp-guilty|probation|innocent.svg, 스케일+회전 낙하 애니메이션)
+   ③ verdictText를 양피지 카드에 문단별로 표시 + TTS 낭독
+   ④ 유형 카드: assets/type-card-frame.svg 프레임 + typeEmoji 크게 + axisCode + typeName
+      하단에 "유형 분류: 소비 MBTI 16 (MPiA)" 출처 1줄
+   ⑤ 형량(sentence) 강조 박스 + costPerUse 있으면 "회당 단가 {n}원" 딱지
+2. 하단 버튼: [전과 기록 보기] / [다른 건도 자수하겠소](기소 화면으로, 상태 초기화)
+3. 전과 기록 화면:
+   - GET /api/records?email=(localStorage 값) → 카드 리스트: 썸네일(photoUrl 없으면
+     카테고리 이모지)·품목·가격·guiltLabel 미니 도장·typeName·날짜
+   - 빈 목록: "전과가 없소. 아직은." + [자수하러 가기]
+   - 카드 탭 → GET /api/records/{id} → 판결문 전문 모달(도장·유형·plea 포함)
+   - 상단 요약 한 줄: "전과 {n}건 · 유죄 {m}건" (개수 세기만 — 금액 합산·재계산 금지)
+4. 헤더의 전과 기록 버튼을 이 화면으로 연결. 이메일 미입력 상태면 소환장부터.
+
+완료 기준: 판결 연출 전체 1회 통과(스킵도 동작), 시드 계정(demo@tribunal.kr)으로
+전과 5건 목록·상세 모달 확인, 콘솔 에러 0.

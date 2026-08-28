@@ -1,0 +1,19 @@
+[B302] Bedrock 공통 서비스
+
+.kiro/steering/tech-constraints.md의 함정 1·2·5를 다시 읽어라. docs/03-프롬프트.md 공통 규칙 참조.
+
+만들 것: services/bedrock_service.py
+1. call_text(system: str, user: str) -> str
+   - boto3 bedrock-runtime invoke_model, 모델 "global.anthropic.claude-sonnet-5"
+   - body: anthropic_version, max_tokens=2048, system, messages. temperature/top_p 절대 금지
+   - 응답 content 배열에서 type=="text"인 블록을 찾아 반환 (content[0] 직접 접근 금지)
+   - 실패 시 logger.error("Bedrock 호출 실패: ...") 후 예외 재발생 (폴백은 호출자 몫)
+2. call_vision(system: str, user: str, image_bytes: bytes, media_type: str) -> str
+   - 위와 동일 + messages에 image 블록(base64) 첨부
+3. extract_json(raw: str) -> dict — 첫 "{"부터 마지막 "}"까지 잘라 json.loads, 실패 시 ValueError
+4. MOCK_AI=1이면 call_text/call_vision은 호출자에게 MockAIError를 던진다
+   (각 서비스가 자기 목 응답을 쓰도록 — 목 데이터는 이 파일에 두지 않는다)
+5. tests/test_bedrock_service.py — thinking 블록이 낀 가짜 응답에서 text 블록을 찾는지,
+   extract_json이 마크다운 펜스 낀 응답을 파싱하는지 (Bedrock 실호출 없이 파싱 함수만)
+
+완료 기준: pytest 통과. 코드에 temperature라는 글자가 없어야 한다.

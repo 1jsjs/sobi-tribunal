@@ -1,0 +1,157 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="심드렁한 판사 할아버지 캐릭터">
+  <defs>
+    <linearGradient id="robeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="1" stop-color="#d4af37"/>
+    </linearGradient>
+    <linearGradient id="benchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="#0f1420"/>
+  <!-- 배경 장식: 좌우 대칭 골드 라인 -->
+  <circle cx="200" cy="150" r="120" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.18"/>
+  <circle cx="200" cy="150" r="145" fill="none" stroke="#d4af37" stroke-width="1.5" opacity="0.10"/>
+
+  <!-- ===== 법복 (상반신) ===== -->
+  <path d="M110 400 L110 330 Q112 292 148 278 L180 266 L220 266 L252 278 Q288 292 290 330 L290 400 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 어깨 라인 하이라이트 -->
+  <path d="M120 400 L120 334 Q122 300 152 287" fill="none" stroke="#1a120c" stroke-width="3" opacity="0.5"/>
+  <path d="M280 400 L280 334 Q278 300 248 287" fill="none" stroke="#1a120c" stroke-width="3" opacity="0.5"/>
+
+  <!-- 법복 앞판(플래킷) -->
+  <path d="M178 268 L222 268 L226 400 L174 400 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 흰 칼라(자보) -->
+  <path d="M176 264 L200 300 L224 264 L224 284 L200 316 L176 284 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <line x1="200" y1="300" x2="200" y2="270" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 골드 브로치 -->
+  <circle cx="200" cy="318" r="13" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="200" cy="318" r="5" fill="#b3261e" stroke="#1a120c" stroke-width="2.5"/>
+
+  <!-- 골드 견장 라인 -->
+  <path d="M132 296 Q150 284 168 279" fill="none" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+  <path d="M268 296 Q250 284 232 279" fill="none" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- ===== 오른팔(화면 우측): 의사봉 든 팔 ===== -->
+  <path d="M252 282 Q296 296 306 332 Q310 350 296 354 Q282 358 276 342 Q268 318 246 306 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 소매 커프스 -->
+  <path d="M272 336 Q290 326 304 336 L308 350 Q294 360 278 352 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 손 -->
+  <circle cx="298" cy="356" r="15" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 의사봉 (손에 쥔 채 위로) -->
+  <g>
+    <rect x="293" y="288" width="10" height="66" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3.5"/>
+    <rect x="268" y="264" width="60" height="28" rx="12" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="262" y="262" width="10" height="32" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3"/>
+    <rect x="324" y="262" width="10" height="32" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3"/>
+  </g>
+
+  <!-- ===== 왼팔(화면 좌측): 팔짱 느낌으로 몸에 붙임 ===== -->
+  <path d="M148 282 Q108 296 100 330 Q96 350 110 355 Q124 359 130 342 Q138 318 156 307 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M104 334 Q118 326 130 334 L128 350 Q114 358 100 350 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="112" cy="356" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 머리 ===== -->
+  <!-- 목 -->
+  <rect x="184" y="238" width="32" height="34" rx="10" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 얼굴 -->
+  <rect x="152" y="128" width="96" height="118" rx="42" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 하얀 가발 ===== -->
+  <!-- 톱 롤 -->
+  <path d="M146 132 Q142 84 200 82 Q258 84 254 132 Q236 118 200 118 Q164 118 146 132 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 사이드 컬 (좌) -->
+  <g fill="#f2ead8" stroke="#1a120c" stroke-width="4.5">
+    <circle cx="140" cy="140" r="17"/>
+    <circle cx="136" cy="172" r="16"/>
+    <circle cx="134" cy="203" r="15"/>
+    <circle cx="136" cy="232" r="14"/>
+  </g>
+  <!-- 사이드 컬 (우) -->
+  <g fill="#f2ead8" stroke="#1a120c" stroke-width="4.5">
+    <circle cx="260" cy="140" r="17"/>
+    <circle cx="264" cy="172" r="16"/>
+    <circle cx="266" cy="203" r="15"/>
+    <circle cx="264" cy="232" r="14"/>
+  </g>
+  <!-- 컬 속 나선 힌트 -->
+  <g fill="none" stroke="#1a120c" stroke-width="2.5" opacity="0.45">
+    <path d="M134 136 Q142 132 146 140"/>
+    <path d="M130 168 Q138 164 142 172"/>
+    <path d="M128 199 Q136 195 140 203"/>
+    <path d="M254 136 Q262 132 266 140"/>
+    <path d="M258 168 Q266 164 270 172"/>
+    <path d="M260 199 Q268 195 272 203"/>
+  </g>
+  <!-- 가발 앞 밴드 -->
+  <path d="M148 134 Q200 114 252 134 L252 148 Q200 130 148 148 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4.5" stroke-linejoin="round"/>
+
+  <!-- ===== 얼굴 디테일 ===== -->
+  <!-- 심드렁한 반개 눈: 윗꺼풀이 절반 덮음 -->
+  <g>
+    <!-- 왼눈 -->
+    <path d="M164 186 Q176 180 190 186 L190 194 Q177 199 164 194 Z" fill="#f5e9d0" stroke="none"/>
+    <circle cx="177" cy="192" r="6.5" fill="#1a120c"/>
+    <rect x="162" y="176" width="30" height="14" rx="7" fill="#f5e9d0"/>
+    <path d="M162 190 Q177 184 192 190" fill="none" stroke="#1a120c" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- 오른눈 -->
+    <circle cx="223" cy="192" r="6.5" fill="#1a120c"/>
+    <rect x="208" y="176" width="30" height="14" rx="7" fill="#f5e9d0"/>
+    <path d="M208 190 Q223 184 238 190" fill="none" stroke="#1a120c" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <!-- 처진 눈썹 (심드렁) -->
+  <path d="M160 176 Q176 172 192 178" fill="none" stroke="#f2ead8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M160 176 Q176 172 192 178" fill="none" stroke="#1a120c" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M208 178 Q224 172 240 176" fill="none" stroke="#f2ead8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M208 178 Q224 172 240 176" fill="none" stroke="#1a120c" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- 코 -->
+  <path d="M200 196 Q206 208 200 214 Q195 217 192 212" fill="none" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 안경 (반달, 골드) -->
+  <g fill="none" stroke="#d4af37" stroke-width="3.5">
+    <path d="M162 196 Q177 206 192 196" />
+    <path d="M208 196 Q223 206 238 196" />
+    <line x1="192" y1="196" x2="208" y2="196"/>
+  </g>
+
+  <!-- ===== 흰 수염 ===== -->
+  <path d="M158 214 Q160 258 200 262 Q240 258 242 214 Q234 224 222 222 Q214 236 200 236 Q186 236 178 222 Q166 224 158 214 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4.5" stroke-linejoin="round"/>
+  <!-- 콧수염 -->
+  <path d="M172 219 Q186 210 200 218 Q214 210 228 219 Q222 228 210 226 Q204 223 200 223 Q196 223 190 226 Q178 228 172 219 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 입: 一자 심드렁 -->
+  <path d="M190 233 L210 233" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+  <!-- 수염 결 -->
+  <g fill="none" stroke="#1a120c" stroke-width="2" opacity="0.3">
+    <path d="M182 240 Q184 250 192 254"/>
+    <path d="M218 240 Q216 250 208 254"/>
+  </g>
+
+  <!-- 볼 홍조 (밈 감성 살짝) -->
+  <circle cx="163" cy="207" r="6" fill="#b3261e" opacity="0.22"/>
+  <circle cx="237" cy="207" r="6" fill="#b3261e" opacity="0.22"/>
+
+  <!-- ===== 판사석 (하단 목재 벤치) ===== -->
+  <rect x="0" y="356" width="400" height="44" fill="url(#benchGrad)" stroke="#1a120c" stroke-width="5"/>
+  <rect x="0" y="356" width="400" height="8" fill="#d4af37" stroke="none"/>
+  <!-- 벤치 중앙 명패 -->
+  <rect x="146" y="368" width="108" height="26" rx="7" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="387" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="15" font-weight="700" fill="#1a120c">소비 재판소</text>
+</svg>

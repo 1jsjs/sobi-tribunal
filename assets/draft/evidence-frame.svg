@@ -1,0 +1,42 @@
+<svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="증거물 제1호 액자">
+  <defs>
+    <radialGradient id="vignette-ev1" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="0" stop-color="#0f1420" stop-opacity="0"/>
+      <stop offset="0.62" stop-color="#0f1420" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0f1420" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="frame-sheen-ev1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="0.5" stop-color="#d4af37"/>
+      <stop offset="1" stop-color="#e8c96a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 내부 비네트 (가운데는 투명, 사진이 뒤에 깔림) -->
+  <rect x="38" y="38" width="224" height="304" fill="url(#vignette-ev1)"/>
+
+  <!-- 골드 프레임 밴드 (두꺼운 스트로크 = 내부 투명 유지) -->
+  <rect x="22" y="22" width="256" height="336" rx="8" fill="none" stroke="url(#frame-sheen-ev1)" stroke-width="28"/>
+  <!-- 프레임 외곽선 -->
+  <rect x="6" y="6" width="288" height="368" rx="14" fill="none" stroke="#1a120c" stroke-width="5"/>
+  <!-- 프레임 안쪽 라인 -->
+  <rect x="38" y="38" width="224" height="304" rx="3" fill="none" stroke="#1a120c" stroke-width="4"/>
+  <rect x="31" y="31" width="238" height="318" rx="5" fill="none" stroke="#e8c96a" stroke-width="3"/>
+
+  <!-- 코너 장식 -->
+  <circle cx="22" cy="22" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="278" cy="22" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="22" cy="358" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="278" cy="358" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 상단 리본 -->
+  <g>
+    <polygon points="52,40 86,40 86,68 52,68 66,54" fill="#b3261e" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="248,40 214,40 214,68 248,68 234,54" fill="#b3261e" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="76" y="32" width="148" height="42" rx="9" fill="#b3261e" stroke="#1a120c" stroke-width="4"/>
+    <rect x="84" y="38" width="132" height="4" rx="2" fill="#f2ead8" opacity="0.35"/>
+    <text x="150" y="55" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="21" font-weight="800" fill="#f2ead8">증거물 제1호</text>
+  </g>
+</svg>

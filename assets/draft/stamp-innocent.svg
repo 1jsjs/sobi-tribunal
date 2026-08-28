@@ -1,0 +1,33 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="무죄 도장">
+  <defs>
+    <mask id="grunge-innocent" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+      <ellipse cx="58" cy="50" rx="13" ry="7" fill="#000000" opacity="0.28"/>
+      <ellipse cx="150" cy="70" rx="8" ry="13" fill="#000000" opacity="0.24"/>
+      <ellipse cx="60" cy="146" rx="15" ry="7" fill="#000000" opacity="0.30"/>
+      <ellipse cx="138" cy="138" rx="9" ry="12" fill="#000000" opacity="0.26"/>
+      <ellipse cx="96" cy="28" rx="11" ry="5" fill="#000000" opacity="0.22"/>
+      <ellipse cx="38" cy="104" rx="6" ry="11" fill="#000000" opacity="0.28"/>
+      <ellipse cx="164" cy="98" rx="6" ry="9" fill="#000000" opacity="0.26"/>
+      <ellipse cx="100" cy="172" rx="12" ry="5" fill="#000000" opacity="0.24"/>
+      <circle cx="86" cy="70" r="4" fill="#000000" opacity="0.32"/>
+      <circle cx="118" cy="102" r="3" fill="#000000" opacity="0.28"/>
+      <circle cx="74" cy="118" r="3.5" fill="#000000" opacity="0.30"/>
+      <circle cx="128" cy="62" r="2.5" fill="#000000" opacity="0.26"/>
+      <circle cx="60" cy="90" r="2.5" fill="#000000" opacity="0.24"/>
+      <circle cx="140" cy="118" r="3" fill="#000000" opacity="0.30"/>
+    </mask>
+  </defs>
+  <g transform="rotate(-12 100 100)" mask="url(#grunge-innocent)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#d4af37" stroke-width="10"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#d4af37" stroke-width="4"/>
+    <circle cx="100" cy="42" r="3.5" fill="#e8c96a"/>
+    <circle cx="100" cy="158" r="3.5" fill="#e8c96a"/>
+    <text x="100" y="86" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#d4af37">무</text>
+    <text x="100" y="140" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#d4af37">죄</text>
+  </g>
+</svg>

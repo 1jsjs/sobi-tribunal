@@ -1,0 +1,53 @@
+# ═══ 비밀·자격증명 — 절대 커밋 금지 ═══
+*.pem
+*.key
+*.p12
+.env
+.env.*
+*credentials*
+*_accounts*.xlsx
+hackathon_team_accounts*
+
+# ═══ 데이터베이스 (런타임 생성물) ═══
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# ═══ Python ═══
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+appenv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ═══ 로그·런타임 산출물 ═══
+*.log
+nohup.out
+faiss_index/
+downloaded_context.txt
+
+# ═══ Node (프론트 도구 사용 대비) ═══
+node_modules/
+dist/
+
+# ═══ OS / 에디터 ═══
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ⚠️ .kiro/ 폴더는 대회 제출 요건이므로 절대 무시하지 말 것 (커밋 대상)
+
+# ⚠️ 실제 개인 거래내역 — 절대 커밋 금지 (실명·송금내역·생활동선 포함)
+# 테스트용으로 로컬에 두는 건 괜찮지만 리포에는 올리지 말 것.
+# 데모·테스트는 samples/카드내역_*.xlsx, samples/계좌내역_*.pdf(합성 데이터)를 쓴다.
+samples/거래내역서.pdf
+samples/*실거래*
+samples/거래내역*

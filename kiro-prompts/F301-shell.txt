@@ -1,0 +1,19 @@
+[F301] 프론트 뼈대 + 법정 스타일
+
+api-contract.md 전체(특히 응답 봉투·지연·금지사항)와 product.md 화면 6개를 읽어라.
+
+만들 것: static/index.html, static/style.css, static/app.js (프레임워크·빌드 금지)
+1. SPA 화면 6개를 <section data-screen="...">로 두고 JS로 전환:
+   summon(소환장) / intake(기소) / dossier(조서 확인) / courtroom(법정) / verdict(판결) / records(전과)
+2. 스타일: 모바일 우선(최대 480px 중앙 칼럼), 법정 다크+골드
+   - 배경: static/assets/bg.svg (지금은 자리표시자 — 팀이 선정본을 복사할 예정)
+   - 변수: --bg #0f1420, --wood #2a1f18, --gold #d4af37, --paper #f5e9d0, --stamp #b3261e
+   - 제목은 명조 계열(serif 스택), 본문은 시스템 산세리프. 판결문 영역은 양피지 카드
+3. 공통 유틸(app.js):
+   - api(path, opts): fetch 래퍼 — 봉투 벗기기(.data), res.ok 판정, error.message 토스트
+   - 로딩 오버레이: 의사봉 아이콘 + 문구 인자("증거물 감식 중..." 등), 버튼 이중클릭 방지
+   - 토스트: 판사 말투 에러 표시("기각하오 — {message}")
+4. 헤더: "소비 재판소" 문패 + 전과 기록 버튼 + 음소거 토글(자리만, F304에서 연결)
+
+주의: 판정·점수 계산 로직을 여기 만들지 말 것(F304에서 게이지 합산만 허용).
+완료 기준: 화면 6개 전환 동작, 모바일 폭 확인, 콘솔 에러 0.

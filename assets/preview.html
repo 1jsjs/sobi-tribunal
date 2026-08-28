@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영수증 소비 재판소 — 에셋 프리뷰</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f1420; color:#f2ead8; font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif; padding:32px 24px 80px; }
+  h1 { text-align:center; font-size:26px; color:#e8c96a; margin-bottom:6px; }
+  .sub { text-align:center; font-size:13px; opacity:.6; margin-bottom:40px; }
+  h2 { font-size:18px; color:#d4af37; border-bottom:1px solid rgba(212,175,55,.3); padding-bottom:8px; margin:48px 0 20px; max-width:1200px; margin-left:auto; margin-right:auto; }
+  .grid { display:grid; gap:24px; max-width:1200px; margin:0 auto; }
+  .g3 { grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); }
+  .g2 { grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); }
+  .item { background:#131a29; border:1px solid rgba(212,175,55,.18); border-radius:12px; padding:16px; display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .item svg { width:100%; height:auto; display:block; }
+  .caption { font-size:13px; color:#f2ead8; opacity:.85; font-family:ui-monospace,'Courier New',monospace; }
+  .stampbox svg { max-width:200px; }
+  .gavelbox svg { max-width:200px; }
+  .composite { position:relative; width:100%; }
+  .composite .bg-layer svg { width:100%; height:auto; display:block; }
+  .composite .judge-layer { position:absolute; left:50%; bottom:12%; width:36%; transform:translateX(-50%); }
+  .composite .judge-layer svg { width:100%; height:auto; display:block; }
+  .cardwrap { position:relative; max-width:320px; width:100%; }
+  .cardwrap .emoji-hole { position:absolute; left:50%; top:42.3%; transform:translate(-50%,-50%); font-size:76px; line-height:1; }
+  .cardwrap svg { position:relative; width:100%; height:auto; display:block; }
+</style>
+</head>
+<body>
+<h1>영수증 소비 재판소 — 드래프트 에셋 프리뷰</h1>
+<p class="sub">assets/draft/ · 판사 3안 / 배경 2안 / 도장·소품 / 유형 카드</p>
+
+<h2>1. 판사 캐릭터 3안</h2>
+<div class="grid g3">
+  <div class="item">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="부엉이 판사">
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="#0f1420"/>
+  <!-- 배경 장식: 은은한 골드 방사 원 -->
+  <circle cx="200" cy="185" r="150" fill="none" stroke="#d4af37" stroke-opacity="0.12" stroke-width="3"/>
+  <circle cx="200" cy="185" r="120" fill="none" stroke="#d4af37" stroke-opacity="0.08" stroke-width="3"/>
+
+  <!-- 판사석(목재 벤치) -->
+  <rect x="20" y="330" width="360" height="70" rx="10" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <rect x="20" y="330" width="360" height="18" rx="9" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <!-- 벤치 명패 -->
+  <rect x="146" y="356" width="108" height="32" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="379" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold" fill="#1a120c">판사</text>
+
+  <!-- ===== 법복(몸통) ===== -->
+  <path d="M110 340 C112 268 140 238 200 238 C260 238 288 268 290 340 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <!-- 법복 안쪽 톤 -->
+  <path d="M200 244 C152 244 128 270 124 340 L276 340 C272 270 248 244 200 244 Z" fill="#0f1420"/>
+  <!-- 골드 트림 -->
+  <path d="M166 250 L200 300 L234 250" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 자보(가슴 흰 띠) -->
+  <rect x="185" y="252" width="30" height="44" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <line x1="200" y1="256" x2="200" y2="292" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 왼쪽 날개(몸에 붙임) -->
+  <path d="M118 300 C104 276 112 258 132 252 C146 268 148 296 142 322 C132 318 124 310 118 300 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 머리 ===== -->
+  <!-- 귀깃 -->
+  <path d="M128 118 C120 92 126 74 142 62 C152 78 154 98 150 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <path d="M272 118 C280 92 274 74 258 62 C248 78 246 98 250 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <!-- 얼굴 -->
+  <circle cx="200" cy="160" r="88" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <!-- 얼굴 하트형 밝은 면 -->
+  <path d="M200 236 C156 226 132 196 134 152 C150 128 178 118 200 130 C222 118 250 128 266 152 C268 196 244 226 200 236 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 하얀 가발(영국식) ===== -->
+  <!-- 정수리 롤 -->
+  <path d="M122 128 C122 84 154 58 200 58 C246 58 278 84 278 128 C252 112 224 106 200 106 C176 106 148 112 122 128 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="148" cy="92" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="176" cy="78" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="207" cy="73" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="238" cy="80" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="262" cy="97" r="12" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <!-- 옆 컬(좌) -->
+  <circle cx="116" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="116" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <!-- 옆 컬(우) -->
+  <circle cx="284" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="284" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 눈 + 골드 안경 ===== -->
+  <!-- 근엄한 눈썹 -->
+  <path d="M138 136 L182 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <path d="M262 136 L218 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <!-- 눈 -->
+  <circle cx="164" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="236" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="167" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="233" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="170" cy="167" r="3.5" fill="#f2ead8"/>
+  <circle cx="236" cy="167" r="3.5" fill="#f2ead8"/>
+  <!-- 반쯤 감긴 근엄 눈꺼풀 -->
+  <path d="M141 160 A24 24 0 0 1 187 158 L187 152 L141 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <path d="M213 158 A24 24 0 0 1 259 160 L259 152 L213 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <!-- 안경 -->
+  <circle cx="164" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <circle cx="236" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <path d="M194 166 C198 162 202 162 206 166" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="134" y1="164" x2="118" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="266" y1="164" x2="282" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <!-- 안경 하이라이트 -->
+  <path d="M148 154 A20 20 0 0 1 158 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M220 154 A20 20 0 0 1 230 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 부리 -->
+  <path d="M200 184 L214 200 C210 212 190 212 186 200 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 살짝 다문 입(귀여운 근엄) -->
+  <path d="M192 218 C196 222 204 222 208 218" fill="none" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 볼터치 -->
+  <circle cx="146" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+  <circle cx="254" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+
+  <!-- ===== 오른쪽 날개 + 의사봉 (머리 옆으로 들어올림) ===== -->
+  <!-- 날개(팔) -->
+  <path d="M268 316 C300 306 322 288 334 262 C324 250 308 248 296 256 C278 270 266 292 262 320 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <!-- 의사봉 -->
+  <g transform="translate(-22 8) rotate(24 340 235)">
+    <rect x="333" y="150" width="14" height="96" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="72" height="36" rx="16" fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="363" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="336" y="238" width="8" height="12" rx="4" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  </g>
+  <!-- 날개 끝 깃털(의사봉을 쥔 손) -->
+  <path d="M326 268 C334 258 348 256 356 264 C352 276 338 282 326 278 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 도장(스탬프) 장식: 벤치 위 -->
+  <g transform="rotate(-8 84 342)">
+    <rect x="62" y="336" width="44" height="26" rx="6" fill="#b3261e" stroke="#1a120c" stroke-width="4"/>
+    <text x="84" y="355" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#f2ead8">유죄?</text>
+  </g>
+</svg>
+    <div class="caption">judge-a-owl.svg</div>
+  </div>
+
+  <div class="item">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="심드렁한 판사 할아버지 캐릭터">
+  <defs>
+    <linearGradient id="robeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="1" stop-color="#d4af37"/>
+    </linearGradient>
+    <linearGradient id="benchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="#0f1420"/>
+  <!-- 배경 장식: 좌우 대칭 골드 라인 -->
+  <circle cx="200" cy="150" r="120" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.18"/>
+  <circle cx="200" cy="150" r="145" fill="none" stroke="#d4af37" stroke-width="1.5" opacity="0.10"/>
+
+  <!-- ===== 법복 (상반신) ===== -->
+  <path d="M110 400 L110 330 Q112 292 148 278 L180 266 L220 266 L252 278 Q288 292 290 330 L290 400 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 어깨 라인 하이라이트 -->
+  <path d="M120 400 L120 334 Q122 300 152 287" fill="none" stroke="#1a120c" stroke-width="3" opacity="0.5"/>
+  <path d="M280 400 L280 334 Q278 300 248 287" fill="none" stroke="#1a120c" stroke-width="3" opacity="0.5"/>
+
+  <!-- 법복 앞판(플래킷) -->
+  <path d="M178 268 L222 268 L226 400 L174 400 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 흰 칼라(자보) -->
+  <path d="M176 264 L200 300 L224 264 L224 284 L200 316 L176 284 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <line x1="200" y1="300" x2="200" y2="270" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 골드 브로치 -->
+  <circle cx="200" cy="318" r="13" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="200" cy="318" r="5" fill="#b3261e" stroke="#1a120c" stroke-width="2.5"/>
+
+  <!-- 골드 견장 라인 -->
+  <path d="M132 296 Q150 284 168 279" fill="none" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+  <path d="M268 296 Q250 284 232 279" fill="none" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- ===== 오른팔(화면 우측): 의사봉 든 팔 ===== -->
+  <path d="M252 282 Q296 296 306 332 Q310 350 296 354 Q282 358 276 342 Q268 318 246 306 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 소매 커프스 -->
+  <path d="M272 336 Q290 326 304 336 L308 350 Q294 360 278 352 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 손 -->
+  <circle cx="298" cy="356" r="15" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 의사봉 (손에 쥔 채 위로) -->
+  <g>
+    <rect x="293" y="288" width="10" height="66" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3.5"/>
+    <rect x="268" y="264" width="60" height="28" rx="12" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="262" y="262" width="10" height="32" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3"/>
+    <rect x="324" y="262" width="10" height="32" rx="5" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3"/>
+  </g>
+
+  <!-- ===== 왼팔(화면 좌측): 팔짱 느낌으로 몸에 붙임 ===== -->
+  <path d="M148 282 Q108 296 100 330 Q96 350 110 355 Q124 359 130 342 Q138 318 156 307 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M104 334 Q118 326 130 334 L128 350 Q114 358 100 350 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="112" cy="356" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 머리 ===== -->
+  <!-- 목 -->
+  <rect x="184" y="238" width="32" height="34" rx="10" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 얼굴 -->
+  <rect x="152" y="128" width="96" height="118" rx="42" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 하얀 가발 ===== -->
+  <!-- 톱 롤 -->
+  <path d="M146 132 Q142 84 200 82 Q258 84 254 132 Q236 118 200 118 Q164 118 146 132 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <!-- 사이드 컬 (좌) -->
+  <g fill="#f2ead8" stroke="#1a120c" stroke-width="4.5">
+    <circle cx="140" cy="140" r="17"/>
+    <circle cx="136" cy="172" r="16"/>
+    <circle cx="134" cy="203" r="15"/>
+    <circle cx="136" cy="232" r="14"/>
+  </g>
+  <!-- 사이드 컬 (우) -->
+  <g fill="#f2ead8" stroke="#1a120c" stroke-width="4.5">
+    <circle cx="260" cy="140" r="17"/>
+    <circle cx="264" cy="172" r="16"/>
+    <circle cx="266" cy="203" r="15"/>
+    <circle cx="264" cy="232" r="14"/>
+  </g>
+  <!-- 컬 속 나선 힌트 -->
+  <g fill="none" stroke="#1a120c" stroke-width="2.5" opacity="0.45">
+    <path d="M134 136 Q142 132 146 140"/>
+    <path d="M130 168 Q138 164 142 172"/>
+    <path d="M128 199 Q136 195 140 203"/>
+    <path d="M254 136 Q262 132 266 140"/>
+    <path d="M258 168 Q266 164 270 172"/>
+    <path d="M260 199 Q268 195 272 203"/>
+  </g>
+  <!-- 가발 앞 밴드 -->
+  <path d="M148 134 Q200 114 252 134 L252 148 Q200 130 148 148 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4.5" stroke-linejoin="round"/>
+
+  <!-- ===== 얼굴 디테일 ===== -->
+  <!-- 심드렁한 반개 눈: 윗꺼풀이 절반 덮음 -->
+  <g>
+    <!-- 왼눈 -->
+    <path d="M164 186 Q176 180 190 186 L190 194 Q177 199 164 194 Z" fill="#f5e9d0" stroke="none"/>
+    <circle cx="177" cy="192" r="6.5" fill="#1a120c"/>
+    <rect x="162" y="176" width="30" height="14" rx="7" fill="#f5e9d0"/>
+    <path d="M162 190 Q177 184 192 190" fill="none" stroke="#1a120c" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- 오른눈 -->
+    <circle cx="223" cy="192" r="6.5" fill="#1a120c"/>
+    <rect x="208" y="176" width="30" height="14" rx="7" fill="#f5e9d0"/>
+    <path d="M208 190 Q223 184 238 190" fill="none" stroke="#1a120c" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <!-- 처진 눈썹 (심드렁) -->
+  <path d="M160 176 Q176 172 192 178" fill="none" stroke="#f2ead8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M160 176 Q176 172 192 178" fill="none" stroke="#1a120c" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M208 178 Q224 172 240 176" fill="none" stroke="#f2ead8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M208 178 Q224 172 240 176" fill="none" stroke="#1a120c" stroke-width="2.5" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- 코 -->
+  <path d="M200 196 Q206 208 200 214 Q195 217 192 212" fill="none" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 안경 (반달, 골드) -->
+  <g fill="none" stroke="#d4af37" stroke-width="3.5">
+    <path d="M162 196 Q177 206 192 196" />
+    <path d="M208 196 Q223 206 238 196" />
+    <line x1="192" y1="196" x2="208" y2="196"/>
+  </g>
+
+  <!-- ===== 흰 수염 ===== -->
+  <path d="M158 214 Q160 258 200 262 Q240 258 242 214 Q234 224 222 222 Q214 236 200 236 Q186 236 178 222 Q166 224 158 214 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4.5" stroke-linejoin="round"/>
+  <!-- 콧수염 -->
+  <path d="M172 219 Q186 210 200 218 Q214 210 228 219 Q222 228 210 226 Q204 223 200 223 Q196 223 190 226 Q178 228 172 219 Z"
+        fill="#f2ead8" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 입: 一자 심드렁 -->
+  <path d="M190 233 L210 233" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+  <!-- 수염 결 -->
+  <g fill="none" stroke="#1a120c" stroke-width="2" opacity="0.3">
+    <path d="M182 240 Q184 250 192 254"/>
+    <path d="M218 240 Q216 250 208 254"/>
+  </g>
+
+  <!-- 볼 홍조 (밈 감성 살짝) -->
+  <circle cx="163" cy="207" r="6" fill="#b3261e" opacity="0.22"/>
+  <circle cx="237" cy="207" r="6" fill="#b3261e" opacity="0.22"/>
+
+  <!-- ===== 판사석 (하단 목재 벤치) ===== -->
+  <rect x="0" y="356" width="400" height="44" fill="url(#benchGrad)" stroke="#1a120c" stroke-width="5"/>
+  <rect x="0" y="356" width="400" height="8" fill="#d4af37" stroke="none"/>
+  <!-- 벤치 중앙 명패 -->
+  <rect x="146" y="368" width="108" height="26" rx="7" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="387" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="15" font-weight="700" fill="#1a120c">소비 재판소</text>
+</svg>
+    <div class="caption">judge-b-elder.svg</div>
+  </div>
+
+  <div class="item">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="돼지저금통 판사">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1420"/>
+      <stop offset="1" stop-color="#1a2233"/>
+    </linearGradient>
+    <linearGradient id="robeGradC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="benchGradC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="pigGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c2cc"/>
+      <stop offset="1" stop-color="#efa3b2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="url(#bgGrad)"/>
+  <!-- 후광 원 -->
+  <circle cx="200" cy="180" r="150" fill="#d4af37" opacity="0.08"/>
+  <circle cx="200" cy="180" r="115" fill="#e8c96a" opacity="0.07"/>
+
+  <!-- 땅땅 효과선 -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round" opacity="0.9">
+    <line x1="352" y1="70" x2="362" y2="52"/>
+    <line x1="368" y1="92" x2="384" y2="82"/>
+    <line x1="330" y1="58" x2="332" y2="38"/>
+  </g>
+
+  <!-- ===== 법복 (상체) ===== -->
+  <path d="M110 400 L118 300 Q126 258 168 248 L232 248 Q274 258 282 300 L290 400 Z"
+        fill="url(#robeGradC)" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 법복 골드 트림 -->
+  <path d="M168 250 L158 400" stroke="#d4af37" stroke-width="6" fill="none"/>
+  <path d="M232 250 L242 400" stroke="#d4af37" stroke-width="6" fill="none"/>
+
+  <!-- 왼팔 (시청자 왼쪽, 벤치 위에 얹음) -->
+  <path d="M126 292 Q92 306 88 344 L104 352 Q112 322 138 312 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 왼손 발굽 + 동전 -->
+  <circle cx="97" cy="349" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="83" cy="330" r="16" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="83" cy="330" r="9" fill="none" stroke="#e8c96a" stroke-width="3"/>
+
+  <!-- 오른팔 (의사봉 든 팔) -->
+  <path d="M272 292 Q300 268 306 226 L288 216 Q280 256 258 274 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 오른손 발굽 (의사봉 손잡이 감쌈) -->
+  <circle cx="299" cy="219" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 자보(흰 목깃) ===== -->
+  <path d="M178 250 L200 292 L222 250 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="200" y1="256" x2="200" y2="284" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- ===== 가발 (양쪽 컬) ===== -->
+  <g fill="#f5e9d0" stroke="#1a120c" stroke-width="5">
+    <!-- 왼쪽 컬 기둥 -->
+    <circle cx="122" cy="140" r="20"/>
+    <circle cx="118" cy="176" r="19"/>
+    <circle cx="118" cy="211" r="18"/>
+    <circle cx="122" cy="244" r="17"/>
+    <!-- 오른쪽 컬 기둥 -->
+    <circle cx="278" cy="140" r="20"/>
+    <circle cx="282" cy="176" r="19"/>
+    <circle cx="282" cy="211" r="18"/>
+    <circle cx="278" cy="244" r="17"/>
+    <!-- 이마 위 밴드 컬 -->
+    <circle cx="146" cy="118" r="17"/>
+    <circle cx="254" cy="118" r="17"/>
+  </g>
+
+  <!-- ===== 돼지 머리 ===== -->
+  <circle cx="200" cy="172" r="82" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- 귀 -->
+  <path d="M142 116 Q128 86 148 74 Q170 82 168 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M258 116 Q272 86 252 74 Q230 82 232 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M150 104 Q144 88 152 82 Q162 88 160 102 Z" fill="#b3261e" opacity="0.35"/>
+  <path d="M250 104 Q256 88 248 82 Q238 88 240 102 Z" fill="#b3261e" opacity="0.35"/>
+
+  <!-- 정수리 동전 투입구 -->
+  <rect x="176" y="92" width="48" height="11" rx="5.5" fill="#1a120c"/>
+  <rect x="176" y="92" width="48" height="11" rx="5.5" fill="none" stroke="#1a120c" stroke-width="4"/>
+  <!-- 투입구로 떨어지는 동전 -->
+  <g transform="rotate(-14 200 62)">
+    <ellipse cx="200" cy="62" rx="16" ry="14" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+    <ellipse cx="200" cy="62" rx="8" ry="7" fill="none" stroke="#e8c96a" stroke-width="3"/>
+  </g>
+
+  <!-- 눈: 뻔뻔한 반쯤 감은 눈 -->
+  <g stroke="#1a120c" stroke-linecap="round" fill="none">
+    <!-- 눈꺼풀 라인 -->
+    <path d="M146 148 Q162 142 178 148" stroke-width="6"/>
+    <path d="M222 148 Q238 142 254 148" stroke-width="6"/>
+  </g>
+  <!-- 동공 (반쯤 가려진) -->
+  <path d="M154 149 A9 9 0 0 0 172 149 Z" fill="#1a120c"/>
+  <path d="M228 149 A9 9 0 0 0 246 149 Z" fill="#1a120c"/>
+  <!-- 치켜올린 눈썹 -->
+  <path d="M146 128 Q162 120 178 127" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M222 127 Q238 118 254 126" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- 코 (주둥이) -->
+  <ellipse cx="200" cy="188" rx="42" ry="29" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="200" cy="188" rx="42" ry="29" fill="#b3261e" opacity="0.12"/>
+  <ellipse cx="186" cy="188" rx="6" ry="10" fill="#1a120c"/>
+  <ellipse cx="214" cy="188" rx="6" ry="10" fill="#1a120c"/>
+
+  <!-- 뻔뻔한 미소 -->
+  <path d="M166 226 Q200 244 234 226" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- 볼터치 -->
+  <ellipse cx="146" cy="196" rx="12" ry="8" fill="#b3261e" opacity="0.25"/>
+  <ellipse cx="254" cy="196" rx="12" ry="8" fill="#b3261e" opacity="0.25"/>
+
+  <!-- ===== 의사봉 (머리 앞에 렌더링) ===== -->
+  <g transform="translate(14 -6) rotate(-24 305 175)">
+    <!-- 손잡이 -->
+    <rect x="298" y="130" width="14" height="90" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+    <!-- 헤드 -->
+    <rect x="272" y="96" width="66" height="40" rx="14" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+    <!-- 골드 밴드 -->
+    <rect x="278" y="96" width="9" height="40" fill="#d4af37"/>
+    <rect x="323" y="96" width="9" height="40" fill="#d4af37"/>
+    <rect x="272" y="96" width="66" height="40" rx="14" fill="none" stroke="#1a120c" stroke-width="5"/>
+  </g>
+  <!-- 오른손 발굽이 손잡이를 감쌈 -->
+  <circle cx="314" cy="216" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 판사석 벤치 ===== -->
+  <rect x="24" y="352" width="352" height="48" rx="8" fill="url(#benchGradC)" stroke="#1a120c" stroke-width="6"/>
+  <rect x="24" y="346" width="352" height="14" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="6"/>
+  <line x1="34" y1="360" x2="366" y2="360" stroke="#d4af37" stroke-width="4"/>
+  <!-- 명패 -->
+  <rect x="146" y="366" width="108" height="28" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <text x="200" y="387" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="17" font-weight="700" fill="#2a1f18">판사</text>
+</svg>
+    <div class="caption">judge-c-piggy.svg</div>
+  </div>
+</div>
+
+<h2>2. 배경 2안 + 합성 미리보기</h2>
+<div class="grid g2">
+  <div class="item">
+    <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="소비 재판소 법정 배경 A안">
+  <defs>
+    <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1420"/>
+      <stop offset="1" stop-color="#1a2233"/>
+    </linearGradient>
+    <linearGradient id="curtainRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b3261e"/>
+      <stop offset="1" stop-color="#8f1e18"/>
+    </linearGradient>
+    <linearGradient id="curtainNavy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2740"/>
+      <stop offset="1" stop-color="#141c30"/>
+    </linearGradient>
+    <linearGradient id="woodFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <!-- one curtain panel, reused mirrored -->
+    <g id="curtainPanel">
+      <path d="M0,0 h150 q-10,150 6,300 q8,80 24,150 L0,450 Z" fill="url(#curtainRed)" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M38,4 q-6,160 4,300 q4,70 12,138" fill="none" stroke="#8f1e18" stroke-width="7" stroke-linecap="round"/>
+      <path d="M86,4 q-4,170 4,310 q3,60 10,128" fill="none" stroke="#8f1e18" stroke-width="7" stroke-linecap="round"/>
+      <path d="M128,4 q0,180 8,320 q3,55 12,118" fill="none" stroke="#8f1e18" stroke-width="7" stroke-linecap="round"/>
+      <!-- gold tieback -->
+      <path d="M96,330 q40,26 80,20 l-6,34 q-44,8 -86,-24 Z" fill="#d4af37" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+    </g>
+    <!-- one column, reused -->
+    <g id="column">
+      <rect x="-34" y="96" width="68" height="380" rx="8" fill="url(#woodFront)" stroke="#1a120c" stroke-width="5"/>
+      <rect x="-22" y="112" width="10" height="348" rx="5" fill="#2a1f18" stroke="none"/>
+      <rect x="4" y="112" width="10" height="348" rx="5" fill="#2a1f18" stroke="none"/>
+      <rect x="-46" y="70" width="92" height="30" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+      <rect x="-40" y="98" width="80" height="14" rx="7" fill="#e8c96a" stroke="#1a120c" stroke-width="4"/>
+      <rect x="-46" y="466" width="92" height="26" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+    </g>
+  </defs>
+
+  <!-- back wall -->
+  <rect x="0" y="0" width="800" height="600" fill="url(#wallGrad)"/>
+
+  <!-- soft glow behind bench center -->
+  <ellipse cx="400" cy="250" rx="300" ry="200" fill="#1c2740" opacity="0.55"/>
+
+  <!-- navy under-curtain (full backdrop between columns) -->
+  <rect x="150" y="86" width="500" height="380" fill="url(#curtainNavy)" stroke="#1a120c" stroke-width="5"/>
+  <!-- red curtains, parted to center -->
+  <use href="#curtainPanel" x="150" y="90"/>
+  <use href="#curtainPanel" x="-150" y="90" transform="scale(-1,1) translate(-500,0)"/>
+  <!-- curtain rod -->
+  <rect x="130" y="72" width="540" height="22" rx="11" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="130" cy="83" r="14" fill="#e8c96a" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="670" cy="83" r="14" fill="#e8c96a" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- scales emblem (simple, high on the navy backdrop) -->
+  <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+    <circle cx="400" cy="170" r="52" fill="#0f1420"/>
+    <circle cx="400" cy="170" r="52" fill="none" stroke="#d4af37" stroke-width="6"/>
+    <g stroke="#e8c96a" stroke-width="5" fill="none" stroke-linecap="round">
+      <line x1="400" y1="140" x2="400" y2="196"/>
+      <line x1="374" y1="150" x2="426" y2="150"/>
+      <line x1="374" y1="150" x2="368" y2="172"/>
+      <line x1="426" y1="150" x2="432" y2="172"/>
+      <path d="M356,172 h24 a12,12 0 0 1 -24,0 Z" fill="#e8c96a" stroke-width="4"/>
+      <path d="M420,172 h24 a12,12 0 0 1 -24,0 Z" fill="#e8c96a" stroke-width="4"/>
+      <line x1="388" y1="198" x2="412" y2="198"/>
+    </g>
+  </g>
+
+  <!-- side columns (visible in mobile 400px center crop) -->
+  <use href="#column" x="235" y="0"/>
+  <use href="#column" x="565" y="0"/>
+  <!-- outer columns for desktop width -->
+  <use href="#column" x="52" y="0"/>
+  <use href="#column" x="748" y="0"/>
+
+  <!-- floor -->
+  <rect x="0" y="470" width="800" height="130" fill="url(#floorGrad)"/>
+  <line x1="0" y1="470" x2="800" y2="470" stroke="#1a120c" stroke-width="6"/>
+  <g stroke="#1a120c" stroke-width="3" opacity="0.5">
+    <line x1="0" y1="512" x2="800" y2="512"/>
+    <line x1="0" y1="556" x2="800" y2="556"/>
+    <line x1="120" y1="470" x2="90" y2="512"/>
+    <line x1="330" y1="470" x2="315" y2="512"/>
+    <line x1="540" y1="470" x2="555" y2="512"/>
+    <line x1="710" y1="470" x2="740" y2="512"/>
+    <line x1="220" y1="512" x2="205" y2="556"/>
+    <line x1="470" y1="512" x2="485" y2="556"/>
+    <line x1="650" y1="512" x2="670" y2="556"/>
+  </g>
+
+  <!-- judge bench: upper tier (keep top edge simple for character) -->
+  <g stroke="#1a120c" stroke-linejoin="round">
+    <!-- bench top slab -->
+    <rect x="228" y="316" width="344" height="26" rx="10" fill="#3d2b1f" stroke-width="6"/>
+    <rect x="216" y="308" width="368" height="18" rx="9" fill="#d4af37" stroke-width="5"/>
+    <!-- bench front body -->
+    <rect x="236" y="338" width="328" height="150" rx="12" fill="url(#woodFront)" stroke-width="6"/>
+    <!-- paneling -->
+    <rect x="258" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="460" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="258" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <rect x="460" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <!-- center parchment plaque -->
+    <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
+    <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
+    <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
+    <!-- gold base molding -->
+    <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
+    <!-- pedestal to floor -->
+    <rect x="268" y="500" width="264" height="52" rx="10" fill="#2a1f18" stroke-width="6"/>
+    <rect x="268" y="544" width="264" height="14" rx="7" fill="#3d2b1f" stroke-width="4"/>
+  </g>
+
+  <!-- gold trim line across bench front -->
+  <line x1="252" y1="348" x2="548" y2="348" stroke="#e8c96a" stroke-width="3" opacity="0.8"/>
+
+  <!-- gavel block accents on bench top, off-center to keep middle clear -->
+  <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+    <rect x="262" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+    <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+  </g>
+</svg>
+    <div class="caption">bg-a-courtroom.svg</div>
+  </div>
+
+  <div class="item">
+    <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="법정 배경 - 미니멀">
+  <defs>
+    <!-- 스포트라이트: 은은한 골드 원형 그라디언트 -->
+    <radialGradient id="spotlight" cx="0.5" cy="0.38" r="0.55">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.14"/>
+      <stop offset="45%" stop-color="#d4af37" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 배경 상하 미묘한 깊이 -->
+    <linearGradient id="bgDepth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f1420"/>
+      <stop offset="70%" stop-color="#0f1420"/>
+      <stop offset="100%" stop-color="#0b0f18"/>
+    </linearGradient>
+    <!-- 단상 목재 그라디언트 -->
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d2b1f"/>
+      <stop offset="100%" stop-color="#2a1f18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 바탕 -->
+  <rect x="0" y="0" width="800" height="600" fill="url(#bgDepth)"/>
+  <rect x="0" y="0" width="800" height="600" fill="url(#spotlight)"/>
+
+  <!-- ===== 좌우 기둥 실루엣 (골드 라인, 저대비) ===== -->
+  <g stroke="#d4af37" stroke-width="2" fill="none" opacity="0.28" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 왼쪽 기둥 -->
+    <g>
+      <rect x="60" y="96" width="76" height="14" rx="5"/>
+      <rect x="70" y="110" width="56" height="10" rx="4"/>
+      <line x1="80" y1="128" x2="80" y2="420"/>
+      <line x1="98" y1="128" x2="98" y2="420"/>
+      <line x1="116" y1="128" x2="116" y2="420"/>
+      <rect x="70" y="426" width="56" height="10" rx="4"/>
+      <rect x="60" y="436" width="76" height="14" rx="5"/>
+    </g>
+    <!-- 오른쪽 기둥 -->
+    <g>
+      <rect x="664" y="96" width="76" height="14" rx="5"/>
+      <rect x="674" y="110" width="56" height="10" rx="4"/>
+      <line x1="684" y1="128" x2="684" y2="420"/>
+      <line x1="702" y1="128" x2="702" y2="420"/>
+      <line x1="720" y1="128" x2="720" y2="420"/>
+      <rect x="674" y="426" width="56" height="10" rx="4"/>
+      <rect x="664" y="436" width="76" height="14" rx="5"/>
+    </g>
+  </g>
+
+  <!-- ===== 중앙 저울 (골드 라인) ===== -->
+  <g stroke="#d4af37" stroke-width="2.5" fill="none" opacity="0.42" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 기둥과 가로대 -->
+    <line x1="400" y1="120" x2="400" y2="300"/>
+    <line x1="290" y1="150" x2="510" y2="150"/>
+    <circle cx="400" cy="120" r="8"/>
+    <!-- 왼쪽 접시 -->
+    <line x1="290" y1="150" x2="270" y2="215"/>
+    <line x1="290" y1="150" x2="310" y2="215"/>
+    <path d="M 258 215 A 32 32 0 0 0 322 215 Z"/>
+    <!-- 오른쪽 접시 -->
+    <line x1="510" y1="150" x2="490" y2="215"/>
+    <line x1="510" y1="150" x2="530" y2="215"/>
+    <path d="M 478 215 A 32 32 0 0 0 542 215 Z"/>
+    <!-- 받침 -->
+    <line x1="360" y1="300" x2="440" y2="300"/>
+  </g>
+  <!-- 저울 하이라이트 포인트 -->
+  <circle cx="400" cy="120" r="3" fill="#e8c96a" opacity="0.5"/>
+
+  <!-- ===== 하단 다크우드 단상 실루엣 ===== -->
+  <!-- 뒷단 (판사석 뒷벽 느낌) -->
+  <rect x="150" y="440" width="500" height="60" rx="10" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <!-- 메인 단상 -->
+  <rect x="90" y="470" width="620" height="90" rx="14" fill="url(#wood)" stroke="#1a120c" stroke-width="3"/>
+  <!-- 단상 상판 몰딩 -->
+  <rect x="76" y="460" width="648" height="20" rx="10" fill="#3d2b1f" stroke="#1a120c" stroke-width="3"/>
+  <!-- 상판 골드 트림 라인 -->
+  <line x1="104" y1="470" x2="696" y2="470" stroke="#d4af37" stroke-width="2" opacity="0.35" stroke-linecap="round"/>
+  <!-- 단상 패널 라인 (좌우 대칭) -->
+  <g stroke="#1a120c" stroke-width="3" opacity="0.8">
+    <line x1="240" y1="488" x2="240" y2="548"/>
+    <line x1="400" y1="488" x2="400" y2="548"/>
+    <line x1="560" y1="488" x2="560" y2="548"/>
+  </g>
+  <!-- 중앙 문양: 골드 로제트 -->
+  <g opacity="0.45">
+    <circle cx="400" cy="518" r="17" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <circle cx="400" cy="518" r="7" fill="none" stroke="#e8c96a" stroke-width="2"/>
+  </g>
+
+  <!-- 바닥 마감선 -->
+  <rect x="0" y="560" width="800" height="40" fill="#0b0f18"/>
+  <line x1="0" y1="560" x2="800" y2="560" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 최소 한글 텍스트: 단상 명패 -->
+  <g>
+    <rect x="337" y="443" width="126" height="24" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="2.5" opacity="0.9"/>
+    <text x="400" y="460" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="14" font-weight="700" fill="#2a1f18">소비 재판소</text>
+  </g>
+</svg>
+    <div class="caption">bg-b-minimal.svg</div>
+  </div>
+
+  <div class="item" style="grid-column:1/-1;">
+    <div class="composite">
+      <div class="bg-layer">
+        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="합성 미리보기 배경">
+          <rect x="0" y="0" width="800" height="600" fill="url(#wallGrad)"/>
+          <ellipse cx="400" cy="250" rx="300" ry="200" fill="#1c2740" opacity="0.55"/>
+          <rect x="150" y="86" width="500" height="380" fill="url(#curtainNavy)" stroke="#1a120c" stroke-width="5"/>
+          <use href="#curtainPanel" x="150" y="90"/>
+          <use href="#curtainPanel" x="-150" y="90" transform="scale(-1,1) translate(-500,0)"/>
+          <rect x="130" y="72" width="540" height="22" rx="11" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+          <circle cx="130" cy="83" r="14" fill="#e8c96a" stroke="#1a120c" stroke-width="5"/>
+          <circle cx="670" cy="83" r="14" fill="#e8c96a" stroke="#1a120c" stroke-width="5"/>
+          <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+            <circle cx="400" cy="170" r="52" fill="#0f1420"/>
+            <circle cx="400" cy="170" r="52" fill="none" stroke="#d4af37" stroke-width="6"/>
+            <g stroke="#e8c96a" stroke-width="5" fill="none" stroke-linecap="round">
+              <line x1="400" y1="140" x2="400" y2="196"/>
+              <line x1="374" y1="150" x2="426" y2="150"/>
+              <line x1="374" y1="150" x2="368" y2="172"/>
+              <line x1="426" y1="150" x2="432" y2="172"/>
+              <path d="M356,172 h24 a12,12 0 0 1 -24,0 Z" fill="#e8c96a" stroke-width="4"/>
+              <path d="M420,172 h24 a12,12 0 0 1 -24,0 Z" fill="#e8c96a" stroke-width="4"/>
+              <line x1="388" y1="198" x2="412" y2="198"/>
+            </g>
+          </g>
+          <use href="#column" x="235" y="0"/>
+          <use href="#column" x="565" y="0"/>
+          <use href="#column" x="52" y="0"/>
+          <use href="#column" x="748" y="0"/>
+          <rect x="0" y="470" width="800" height="130" fill="url(#floorGrad)"/>
+          <line x1="0" y1="470" x2="800" y2="470" stroke="#1a120c" stroke-width="6"/>
+          <g stroke="#1a120c" stroke-width="3" opacity="0.5">
+            <line x1="0" y1="512" x2="800" y2="512"/>
+            <line x1="0" y1="556" x2="800" y2="556"/>
+            <line x1="120" y1="470" x2="90" y2="512"/>
+            <line x1="330" y1="470" x2="315" y2="512"/>
+            <line x1="540" y1="470" x2="555" y2="512"/>
+            <line x1="710" y1="470" x2="740" y2="512"/>
+            <line x1="220" y1="512" x2="205" y2="556"/>
+            <line x1="470" y1="512" x2="485" y2="556"/>
+            <line x1="650" y1="512" x2="670" y2="556"/>
+          </g>
+          <g stroke="#1a120c" stroke-linejoin="round">
+            <rect x="228" y="316" width="344" height="26" rx="10" fill="#3d2b1f" stroke-width="6"/>
+            <rect x="216" y="308" width="368" height="18" rx="9" fill="#d4af37" stroke-width="5"/>
+            <rect x="236" y="338" width="328" height="150" rx="12" fill="url(#woodFront)" stroke-width="6"/>
+            <rect x="258" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+            <rect x="460" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+            <rect x="258" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+            <rect x="460" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+            <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
+            <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
+            <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
+            <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
+            <rect x="268" y="500" width="264" height="52" rx="10" fill="#2a1f18" stroke-width="6"/>
+            <rect x="268" y="544" width="264" height="14" rx="7" fill="#3d2b1f" stroke-width="4"/>
+          </g>
+          <line x1="252" y1="348" x2="548" y2="348" stroke="#e8c96a" stroke-width="3" opacity="0.8"/>
+          <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+            <rect x="262" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+            <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+          </g>
+        </svg>
+      </div>
+      <div class="judge-layer">
+        <!-- 판사 A안: 배경 렉트/장식 원 제거한 투명 버전 -->
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="부엉이 판사 (합성용)">
+  <!-- 판사석(목재 벤치) -->
+  <rect x="20" y="330" width="360" height="70" rx="10" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <rect x="20" y="330" width="360" height="18" rx="9" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <rect x="146" y="356" width="108" height="32" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="379" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold" fill="#1a120c">판사</text>
+  <path d="M110 340 C112 268 140 238 200 238 C260 238 288 268 290 340 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <path d="M200 244 C152 244 128 270 124 340 L276 340 C272 270 248 244 200 244 Z" fill="#0f1420"/>
+  <path d="M166 250 L200 300 L234 250" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="185" y="252" width="30" height="44" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <line x1="200" y1="256" x2="200" y2="292" stroke="#1a120c" stroke-width="3"/>
+  <path d="M118 300 C104 276 112 258 132 252 C146 268 148 296 142 322 C132 318 124 310 118 300 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <path d="M128 118 C120 92 126 74 142 62 C152 78 154 98 150 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <path d="M272 118 C280 92 274 74 258 62 C248 78 246 98 250 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="200" cy="160" r="88" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <path d="M200 236 C156 226 132 196 134 152 C150 128 178 118 200 130 C222 118 250 128 266 152 C268 196 244 226 200 236 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+  <path d="M122 128 C122 84 154 58 200 58 C246 58 278 84 278 128 C252 112 224 106 200 106 C176 106 148 112 122 128 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="148" cy="92" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="176" cy="78" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="207" cy="73" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="238" cy="80" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="262" cy="97" r="12" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="116" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="116" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="284" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="284" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <path d="M138 136 L182 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <path d="M262 136 L218 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="164" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="236" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="167" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="233" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="170" cy="167" r="3.5" fill="#f2ead8"/>
+  <circle cx="236" cy="167" r="3.5" fill="#f2ead8"/>
+  <path d="M141 160 A24 24 0 0 1 187 158 L187 152 L141 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <path d="M213 158 A24 24 0 0 1 259 160 L259 152 L213 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="164" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <circle cx="236" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <path d="M194 166 C198 162 202 162 206 166" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="134" y1="164" x2="118" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="266" y1="164" x2="282" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <path d="M148 154 A20 20 0 0 1 158 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M220 154 A20 20 0 0 1 230 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M200 184 L214 200 C210 212 190 212 186 200 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M192 218 C196 222 204 222 208 218" fill="none" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="146" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+  <circle cx="254" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+  <path d="M268 316 C300 306 322 288 334 262 C324 250 308 248 296 256 C278 270 266 292 262 320 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <g transform="translate(-22 8) rotate(24 340 235)">
+    <rect x="333" y="150" width="14" height="96" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="72" height="36" rx="16" fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="363" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="336" y="238" width="8" height="12" rx="4" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  </g>
+  <path d="M326 268 C334 258 348 256 356 264 C352 276 338 282 326 278 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+  <g transform="rotate(-8 84 342)">
+    <rect x="62" y="336" width="44" height="26" rx="6" fill="#b3261e" stroke="#1a120c" stroke-width="4"/>
+    <text x="84" y="355" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#f2ead8">유죄?</text>
+  </g>
+</svg>
+      </div>
+    </div>
+    <div class="caption">합성 미리보기: bg-a-courtroom.svg + judge-a-owl.svg (배경 제거 오버레이)</div>
+  </div>
+</div>
+
+<h2>3. 도장 · 소품</h2>
+<div class="grid g3">
+  <div class="item stampbox">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="유죄 도장">
+  <defs>
+    <mask id="grunge-guilty" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+      <ellipse cx="52" cy="44" rx="14" ry="8" fill="#000000" opacity="0.30"/>
+      <ellipse cx="148" cy="60" rx="9" ry="14" fill="#000000" opacity="0.24"/>
+      <ellipse cx="66" cy="150" rx="16" ry="7" fill="#000000" opacity="0.28"/>
+      <ellipse cx="132" cy="142" rx="8" ry="12" fill="#000000" opacity="0.34"/>
+      <ellipse cx="100" cy="30" rx="10" ry="5" fill="#000000" opacity="0.22"/>
+      <ellipse cx="40" cy="100" rx="6" ry="10" fill="#000000" opacity="0.26"/>
+      <ellipse cx="162" cy="104" rx="7" ry="9" fill="#000000" opacity="0.30"/>
+      <ellipse cx="104" cy="170" rx="12" ry="5" fill="#000000" opacity="0.24"/>
+      <circle cx="84" cy="72" r="4" fill="#000000" opacity="0.35"/>
+      <circle cx="120" cy="98" r="3" fill="#000000" opacity="0.30"/>
+      <circle cx="76" cy="122" r="3.5" fill="#000000" opacity="0.28"/>
+      <circle cx="126" cy="58" r="2.5" fill="#000000" opacity="0.32"/>
+      <circle cx="58" cy="86" r="2.5" fill="#000000" opacity="0.26"/>
+      <circle cx="142" cy="122" r="3" fill="#000000" opacity="0.28"/>
+    </mask>
+  </defs>
+  <g transform="rotate(-12 100 100)" mask="url(#grunge-guilty)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#b3261e" stroke-width="10"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#b3261e" stroke-width="4"/>
+    <circle cx="100" cy="42" r="3.5" fill="#b3261e"/>
+    <circle cx="100" cy="158" r="3.5" fill="#b3261e"/>
+    <text x="100" y="86" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#b3261e">유</text>
+    <text x="100" y="140" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#b3261e">죄</text>
+  </g>
+</svg>
+    <div class="caption">stamp-guilty.svg</div>
+  </div>
+
+  <div class="item stampbox">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="무죄 도장">
+  <defs>
+    <mask id="grunge-innocent" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+      <ellipse cx="58" cy="50" rx="13" ry="7" fill="#000000" opacity="0.28"/>
+      <ellipse cx="150" cy="70" rx="8" ry="13" fill="#000000" opacity="0.24"/>
+      <ellipse cx="60" cy="146" rx="15" ry="7" fill="#000000" opacity="0.30"/>
+      <ellipse cx="138" cy="138" rx="9" ry="12" fill="#000000" opacity="0.26"/>
+      <ellipse cx="96" cy="28" rx="11" ry="5" fill="#000000" opacity="0.22"/>
+      <ellipse cx="38" cy="104" rx="6" ry="11" fill="#000000" opacity="0.28"/>
+      <ellipse cx="164" cy="98" rx="6" ry="9" fill="#000000" opacity="0.26"/>
+      <ellipse cx="100" cy="172" rx="12" ry="5" fill="#000000" opacity="0.24"/>
+      <circle cx="86" cy="70" r="4" fill="#000000" opacity="0.32"/>
+      <circle cx="118" cy="102" r="3" fill="#000000" opacity="0.28"/>
+      <circle cx="74" cy="118" r="3.5" fill="#000000" opacity="0.30"/>
+      <circle cx="128" cy="62" r="2.5" fill="#000000" opacity="0.26"/>
+      <circle cx="60" cy="90" r="2.5" fill="#000000" opacity="0.24"/>
+      <circle cx="140" cy="118" r="3" fill="#000000" opacity="0.30"/>
+    </mask>
+  </defs>
+  <g transform="rotate(-12 100 100)" mask="url(#grunge-innocent)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#d4af37" stroke-width="10"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#d4af37" stroke-width="4"/>
+    <circle cx="100" cy="42" r="3.5" fill="#e8c96a"/>
+    <circle cx="100" cy="158" r="3.5" fill="#e8c96a"/>
+    <text x="100" y="86" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#d4af37">무</text>
+    <text x="100" y="140" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="52" font-weight="900" fill="#d4af37">죄</text>
+  </g>
+</svg>
+    <div class="caption">stamp-innocent.svg</div>
+  </div>
+
+  <div class="item stampbox">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="집행유예 도장">
+  <defs>
+    <mask id="grunge-probation" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <rect x="0" y="0" width="200" height="200" fill="#ffffff"/>
+      <ellipse cx="50" cy="48" rx="13" ry="7" fill="#000000" opacity="0.28"/>
+      <ellipse cx="152" cy="64" rx="8" ry="13" fill="#000000" opacity="0.26"/>
+      <ellipse cx="64" cy="150" rx="15" ry="7" fill="#000000" opacity="0.30"/>
+      <ellipse cx="134" cy="144" rx="9" ry="12" fill="#000000" opacity="0.24"/>
+      <ellipse cx="102" cy="28" rx="11" ry="5" fill="#000000" opacity="0.24"/>
+      <ellipse cx="38" cy="98" rx="6" ry="11" fill="#000000" opacity="0.26"/>
+      <ellipse cx="162" cy="108" rx="6" ry="9" fill="#000000" opacity="0.28"/>
+      <ellipse cx="98" cy="172" rx="12" ry="5" fill="#000000" opacity="0.22"/>
+      <circle cx="82" cy="74" r="4" fill="#000000" opacity="0.30"/>
+      <circle cx="122" cy="96" r="3" fill="#000000" opacity="0.28"/>
+      <circle cx="78" cy="124" r="3.5" fill="#000000" opacity="0.32"/>
+      <circle cx="124" cy="60" r="2.5" fill="#000000" opacity="0.26"/>
+      <circle cx="56" cy="88" r="2.5" fill="#000000" opacity="0.24"/>
+      <circle cx="144" cy="124" r="3" fill="#000000" opacity="0.28"/>
+    </mask>
+  </defs>
+  <g transform="rotate(-12 100 100)" mask="url(#grunge-probation)">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#e8c96a" stroke-width="10"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#e8c96a" stroke-width="4"/>
+    <circle cx="100" cy="42" r="3.5" fill="#e8c96a"/>
+    <circle cx="100" cy="158" r="3.5" fill="#e8c96a"/>
+    <text x="74" y="78" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="40" font-weight="900" fill="#e8c96a">집</text>
+    <text x="126" y="78" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="40" font-weight="900" fill="#e8c96a">행</text>
+    <text x="74" y="126" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="40" font-weight="900" fill="#e8c96a">유</text>
+    <text x="126" y="126" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="40" font-weight="900" fill="#e8c96a">예</text>
+  </g>
+</svg>
+    <div class="caption">stamp-probation.svg</div>
+  </div>
+
+  <div class="item gavelbox">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="의사봉">
+  <!-- 받침대 (sound block) -->
+  <rect x="36" y="160" width="128" height="20" rx="9" fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+  <rect x="60" y="146" width="80" height="18" rx="8" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+  <rect x="70" y="151" width="36" height="4" rx="2" fill="#e8c96a" opacity="0.35"/>
+
+  <!-- 망치 (기울여 쾅 찍는 느낌) -->
+  <g transform="rotate(-35 100 84)">
+    <!-- 손잡이 -->
+    <rect x="93" y="94" width="14" height="66" rx="7" fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+    <rect x="90" y="152" width="20" height="14" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+    <!-- 머리 -->
+    <rect x="58" y="56" width="84" height="40" rx="12" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="52" y="52" width="18" height="48" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+    <rect x="130" y="52" width="18" height="48" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+    <rect x="76" y="63" width="40" height="6" rx="3" fill="#e8c96a" opacity="0.5"/>
+  </g>
+
+  <!-- 임팩트 스파크 (만화적 쾅 효과) -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round">
+    <line x1="150" y1="128" x2="162" y2="118"/>
+    <line x1="158" y1="142" x2="172" y2="140"/>
+    <line x1="38" y1="132" x2="28" y2="124"/>
+  </g>
+</svg>
+    <div class="caption">gavel.svg</div>
+  </div>
+
+  <div class="item" style="max-width:none;">
+    <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" style="max-width:260px" role="img" aria-label="증거물 제1호 액자">
+  <defs>
+    <radialGradient id="vignette-ev1" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="0" stop-color="#0f1420" stop-opacity="0"/>
+      <stop offset="0.62" stop-color="#0f1420" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0f1420" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="frame-sheen-ev1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="0.5" stop-color="#d4af37"/>
+      <stop offset="1" stop-color="#e8c96a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 내부 비네트 (가운데는 투명, 사진이 뒤에 깔림) -->
+  <rect x="38" y="38" width="224" height="304" fill="url(#vignette-ev1)"/>
+
+  <!-- 골드 프레임 밴드 (두꺼운 스트로크 = 내부 투명 유지) -->
+  <rect x="22" y="22" width="256" height="336" rx="8" fill="none" stroke="url(#frame-sheen-ev1)" stroke-width="28"/>
+  <!-- 프레임 외곽선 -->
+  <rect x="6" y="6" width="288" height="368" rx="14" fill="none" stroke="#1a120c" stroke-width="5"/>
+  <!-- 프레임 안쪽 라인 -->
+  <rect x="38" y="38" width="224" height="304" rx="3" fill="none" stroke="#1a120c" stroke-width="4"/>
+  <rect x="31" y="31" width="238" height="318" rx="5" fill="none" stroke="#e8c96a" stroke-width="3"/>
+
+  <!-- 코너 장식 -->
+  <circle cx="22" cy="22" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="278" cy="22" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="22" cy="358" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="278" cy="358" r="7" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 상단 리본 -->
+  <g>
+    <polygon points="52,40 86,40 86,68 52,68 66,54" fill="#b3261e" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="248,40 214,40 214,68 248,68 234,54" fill="#b3261e" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="76" y="32" width="148" height="42" rx="9" fill="#b3261e" stroke="#1a120c" stroke-width="4"/>
+    <rect x="84" y="38" width="132" height="4" rx="2" fill="#f2ead8" opacity="0.35"/>
+    <text x="150" y="55" text-anchor="middle" dominant-baseline="middle"
+          font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+          font-size="21" font-weight="800" fill="#f2ead8">증거물 제1호</text>
+  </g>
+</svg>
+    <div class="caption">evidence-frame.svg</div>
+  </div>
+</div>
+
+<h2>4. 소비 유형 판결 카드 (이모지 합성 예시)</h2>
+<div class="grid g3">
+  <div class="item">
+    <div class="cardwrap">
+      <div class="emoji-hole">🛍️</div>
+      <svg viewBox="0 0 360 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="소비 유형 판결 카드 프레임">
+  <defs>
+    <linearGradient id="woodGradCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="goldGradCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="1" stop-color="#d4af37"/>
+    </linearGradient>
+    <linearGradient id="parchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5e9d0"/>
+      <stop offset="1" stop-color="#eddfc0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 딥네이비 배경 (합성 예시: 원형 홀 이모지가 보이도록 rect 유지, 이모지는 CSS 레이어 뒤) -->
+  <rect x="0" y="0" width="360" height="520" rx="22" fill="#0f1420" opacity="0"/>
+
+  <!-- 목재 프레임 -->
+  <rect x="10" y="10" width="340" height="500" rx="18" fill="url(#woodGradCard)" stroke="#1a120c" stroke-width="3"/>
+  <rect x="18" y="18" width="324" height="484" rx="14" fill="none" stroke="#d4af37" stroke-width="2"/>
+
+  <!-- 양피지 본체 (중앙 원형 홀은 투명하게 뚫림: evenodd) -->
+  <path fill-rule="evenodd" fill="url(#parchGrad)" stroke="#1a120c" stroke-width="3"
+    d="M44 30
+       h272 a14 14 0 0 1 14 14
+       v432 a14 14 0 0 1 -14 14
+       h-272 a14 14 0 0 1 -14 -14
+       v-432 a14 14 0 0 1 14 -14 z
+       M180 142 a78 78 0 1 0 0.01 0 z"/>
+
+  <!-- 양피지 내측 라인 -->
+  <rect x="40" y="40" width="280" height="440" rx="10" fill="none" stroke="#3d2b1f" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.5"/>
+
+  <!-- 원형 홀 골드 링 (아이콘/이모지가 뒤에 깔림) -->
+  <circle cx="180" cy="220" r="78" fill="none" stroke="url(#goldGradCard)" stroke-width="8"/>
+  <circle cx="180" cy="220" r="84" fill="none" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="180" cy="220" r="70" fill="none" stroke="#1a120c" stroke-width="3"/>
+  <!-- 링 상하 장식 다이아 -->
+  <path d="M180 128 l7 8 -7 8 -7 -8 z" fill="#d4af37" stroke="#1a120c" stroke-width="2"/>
+  <path d="M180 296 l7 8 -7 8 -7 -8 z" fill="#d4af37" stroke="#1a120c" stroke-width="2"/>
+
+  <!-- 상단 골드 리본 -->
+  <g>
+    <!-- 리본 꼬리 -->
+    <path d="M46 62 l-18 18 18 18 z" fill="#b3261e" stroke="#1a120c" stroke-width="3"/>
+    <path d="M314 62 l18 18 -18 18 z" fill="#b3261e" stroke="#1a120c" stroke-width="3"/>
+    <!-- 리본 몸통 -->
+    <rect x="42" y="56" width="276" height="48" rx="10" fill="url(#goldGradCard)" stroke="#1a120c" stroke-width="3"/>
+    <rect x="50" y="63" width="260" height="34" rx="7" fill="none" stroke="#3d2b1f" stroke-width="1.5" opacity="0.6"/>
+    <text x="180" y="88" text-anchor="middle"
+      font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+      font-size="21" font-weight="800" fill="#2a1f18" letter-spacing="2">판결: 소비 유형</text>
+  </g>
+
+  <!-- 유형 코드 4글자 -->
+  <text x="180" y="352" text-anchor="middle"
+    font-family="'Avenir Next','Helvetica Neue',Arial,sans-serif"
+    font-size="52" font-weight="800" fill="#2a1f18" letter-spacing="10">GIFD</text>
+  <rect x="96" y="362" width="168" height="4" rx="2" fill="#d4af37"/>
+
+  <!-- 유형명 한 줄 -->
+  <text x="180" y="392" text-anchor="middle"
+    font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+    font-size="16" font-weight="700" fill="#3d2b1f">낭만과 감성을 아는 기분파 활동가</text>
+
+  <!-- 하단 죄수 번호판 바 -->
+  <g>
+    <rect x="66" y="418" width="228" height="46" rx="8" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+    <rect x="72" y="424" width="216" height="34" rx="5" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <!-- 번호판 볼트 -->
+    <circle cx="80" cy="441" r="4" fill="#e8c96a" stroke="#1a120c" stroke-width="1.5"/>
+    <circle cx="280" cy="441" r="4" fill="#e8c96a" stroke="#1a120c" stroke-width="1.5"/>
+    <text x="180" y="447" text-anchor="middle"
+      font-family="'Courier New',ui-monospace,monospace"
+      font-size="17" font-weight="700" fill="#f2ead8" letter-spacing="2">사건번호 2026-08-XXX</text>
+  </g>
+
+  <!-- 도장 레드 포인트 (우하단 인장) -->
+  <g transform="translate(296 400) rotate(12)">
+    <circle cx="0" cy="0" r="17" fill="none" stroke="#b3261e" stroke-width="3"/>
+    <text x="0" y="6" text-anchor="middle"
+      font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+      font-size="15" font-weight="800" fill="#b3261e">判</text>
+  </g>
+
+  <!-- 모서리 골드 리벳 4개 -->
+  <g stroke="#1a120c" stroke-width="2.5">
+    <circle cx="34" cy="34" r="9" fill="url(#goldGradCard)"/>
+    <circle cx="326" cy="34" r="9" fill="url(#goldGradCard)"/>
+    <circle cx="34" cy="486" r="9" fill="url(#goldGradCard)"/>
+    <circle cx="326" cy="486" r="9" fill="url(#goldGradCard)"/>
+  </g>
+  <g fill="#f2ead8" opacity="0.9">
+    <circle cx="31.5" cy="31.5" r="2.5"/>
+    <circle cx="323.5" cy="31.5" r="2.5"/>
+    <circle cx="31.5" cy="483.5" r="2.5"/>
+    <circle cx="323.5" cy="483.5" r="2.5"/>
+  </g>
+</svg>
+    </div>
+    <div class="caption">type-card-frame.svg (원형 홀 뒤 이모지 🛍️ 합성 예시)</div>
+  </div>
+</div>
+
+</body>
+</html>

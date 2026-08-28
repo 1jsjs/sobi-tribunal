@@ -1,0 +1,114 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="부엉이 판사">
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="#0f1420"/>
+  <!-- 배경 장식: 은은한 골드 방사 원 -->
+  <circle cx="200" cy="185" r="150" fill="none" stroke="#d4af37" stroke-opacity="0.12" stroke-width="3"/>
+  <circle cx="200" cy="185" r="120" fill="none" stroke="#d4af37" stroke-opacity="0.08" stroke-width="3"/>
+
+  <!-- 판사석(목재 벤치) -->
+  <rect x="20" y="330" width="360" height="70" rx="10" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <rect x="20" y="330" width="360" height="18" rx="9" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <!-- 벤치 명패 -->
+  <rect x="146" y="356" width="108" height="32" rx="8" fill="#d4af37" stroke="#1a120c" stroke-width="4"/>
+  <text x="200" y="379" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="bold" fill="#1a120c">판사</text>
+
+  <!-- ===== 법복(몸통) ===== -->
+  <path d="M110 340 C112 268 140 238 200 238 C260 238 288 268 290 340 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <!-- 법복 안쪽 톤 -->
+  <path d="M200 244 C152 244 128 270 124 340 L276 340 C272 270 248 244 200 244 Z" fill="#0f1420"/>
+  <!-- 골드 트림 -->
+  <path d="M166 250 L200 300 L234 250" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 자보(가슴 흰 띠) -->
+  <rect x="185" y="252" width="30" height="44" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <line x1="200" y1="256" x2="200" y2="292" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- 왼쪽 날개(몸에 붙임) -->
+  <path d="M118 300 C104 276 112 258 132 252 C146 268 148 296 142 322 C132 318 124 310 118 300 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 머리 ===== -->
+  <!-- 귀깃 -->
+  <path d="M128 118 C120 92 126 74 142 62 C152 78 154 98 150 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <path d="M272 118 C280 92 274 74 258 62 C248 78 246 98 250 116 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+  <!-- 얼굴 -->
+  <circle cx="200" cy="160" r="88" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+  <!-- 얼굴 하트형 밝은 면 -->
+  <path d="M200 236 C156 226 132 196 134 152 C150 128 178 118 200 130 C222 118 250 128 266 152 C268 196 244 226 200 236 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 하얀 가발(영국식) ===== -->
+  <!-- 정수리 롤 -->
+  <path d="M122 128 C122 84 154 58 200 58 C246 58 278 84 278 128 C252 112 224 106 200 106 C176 106 148 112 122 128 Z"
+        fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="148" cy="92" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="176" cy="78" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="207" cy="73" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="238" cy="80" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="262" cy="97" r="12" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <!-- 옆 컬(좌) -->
+  <circle cx="116" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="112" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="116" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <!-- 옆 컬(우) -->
+  <circle cx="284" cy="136" r="15" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="168" r="14" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="288" cy="198" r="13" fill="#f2ead8" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="284" cy="226" r="12" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- ===== 눈 + 골드 안경 ===== -->
+  <!-- 근엄한 눈썹 -->
+  <path d="M138 136 L182 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <path d="M262 136 L218 148" stroke="#1a120c" stroke-width="8" stroke-linecap="round"/>
+  <!-- 눈 -->
+  <circle cx="164" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="236" cy="168" r="24" fill="#f5e9d0" stroke="#1a120c" stroke-width="4"/>
+  <circle cx="167" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="233" cy="171" r="10" fill="#1a120c"/>
+  <circle cx="170" cy="167" r="3.5" fill="#f2ead8"/>
+  <circle cx="236" cy="167" r="3.5" fill="#f2ead8"/>
+  <!-- 반쯤 감긴 근엄 눈꺼풀 -->
+  <path d="M141 160 A24 24 0 0 1 187 158 L187 152 L141 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <path d="M213 158 A24 24 0 0 1 259 160 L259 152 L213 152 Z" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+  <!-- 안경 -->
+  <circle cx="164" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <circle cx="236" cy="168" r="30" fill="none" stroke="#d4af37" stroke-width="6"/>
+  <path d="M194 166 C198 162 202 162 206 166" fill="none" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="134" y1="164" x2="118" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <line x1="266" y1="164" x2="282" y2="158" stroke="#d4af37" stroke-width="6" stroke-linecap="round"/>
+  <!-- 안경 하이라이트 -->
+  <path d="M148 154 A20 20 0 0 1 158 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M220 154 A20 20 0 0 1 230 148" fill="none" stroke="#e8c96a" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 부리 -->
+  <path d="M200 184 L214 200 C210 212 190 212 186 200 Z" fill="#e8c96a" stroke="#1a120c" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 살짝 다문 입(귀여운 근엄) -->
+  <path d="M192 218 C196 222 204 222 208 218" fill="none" stroke="#1a120c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 볼터치 -->
+  <circle cx="146" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+  <circle cx="254" cy="204" r="8" fill="#b3261e" fill-opacity="0.55"/>
+
+  <!-- ===== 오른쪽 날개 + 의사봉 (머리 옆으로 들어올림) ===== -->
+  <!-- 날개(팔) -->
+  <path d="M268 316 C300 306 322 288 334 262 C324 250 308 248 296 256 C278 270 266 292 262 320 Z"
+        fill="#1a120c" stroke="#1a120c" stroke-width="5"/>
+  <!-- 의사봉 -->
+  <g transform="translate(-22 8) rotate(24 340 235)">
+    <rect x="333" y="150" width="14" height="96" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="72" height="36" rx="16" fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+    <rect x="304" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="363" y="122" width="13" height="36" rx="6" fill="#d4af37" stroke="#1a120c" stroke-width="3"/>
+    <rect x="336" y="238" width="8" height="12" rx="4" fill="#e8c96a" stroke="#1a120c" stroke-width="3"/>
+  </g>
+  <!-- 날개 끝 깃털(의사봉을 쥔 손) -->
+  <path d="M326 268 C334 258 348 256 356 264 C352 276 338 282 326 278 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="4"/>
+
+  <!-- 도장(스탬프) 장식: 벤치 위 -->
+  <g transform="rotate(-8 84 342)">
+    <rect x="62" y="336" width="44" height="26" rx="6" fill="#b3261e" stroke="#1a120c" stroke-width="4"/>
+    <text x="84" y="355" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#f2ead8">유죄?</text>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+[B303] 기소 — 사진 → 조서
+
+api-contract.md §POST /api/intake, docs/03-프롬프트.md §1(비전)·§4(MOCK) 참조.
+
+만들 것: routes/intake.py + services/intake_service.py
+1. POST /api/intake — multipart 필드명 file. File(None)으로 받아 직접 검증(422 금지):
+   - 파일 없음 → 400 INVALID_FILE "증거 사진을 제출하시오"
+   - jpg/png/webp 외 or 5MB 초과 → 400 INVALID_FILE
+2. intake_service:
+   - Bedrock 비전 호출(docs/03 §1 프롬프트 그대로) → candidates 파싱·검증
+     (itemName 15자 잘라내기, price 정수화·음수→0, category 6종 외→OTHER)
+   - MOCK_AI=1 → docs/03 §4의 목 candidates
+   - 비전 파싱 실패 → 200 + candidates: [] (프론트가 수동 입력으로 안내) — 500 내지 말 것
+   - S3 업로드: 버킷 hackathon-e1-t07-docs, 키 evidence/{uuid}.jpg
+     presigned GET 12시간, endpoint_url="https://s3.eu-west-2.amazonaws.com" 필수
+     S3 실패 시 photoKey/photoUrl null로 계속 진행 (예외 전파 금지)
+3. 응답: {"dossier": {첫 candidate + photoKey, usage: null, story: null},
+         "candidates": [2건 이상일 때만 전체 배열, 아니면 []], "photoUrl": ..., "source": "bedrock"|"mock"}
+4. tests/test_intake.py — MOCK 정상 경로, 파일 누락 400, 큰 파일 400
+
+완료 기준: MOCK_AI=1 pytest 통과 + curl multipart 실측 400/200.

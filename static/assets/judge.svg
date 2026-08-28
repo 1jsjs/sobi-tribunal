@@ -1,0 +1,140 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="돼지저금통 판사">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1420"/>
+      <stop offset="1" stop-color="#1a2233"/>
+    </linearGradient>
+    <linearGradient id="robeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="benchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="pigGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6c2cc"/>
+      <stop offset="1" stop-color="#efa3b2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="400" height="400" fill="url(#bgGrad)"/>
+  <!-- 후광 원 -->
+  <circle cx="200" cy="180" r="150" fill="#d4af37" opacity="0.08"/>
+  <circle cx="200" cy="180" r="115" fill="#e8c96a" opacity="0.07"/>
+
+  <!-- 땅땅 효과선 -->
+  <g stroke="#e8c96a" stroke-width="5" stroke-linecap="round" opacity="0.9">
+    <line x1="352" y1="70" x2="362" y2="52"/>
+    <line x1="368" y1="92" x2="384" y2="82"/>
+    <line x1="330" y1="58" x2="332" y2="38"/>
+  </g>
+
+  <!-- ===== 법복 (상체) ===== -->
+  <path d="M110 400 L118 300 Q126 258 168 248 L232 248 Q274 258 282 300 L290 400 Z"
+        fill="url(#robeGrad)" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 법복 골드 트림 -->
+  <path d="M168 250 L158 400" stroke="#d4af37" stroke-width="6" fill="none"/>
+  <path d="M232 250 L242 400" stroke="#d4af37" stroke-width="6" fill="none"/>
+
+  <!-- 왼팔 (시청자 왼쪽, 벤치 위에 얹음) -->
+  <path d="M126 292 Q92 306 88 344 L104 352 Q112 322 138 312 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 왼손 발굽 + 동전 -->
+  <circle cx="97" cy="349" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="83" cy="330" r="16" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+  <circle cx="83" cy="330" r="9" fill="none" stroke="#e8c96a" stroke-width="3"/>
+
+  <!-- 오른팔 (의사봉 든 팔) -->
+  <path d="M272 292 Q300 268 306 226 L288 216 Q280 256 258 274 Z"
+        fill="#2a1f18" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <!-- 오른손 발굽 (의사봉 손잡이 감쌈) -->
+  <circle cx="299" cy="219" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 자보(흰 목깃) ===== -->
+  <path d="M178 250 L200 292 L222 250 Z" fill="#f5e9d0" stroke="#1a120c" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="200" y1="256" x2="200" y2="284" stroke="#1a120c" stroke-width="3"/>
+
+  <!-- ===== 가발 (양쪽 컬) ===== -->
+  <g fill="#f5e9d0" stroke="#1a120c" stroke-width="5">
+    <!-- 왼쪽 컬 기둥 -->
+    <circle cx="122" cy="140" r="20"/>
+    <circle cx="118" cy="176" r="19"/>
+    <circle cx="118" cy="211" r="18"/>
+    <circle cx="122" cy="244" r="17"/>
+    <!-- 오른쪽 컬 기둥 -->
+    <circle cx="278" cy="140" r="20"/>
+    <circle cx="282" cy="176" r="19"/>
+    <circle cx="282" cy="211" r="18"/>
+    <circle cx="278" cy="244" r="17"/>
+    <!-- 이마 위 밴드 컬 -->
+    <circle cx="146" cy="118" r="17"/>
+    <circle cx="254" cy="118" r="17"/>
+  </g>
+
+  <!-- ===== 돼지 머리 ===== -->
+  <circle cx="200" cy="172" r="82" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="6"/>
+
+  <!-- 귀 -->
+  <path d="M142 116 Q128 86 148 74 Q170 82 168 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M258 116 Q272 86 252 74 Q230 82 232 108 Z" fill="#efa3b2" stroke="#1a120c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M150 104 Q144 88 152 82 Q162 88 160 102 Z" fill="#b3261e" opacity="0.35"/>
+  <path d="M250 104 Q256 88 248 82 Q238 88 240 102 Z" fill="#b3261e" opacity="0.35"/>
+
+  <!-- 정수리 동전 투입구 -->
+  <rect x="176" y="92" width="48" height="11" rx="5.5" fill="#1a120c"/>
+  <rect x="176" y="92" width="48" height="11" rx="5.5" fill="none" stroke="#1a120c" stroke-width="4"/>
+  <!-- 투입구로 떨어지는 동전 -->
+  <g transform="rotate(-14 200 62)">
+    <ellipse cx="200" cy="62" rx="16" ry="14" fill="#d4af37" stroke="#1a120c" stroke-width="5"/>
+    <ellipse cx="200" cy="62" rx="8" ry="7" fill="none" stroke="#e8c96a" stroke-width="3"/>
+  </g>
+
+  <!-- 눈: 뻔뻔한 반쯤 감은 눈 -->
+  <g stroke="#1a120c" stroke-linecap="round" fill="none">
+    <!-- 눈꺼풀 라인 -->
+    <path d="M146 148 Q162 142 178 148" stroke-width="6"/>
+    <path d="M222 148 Q238 142 254 148" stroke-width="6"/>
+  </g>
+  <!-- 동공 (반쯤 가려진) -->
+  <path d="M154 149 A9 9 0 0 0 172 149 Z" fill="#1a120c"/>
+  <path d="M228 149 A9 9 0 0 0 246 149 Z" fill="#1a120c"/>
+  <!-- 치켜올린 눈썹 -->
+  <path d="M146 128 Q162 120 178 127" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M222 127 Q238 118 254 126" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- 코 (주둥이) -->
+  <ellipse cx="200" cy="188" rx="42" ry="29" fill="#f6c2cc" stroke="#1a120c" stroke-width="6"/>
+  <ellipse cx="200" cy="188" rx="42" ry="29" fill="#b3261e" opacity="0.12"/>
+  <ellipse cx="186" cy="188" rx="6" ry="10" fill="#1a120c"/>
+  <ellipse cx="214" cy="188" rx="6" ry="10" fill="#1a120c"/>
+
+  <!-- 뻔뻔한 미소 -->
+  <path d="M166 226 Q200 244 234 226" stroke="#1a120c" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <!-- 볼터치 -->
+  <ellipse cx="146" cy="196" rx="12" ry="8" fill="#b3261e" opacity="0.25"/>
+  <ellipse cx="254" cy="196" rx="12" ry="8" fill="#b3261e" opacity="0.25"/>
+
+  <!-- ===== 의사봉 (머리 앞에 렌더링) ===== -->
+  <g transform="translate(14 -6) rotate(-24 305 175)">
+    <!-- 손잡이 -->
+    <rect x="298" y="130" width="14" height="90" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="5"/>
+    <!-- 헤드 -->
+    <rect x="272" y="96" width="66" height="40" rx="14" fill="#2a1f18" stroke="#1a120c" stroke-width="5"/>
+    <!-- 골드 밴드 -->
+    <rect x="278" y="96" width="9" height="40" fill="#d4af37"/>
+    <rect x="323" y="96" width="9" height="40" fill="#d4af37"/>
+    <rect x="272" y="96" width="66" height="40" rx="14" fill="none" stroke="#1a120c" stroke-width="5"/>
+  </g>
+  <!-- 오른손 발굽이 손잡이를 감쌈 -->
+  <circle cx="314" cy="216" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
+
+  <!-- ===== 판사석 벤치 ===== -->
+  <rect x="24" y="352" width="352" height="48" rx="8" fill="url(#benchGrad)" stroke="#1a120c" stroke-width="6"/>
+  <rect x="24" y="346" width="352" height="14" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="6"/>
+  <line x1="34" y1="360" x2="366" y2="360" stroke="#d4af37" stroke-width="4"/>
+  <!-- 명패 -->
+  <rect x="146" y="366" width="108" height="28" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
+  <text x="200" y="387" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="17" font-weight="700" fill="#2a1f18">판사</text>
+</svg>

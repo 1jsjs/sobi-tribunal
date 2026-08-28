@@ -1,0 +1,27 @@
+[F304] 법정 심문 — 질문 진행 + 심증 게이지 + 판사 TTS
+
+api-contract.md §questions·§프론트가 하면 안 되는 것, tech-constraints.md §TTS/STT 참조.
+
+1. 레이아웃: 상단 판사(static/assets/judge.svg 자리표시자) / 그 옆 증거물 액자
+   (assets/evidence-frame.svg 배경 + 사진) / 중앙 말풍선(질문) / 하단 선택지 버튼들
+2. 진행 로직 (서버 호출 없음 — 전부 로컬):
+   - questions 배열을 순서대로. askIf가 null이면 질문, {"axis","whenScore"}면
+     그 축의 pole 합(±2 합산)이 whenScore와 같을 때만 질문 — 아니면 건너뜀
+   - 시작 시 opening을 말풍선 + TTS로 낭독 → [심문을 받겠소] 버튼으로 첫 질문
+   - 답 선택 → 선택지 잠금 → 0.8초 판사 리액션("…기록하겠소.") → 다음 질문
+   - answers = [{questionId, choiceIndex}] 누적 (pole/guilt는 게이지 표시에만 사용)
+3. 심증 게이지 (docs/01 §6):
+   - 확정 축 수(합≠0) → 15/35/55/75/95%. 게이지 바 + "심증이 굳어가고 있소…"
+   - 확정 축 2개부터 유력 유형명 표시(미확정 축은 앞 글자로 채워 16유형 표 조회 —
+     이 표는 constants.py와 동일한 사본을 app.js에 둔다. 표시 전용)
+4. TTS: speechSynthesis — ko-KR 보이스(voiceschanged 후 선택), rate 0.95, pitch 0.7
+   - opening과 각 질문 text를 낭독. 선택지는 낭독하지 않는다
+   - 헤더 음소거 토글과 연동(localStorage 기억). speak는 반드시 클릭 핸들러 흐름에서 시작
+5. 마지막 질문(RETURN) 답변 후: 최후 변론 화면 —
+   textarea(200자 카운터) + [변론을 마치오]/[할 말 없소]
+   - window.isSecureContext && SpeechRecognition 있으면 🎤 버튼 노출(음성→textarea),
+     아니면 버튼 자체를 렌더하지 않는다 (HTTP 배포에선 안 뜨는 게 정상)
+   → POST /api/trial/verdict (로딩 "판결문 작성 중...") → 판결 화면으로
+
+완료 기준: 6문(중립 답 없음)·8문(중립 답 2개) 경로 모두 진행, 게이지 단조 증가,
+TTS 토글 동작, 콘솔 에러 0.

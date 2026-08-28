@@ -1,0 +1,101 @@
+<svg viewBox="0 0 360 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="소비 유형 판결 카드 프레임">
+  <defs>
+    <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d2b1f"/>
+      <stop offset="1" stop-color="#2a1f18"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8c96a"/>
+      <stop offset="1" stop-color="#d4af37"/>
+    </linearGradient>
+    <linearGradient id="parchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5e9d0"/>
+      <stop offset="1" stop-color="#eddfc0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 딥네이비 배경 -->
+  <rect x="0" y="0" width="360" height="520" rx="22" fill="#0f1420"/>
+
+  <!-- 목재 프레임 -->
+  <rect x="10" y="10" width="340" height="500" rx="18" fill="url(#woodGrad)" stroke="#1a120c" stroke-width="3"/>
+  <rect x="18" y="18" width="324" height="484" rx="14" fill="none" stroke="#d4af37" stroke-width="2"/>
+
+  <!-- 양피지 본체 (중앙 원형 홀은 투명하게 뚫림: evenodd) -->
+  <path fill-rule="evenodd" fill="url(#parchGrad)" stroke="#1a120c" stroke-width="3"
+    d="M44 30
+       h272 a14 14 0 0 1 14 14
+       v432 a14 14 0 0 1 -14 14
+       h-272 a14 14 0 0 1 -14 -14
+       v-432 a14 14 0 0 1 14 -14 z
+       M180 142 a78 78 0 1 0 0.01 0 z"/>
+
+  <!-- 양피지 내측 라인 -->
+  <rect x="40" y="40" width="280" height="440" rx="10" fill="none" stroke="#3d2b1f" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.5"/>
+
+  <!-- 원형 홀 골드 링 (아이콘/이모지가 뒤에 깔림) -->
+  <circle cx="180" cy="220" r="78" fill="none" stroke="url(#goldGrad)" stroke-width="8"/>
+  <circle cx="180" cy="220" r="84" fill="none" stroke="#1a120c" stroke-width="3"/>
+  <circle cx="180" cy="220" r="70" fill="none" stroke="#1a120c" stroke-width="3"/>
+  <!-- 링 상하 장식 다이아 -->
+  <path d="M180 128 l7 8 -7 8 -7 -8 z" fill="#d4af37" stroke="#1a120c" stroke-width="2"/>
+  <path d="M180 296 l7 8 -7 8 -7 -8 z" fill="#d4af37" stroke="#1a120c" stroke-width="2"/>
+
+  <!-- 상단 골드 리본 -->
+  <g>
+    <!-- 리본 꼬리 -->
+    <path d="M46 62 l-18 18 18 18 z" fill="#b3261e" stroke="#1a120c" stroke-width="3"/>
+    <path d="M314 62 l18 18 -18 18 z" fill="#b3261e" stroke="#1a120c" stroke-width="3"/>
+    <!-- 리본 몸통 -->
+    <rect x="42" y="56" width="276" height="48" rx="10" fill="url(#goldGrad)" stroke="#1a120c" stroke-width="3"/>
+    <rect x="50" y="63" width="260" height="34" rx="7" fill="none" stroke="#3d2b1f" stroke-width="1.5" opacity="0.6"/>
+    <text x="180" y="88" text-anchor="middle"
+      font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+      font-size="21" font-weight="800" fill="#2a1f18" letter-spacing="2">판결: 소비 유형</text>
+  </g>
+
+  <!-- 유형 코드 4글자 -->
+  <text x="180" y="352" text-anchor="middle"
+    font-family="'Avenir Next','Helvetica Neue',Arial,sans-serif"
+    font-size="52" font-weight="800" fill="#2a1f18" letter-spacing="10">GIFD</text>
+  <rect x="96" y="362" width="168" height="4" rx="2" fill="#d4af37"/>
+
+  <!-- 유형명 한 줄 -->
+  <text x="180" y="392" text-anchor="middle"
+    font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+    font-size="16" font-weight="700" fill="#3d2b1f">낭만과 감성을 아는 기분파 활동가</text>
+
+  <!-- 하단 죄수 번호판 바 -->
+  <g>
+    <rect x="66" y="418" width="228" height="46" rx="8" fill="#2a1f18" stroke="#1a120c" stroke-width="3"/>
+    <rect x="72" y="424" width="216" height="34" rx="5" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <!-- 번호판 볼트 -->
+    <circle cx="80" cy="441" r="4" fill="#e8c96a" stroke="#1a120c" stroke-width="1.5"/>
+    <circle cx="280" cy="441" r="4" fill="#e8c96a" stroke="#1a120c" stroke-width="1.5"/>
+    <text x="180" y="447" text-anchor="middle"
+      font-family="'Courier New',ui-monospace,monospace"
+      font-size="17" font-weight="700" fill="#f2ead8" letter-spacing="2">사건번호 2026-08-XXX</text>
+  </g>
+
+  <!-- 도장 레드 포인트 (우하단 인장) -->
+  <g transform="translate(296 400) rotate(12)">
+    <circle cx="0" cy="0" r="17" fill="none" stroke="#b3261e" stroke-width="3"/>
+    <text x="0" y="6" text-anchor="middle"
+      font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+      font-size="15" font-weight="800" fill="#b3261e">判</text>
+  </g>
+
+  <!-- 모서리 골드 리벳 4개 -->
+  <g stroke="#1a120c" stroke-width="2.5">
+    <circle cx="34" cy="34" r="9" fill="url(#goldGrad)"/>
+    <circle cx="326" cy="34" r="9" fill="url(#goldGrad)"/>
+    <circle cx="34" cy="486" r="9" fill="url(#goldGrad)"/>
+    <circle cx="326" cy="486" r="9" fill="url(#goldGrad)"/>
+  </g>
+  <g fill="#f2ead8" opacity="0.9">
+    <circle cx="31.5" cy="31.5" r="2.5"/>
+    <circle cx="323.5" cy="31.5" r="2.5"/>
+    <circle cx="31.5" cy="483.5" r="2.5"/>
+    <circle cx="323.5" cy="483.5" r="2.5"/>
+  </g>
+</svg>

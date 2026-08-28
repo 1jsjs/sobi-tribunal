@@ -1,0 +1,27 @@
+[B301] FastAPI 스캐폴드 + 상수 + DB
+
+.kiro/steering/ 4개 문서와 docs/01-판정룰표.md를 먼저 읽어라.
+
+만들 것:
+1. requirements.txt — fastapi, uvicorn, boto3, pytest, httpx (버전 고정 불필요)
+2. main.py
+   - FastAPI 앱, routes/ 3개 라우터 include (지금은 빈 라우터 파일만 생성)
+   - GET /api/health → {"success": true, "data": {"message": "법정은 열려 있다"}}
+   - 응답 봉투 헬퍼 ok(data, status=200) / fail(code, message, status=400)
+   - 전역 RequestValidationError 핸들러: 422를 400 + {"success": false, "error": {...}}로 변환
+   - static/ 디렉토리 서빙 (/, /static). static/index.html 자리표시자 1줄 생성
+3. constants.py — docs/01-판정룰표.md를 그대로 옮긴다:
+   - CATEGORIES (6종 코드→한글 라벨)
+   - CONSUMER_TYPES (16개: axisCode → {"name": ..., "emoji": ...})
+   - QUESTION_BANK (8문: id, axis, askIf, text, choices[{label, pole, guilt}]) — §3 표와 글자까지 일치
+   - AXIS_PREFILL (카테고리→축 선반영 ±1), GUILT_CUTS (0~3/4~6/7+), SENTENCES (형량 5종)
+4. db.py — sqlite3, data/database.sqlite, verdicts 테이블:
+   id INTEGER PK AUTOINCREMENT, email TEXT NOT NULL, itemName TEXT, price INTEGER,
+   boughtAt TEXT, merchant TEXT, category TEXT, photoKey TEXT,
+   axisCode TEXT, typeName TEXT, guilt TEXT, guiltScore INTEGER,
+   sentence TEXT, verdictText TEXT, plea TEXT, evidenceJson TEXT, costPerUse INTEGER,
+   createdAt TEXT DEFAULT (datetime('now'))
+   + email 인덱스. _migrate()는 ALTER TABLE 방식(기존 DB 보존).
+5. tests/test_scaffold.py — health 200 봉투 형식, 깨진 JSON POST가 400(422 아님)인지
+
+완료 기준: uvicorn 기동, pytest 통과. 검증 실패 응답에 detail 배열이 보이면 실패다.

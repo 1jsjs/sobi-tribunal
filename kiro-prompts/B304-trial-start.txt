@@ -1,0 +1,28 @@
+[B304] 재판 시작 — 질문 스타일링 + 채점 룰
+
+api-contract.md §questions, docs/01-판정룰표.md §3~5, docs/03-프롬프트.md §2 참조.
+
+만들 것: routes/trial.py + services/trial_service.py
+1. POST /api/trial/start — Body(None)으로 받아 직접 검증:
+   - dossier 없음/itemName 빈 값/price가 정수 아님 → 400 INVALID_DOSSIER
+2. trial_service.style_questions(dossier):
+   - constants.QUESTION_BANK을 docs/03 §2 프롬프트로 Bedrock에 보내 재작성
+   - 응답 검증: id 집합·순서 동일, 각 questions의 choices 개수 동일. 어긋난 질문은
+     기본 문구로 폴백(태그는 어차피 서버 원본 사용). 전체 실패 → 기본 뱅크 + opening 템플릿,
+     source: "fallback"
+   - MOCK_AI=1 → 기본 뱅크 + docs/03 §4 opening 템플릿, source: "mock"
+   - 응답 questions에는 원본 태그(pole·guilt·askIf)를 붙여 내려준다(프론트 게이지용)
+3. trial_service 채점 룰(순수 함수 — B305에서 씀):
+   - score_axes(dossier, answers) -> {"axisCode": "GISD", "axisScores": {...}}
+     docs/01 §4 그대로: 선반영 ±1, 답변 pole ±2, 합 0이면 앞 글자
+   - score_guilt(dossier, answers) -> {"guiltScore": n, "guilt": ..., "guiltLabel": ...,
+     "sentence": ..., "evidence": [...], "costPerUse": n|null}
+     docs/01 §5 그대로: guilt 합산 + USE③·price≥100000 보정 +1, 컷 0~3/4~6/7+,
+     형량은 최다 기여 요인 매핑, evidence는 사람이 읽는 한국어 문장 배열로 생성
+4. tests/test_rules.py — 경계값 필수:
+   - 전부 절제 답 → ERFQ·무죄 / 전부 반대 → GISD 계열·유죄
+   - guiltScore 3(무죄)·4(집행유예)·6(집행유예)·7(유죄)
+   - EG1 중립 답 후 EG2 미포함 answers도 채점 가능(6문 재판)
+   - FASHION_BEAUTY 선반영이 답변 없을 때 S로, 답변 F(±2)가 선반영을 이기는지
+
+완료 기준: MOCK_AI=1 pytest 통과. 룰 테스트가 docs/01 표와 숫자 하나까지 일치.
