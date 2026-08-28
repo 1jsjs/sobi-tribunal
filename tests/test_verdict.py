@@ -70,6 +70,12 @@ def test_e2e_start_verdict_records():
     assert v["costPerUse"] == 219000
     assert isinstance(v["verdictText"], str) and v["verdictText"]
     assert isinstance(v["evidence"], list) and v["evidence"]
+    # B307: crime·reasoning 필드 존재, 유죄면 죄명이 "죄명 없음"이 아니어야
+    assert isinstance(v["crime"], str) and v["crime"] and v["crime"] != "죄명 없음"
+    assert len(v["crime"]) <= 12
+    assert isinstance(v["reasoning"], str) and v["reasoning"]
+    # 조립 전문에 섹션 라벨이 들어있어야 (records 상세 호환)
+    assert "[죄명]" in v["verdictText"] and "[최종 판결]" in v["verdictText"]
     record_id = v["recordId"]
 
     # 3) records 목록에 반영
@@ -89,10 +95,36 @@ def test_e2e_start_verdict_records():
     assert detail["guiltScore"] == 11
     assert isinstance(detail["evidence"], list)
     assert isinstance(detail["verdictText"], str)
+    # B307: 상세에 crime·reasoning
+    assert detail["crime"] == v["crime"]
+    assert detail["reasoning"] == v["reasoning"]
     # 심문 기록: 답변 수만큼, 각 항목은 {q, a}
     assert isinstance(detail["interrogation"], list)
     assert len(detail["interrogation"]) == len(GUILTY_ANSWERS)
     assert all("q" in x and "a" in x for x in detail["interrogation"])
+
+
+INNOCENT_ANSWERS = [
+    {"questionId": "USE", "choiceIndex": 0},
+    {"questionId": "EG1", "choiceIndex": 0},
+    {"questionId": "RI1", "choiceIndex": 0},
+    {"questionId": "FS1", "choiceIndex": 0},
+    {"questionId": "QD1", "choiceIndex": 0},
+    {"questionId": "RETURN", "choiceIndex": 0},
+]
+
+
+def test_innocent_crime_is_none_label():
+    # B307: 무죄면 crime == "죄명 없음"
+    c = _client()
+    r = c.post(
+        "/api/trial/verdict",
+        json={"email": "in@b.kr", "dossier": {**DOSSIER, "price": 9000}, "answers": INNOCENT_ANSWERS},
+    )
+    assert r.status_code == 201, r.text
+    v = r.json()["data"]
+    assert v["guilt"] == "INNOCENT"
+    assert v["crime"] == "죄명 없음"
 
 
 def test_email_uppercase_normalized_to_lowercase():

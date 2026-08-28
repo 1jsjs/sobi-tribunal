@@ -24,6 +24,8 @@ COLUMNS = [
     ("evidenceJson", "TEXT"),
     ("costPerUse", "INTEGER"),
     ("interrogationJson", "TEXT"),
+    ("crime", "TEXT"),
+    ("reasoning", "TEXT"),
     ("createdAt", "TEXT DEFAULT (datetime('now'))"),
 ]
 

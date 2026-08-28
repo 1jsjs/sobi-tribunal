@@ -1,8 +1,9 @@
-"""판결 확정 — 룰 채점 → 판결문 생성 → 저장.
+"""판결 확정 — 룰 채점 → 죄명·판단 생성 → 전문 조립 → 저장.
 
 - 판정(유무죄·유형·형량·evidence·costPerUse)은 전부 trial_service 룰이 결정한다.
-  Bedrock/MOCK 어느 쪽이든 판정 값은 동일하다. LLM은 verdictText(산문)만 만든다.
-- Bedrock 실패/MOCK → docs/03 §4 템플릿 조립.
+  Bedrock/MOCK 어느 쪽이든 판정 값은 동일하다. LLM은 crime(죄명)·reasoning(판단)만 만든다.
+- Bedrock 실패/MOCK → docs/03 §3 폴백 룰(죄명 템플릿 + reasoning 템플릿).
+- verdictText는 서버가 섹션 조립한 전문을 저장·응답한다(records 상세 호환).
 """
 import json
 import logging
@@ -14,16 +15,25 @@ from services import trial_service as trial
 
 logger = logging.getLogger("bedrock")
 
-# ── docs/03 §3 판결문 프롬프트 (§0 문장 금칙 포함) ───────────────────
+CRIME_MAX = 12  # 죄명 최대 글자
+
+# ── docs/03 §3 판결문 프롬프트 v2 (§0 문장 금칙 포함) ─────────────────
 VERDICT_SYSTEM = f"""너는 소비 재판소의 판사다. 심문이 끝났고 판정은 이미 확정되어 있다.
-너의 일은 판결문 낭독 원고를 쓰는 것뿐이다. 판정(유무죄·유형·형량)을 바꾸면 무효다.
+판정(유무죄·유형·형량)을 바꾸면 무효다. 너는 두 가지만 쓴다.
 {trial.NO_SLOP}
-구성(총 6~9문장, 문단 3개):
-1) 죄명 낭독: 품목·금액을 적시하며 이 사건이 무엇인지 선언
-2) 증거 적시: 전달받은 evidence와 피고인의 실제 답변을 인용해 판정 이유 서술.
-   피고인이 최후 변론(plea)을 냈다면 한 문장으로 인용하고 받아들이거나 기각한다.
-3) 주문: guiltLabel을 선고하고 sentence를 낭독, 마지막에 소비 유형(typeName)을 선언
-반드시 아래 JSON 하나만 출력한다: {{"verdictText": "..."}}"""
+1) crime(죄명): 이 사건에 붙일 죄명 한 줄, 12자 이내. 품목의 특성을 비틀어라.
+   (예: "냉장고 유기죄", "구독료 방치죄", "서랍 중복 보유죄") 무죄면 "죄명 없음".
+2) reasoning(재판부 판단): 2~3문장. 피고인의 실제 답변을 인용해 판정 이유를 서술하고,
+   최후 변론(plea)이 있으면 한 문장으로 인용하며 받아들이거나 기각한다.
+반드시 아래 JSON 하나만 출력한다: {{"crime": "...", "reasoning": "..."}}"""
+
+# 폴백 죄명 템플릿 — 최다 기여 요인별 (docs/03 §3 폴백 표)
+FALLBACK_CRIME = {
+    "EG": "잔고 외면죄",
+    "RI": "중복 보유죄",
+    "RETURN": "충동 결제죄",
+    "INNOCENT": "죄명 없음",
+}
 
 
 def _q_by_id(qid):
@@ -42,18 +52,18 @@ def _interrogation_log(answers: list) -> list:
     return log
 
 
-def _verdict_text(dossier, answers, judgement, plea) -> str:
-    """판결문 산문 생성. Bedrock 실패/MOCK → 템플릿 조립."""
+def _crime_reasoning(dossier, answers, j, plea) -> tuple:
+    """LLM으로 (crime, reasoning) 생성. 실패/MOCK → 폴백 룰. crime 검증까지 적용."""
     plea_line = f'\n최후 변론: "{plea}"' if plea else "\n최후 변론: (없음)"
     try:
         judgement_view = {
-            "guiltLabel": judgement["guiltLabel"],
-            "guiltScore": judgement["guiltScore"],
-            "axisCode": judgement["axisCode"],
-            "typeName": judgement["typeName"],
-            "sentence": judgement["sentence"],
-            "evidence": judgement["evidence"],
-            "costPerUse": judgement["costPerUse"],
+            "guiltLabel": j["guiltLabel"],
+            "guiltScore": j["guiltScore"],
+            "axisCode": j["axisCode"],
+            "typeName": j["typeName"],
+            "sentence": j["sentence"],
+            "evidence": j["evidence"],
+            "costPerUse": j["costPerUse"],
         }
         user = (
             "조서: " + json.dumps(_dossier_view(dossier), ensure_ascii=False)
@@ -64,20 +74,47 @@ def _verdict_text(dossier, answers, judgement, plea) -> str:
         )
         raw = llm.call_text(VERDICT_SYSTEM, user)
     except llm.MockAIError:
-        return _template_verdict(dossier, judgement, plea)
+        return _fallback_crime(j), _template_reasoning(j, plea)
     except Exception as e:
         logger.error("Bedrock 호출 실패: %s", e)
-        return _template_verdict(dossier, judgement, plea)
+        return _fallback_crime(j), _template_reasoning(j, plea)
 
     try:
         data = llm.extract_json(raw)
-        text = data.get("verdictText")
-        if isinstance(text, str) and text.strip():
-            return text.strip()
-        raise ValueError("verdictText 비어 있음")
+        crime = data.get("crime")
+        reasoning = data.get("reasoning")
+        crime = _sanitize_crime(crime, j)
+        if not (isinstance(reasoning, str) and reasoning.strip()):
+            reasoning = _template_reasoning(j, plea)
+        else:
+            reasoning = reasoning.strip()
+        return crime, reasoning
     except Exception as e:
         logger.error("Bedrock 호출 실패: 판결문 파싱 실패 %s", e)
-        return _template_verdict(dossier, judgement, plea)
+        return _fallback_crime(j), _template_reasoning(j, plea)
+
+
+def _sanitize_crime(crime, j) -> str:
+    """crime 검증: 무죄면 '죄명 없음' 강제, 12자 초과면 잘라내기, 빈 값이면 폴백."""
+    if j["guilt"] == "INNOCENT":
+        return "죄명 없음"
+    if not isinstance(crime, str) or not crime.strip():
+        return _fallback_crime(j)
+    crime = crime.strip()
+    if crime == "죄명 없음":  # 유죄인데 무죄 죄명이 오면 폴백으로 교정
+        return _fallback_crime(j)
+    return crime[:CRIME_MAX]
+
+
+def _fallback_crime(j) -> str:
+    """최다 기여 요인별 죄명 템플릿 (docs/03 §3 폴백)."""
+    if j["guilt"] == "INNOCENT":
+        return "죄명 없음"
+    key = j.get("sentenceKey")
+    if key == "USE":
+        item = (j.get("itemName") or "물건")
+        return f"{item} 방치죄"[:CRIME_MAX]
+    return FALLBACK_CRIME.get(key, "충동 결제죄")
 
 
 def _dossier_view(dossier) -> dict:
@@ -90,23 +127,30 @@ def _dossier_view(dossier) -> dict:
     }
 
 
-def _template_verdict(dossier, j, plea) -> str:
-    """docs/03 §4 템플릿 조립."""
+def _template_reasoning(j, plea) -> str:
+    """폴백 reasoning: evidence 나열 + plea 참작 (기존 _template_verdict 문단 2 재사용)."""
+    body = " ".join(f"{e}." for e in j["evidence"])
+    if plea:
+        body += f" 피고인은 '{plea}'라 항변하였으나, 본 법정은 이를 참작하는 데 그치오."
+    return body.strip()
+
+
+def _assemble_verdict_text(dossier, j, crime, reasoning) -> str:
+    """섹션 조립 전문 (피고인/죄명/주요 증거/재판부 판단/최종 판결/최종 소비 유형)."""
     item = dossier.get("itemName") or "물건"
     price = dossier.get("price") or 0
     merchant = dossier.get("merchant") or "어느 가게"
     bought = dossier.get("boughtAt") or "그날"
 
-    p1 = f"피고인은 {bought}, {merchant}에서 {item}을(를) {price:,}원에 구매하였소."
-    p2 = " ".join(f"{e}." for e in j["evidence"])
-    plea_line = ""
-    if plea:
-        plea_line = f" 피고인은 '{plea}'라 항변하였으나, 본 법정은 이를 참작하는 데 그치오."
-    p3 = (
-        f"이에 본 법정은 {j['guiltLabel']}를 선고하오. {j['sentence']} "
-        f"피고인의 소비 유형은 {j['typeName']}({j['axisCode']})이오."
-    )
-    return f"{p1} {p2}{plea_line} {p3}".strip()
+    lines = [
+        f"[피고인] {bought}, {merchant}에서 {item}을(를) {price:,}원에 구매한 자.",
+        f"[죄명] {crime}",
+        f"[주요 증거] {' / '.join(j['evidence'])}",
+        f"[재판부 판단] {reasoning}",
+        f"[최종 판결] {j['guiltLabel']} — {j['sentence']}",
+        f"[최종 소비 유형] {j['typeName']} ({j['axisCode']})",
+    ]
+    return "\n".join(lines)
 
 
 def decide(dossier: dict, answers: list, plea) -> dict:
@@ -128,17 +172,20 @@ def decide(dossier: dict, answers: list, plea) -> dict:
         "guiltLabel": guilt["guiltLabel"],
         "guiltScore": guilt["guiltScore"],
         "sentence": guilt["sentence"],
+        "sentenceKey": guilt["sentenceKey"],  # 죄명 폴백용
+        "itemName": dossier.get("itemName"),   # USE 죄명 템플릿용
         "evidence": guilt["evidence"],
         "costPerUse": guilt["costPerUse"],
     }
 
 
 def render_and_save(email: str, dossier: dict, answers: list, plea) -> dict:
-    """판정 확정 + 판결문 생성 + 저장. api-contract §판결 응답 data 반환."""
+    """판정 확정 + 죄명·판단 생성 + 전문 조립 + 저장. api-contract §판결 응답 data 반환."""
     j = decide(dossier, answers, plea)
-    verdict_text = _verdict_text(dossier, answers, j, plea)
+    crime, reasoning = _crime_reasoning(dossier, answers, j, plea)
+    verdict_text = _assemble_verdict_text(dossier, j, crime, reasoning)
 
-    record_id = _save(email, dossier, j, verdict_text, plea, answers)
+    record_id = _save(email, dossier, j, verdict_text, crime, reasoning, plea, answers)
 
     return {
         "recordId": record_id,
@@ -149,13 +196,15 @@ def render_and_save(email: str, dossier: dict, answers: list, plea) -> dict:
         "guiltLabel": j["guiltLabel"],
         "guiltScore": j["guiltScore"],
         "sentence": j["sentence"],
+        "crime": crime,
+        "reasoning": reasoning,
         "verdictText": verdict_text,
         "evidence": j["evidence"],
         "costPerUse": j["costPerUse"],
     }
 
 
-def _save(email, dossier, j, verdict_text, plea, answers) -> int:
+def _save(email, dossier, j, verdict_text, crime, reasoning, plea, answers) -> int:
     # 심문 기록은 서버 원본 뱅크 문구로 구성한다(클라이언트 텍스트 불신)
     interrogation = _interrogation_log(answers)
     conn = get_conn()
@@ -165,8 +214,8 @@ def _save(email, dossier, j, verdict_text, plea, answers) -> int:
             INSERT INTO verdicts
               (email, itemName, price, boughtAt, merchant, category, photoKey,
                axisCode, typeName, guilt, guiltScore, sentence, verdictText,
-               plea, evidenceJson, costPerUse, interrogationJson)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+               plea, evidenceJson, costPerUse, interrogationJson, crime, reasoning)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 email,
@@ -186,6 +235,8 @@ def _save(email, dossier, j, verdict_text, plea, answers) -> int:
                 json.dumps(j["evidence"], ensure_ascii=False),
                 j["costPerUse"],
                 json.dumps(interrogation, ensure_ascii=False),
+                crime,
+                reasoning,
             ),
         )
         conn.commit()

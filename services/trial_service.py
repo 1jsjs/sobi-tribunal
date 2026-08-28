@@ -282,6 +282,7 @@ def score_guilt(dossier: dict, answers: list) -> dict:
         "guilt": grade["guilt"],
         "guiltLabel": grade["guiltLabel"],
         "sentence": sentence,
+        "sentenceKey": sentence_key,  # 최다 기여 요인 (USE/EG/RI/RETURN/INNOCENT) — 죄명 폴백용
         "evidence": evidence,
         "costPerUse": cost_per_use,
     }
