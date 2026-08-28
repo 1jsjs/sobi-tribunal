@@ -721,3 +721,6 @@ body.with-judge::before {
 body.with-judge .judge { display: none; } /* 판사는 배경에 있음 — 콘텐츠 판사 숨김 */
 body.with-judge .stage { padding-top: clamp(280px, 44vh, 430px); } /* 판사가 보이게 내용은 아래부터 */
 body.with-judge .courtroom-top { justify-content: flex-end; }
+
+/* hidden 속성이 display:grid/flex 지정에 지지 않게 (조서 이모지 타일 이중 표시 버그) */
+.thumb-emoji[hidden], .dossier-evidence img[hidden] { display: none !important; }
