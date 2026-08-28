@@ -230,10 +230,20 @@ input:focus, select:focus { border-color: var(--gold); }
 .choice:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.08); }
 .choice:active { transform: scale(0.99); }
 
-/* 후보 선택 리스트 */
+/* 후보 선택 리스트 (조서 양피지 위) */
 .candidate-list { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 4px; }
-.choice.candidate { display: flex; flex-direction: column; gap: 2px; }
-.choice.candidate.selected { border-color: var(--gold); background: rgba(212, 175, 55, 0.14); }
+.choice.candidate {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(90, 61, 18, 0.4);
+  color: #2a2117;
+}
+.choice.candidate .muted { color: #7a5a2a; }
+.choice.candidate:hover { background: rgba(212, 175, 55, 0.22); }
+.choice.candidate.selected { border-color: #8a5a1c; background: rgba(212, 175, 55, 0.3); }
+#candidate-picker > .muted { color: #7a5a2a; }
 .progress { margin-top: 14px; text-align: right; }
 
 /* ── 판결 ────────────────────────────────────────────── */
@@ -263,6 +273,40 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 .paper h2 { margin: 0 0 12px; color: #5a3d12; font-size: 1.2rem; }
 .paper .sentence { font-weight: 700; margin-top: 14px; }
+
+/* ── 조서(양피지 폼) ─────────────────────────────────── */
+.dossier-paper h2 { color: #3b2a12; }
+.eyebrow.dark { color: #8a5a1c; }
+.dossier-evidence { display: flex; justify-content: center; margin: 8px 0 14px; }
+.dossier-evidence img {
+  width: 42%;
+  max-width: 160px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 5px solid var(--wood);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.thumb-emoji {
+  width: 42%;
+  max-width: 160px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  border: 5px solid var(--wood);
+  border-radius: 6px;
+  background: rgba(90, 61, 18, 0.12);
+}
+.dossier-form label { color: #5a3d12; }
+.dossier-form input,
+.dossier-form select {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(90, 61, 18, 0.4);
+  color: #2a2117;
+}
+.dossier-form input:focus,
+.dossier-form select:focus { border-color: #8a5a1c; }
 
 .type-card { text-align: center; }
 .type-emoji { font-size: 3rem; }

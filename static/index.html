@@ -55,26 +55,42 @@
 
     <!-- 3. 조서 확인 -->
     <section class="screen" data-screen="dossier" hidden>
-      <div class="card">
-        <p class="eyebrow">조서 확인</p>
+      <article class="paper dossier-paper">
+        <p class="eyebrow dark">사건 조서</p>
         <h2 class="serif">이 물건이 맞소?</h2>
-        <p class="muted">서기가 읽은 내용이오. 틀린 곳은 고치시오.</p>
 
-        <!-- 결제내역 여러 건일 때 선택 UI (F303에서 채움) -->
+        <!-- 증거물 썸네일 (모바일 상단) -->
+        <div class="dossier-evidence">
+          <img id="dossier-thumb" alt="증거물" hidden />
+          <div id="dossier-thumb-emoji" class="thumb-emoji" hidden></div>
+        </div>
+
+        <!-- 결제내역 여러 건일 때 선택 UI -->
         <div id="candidate-picker" hidden></div>
 
         <form id="dossier-form" class="dossier-form">
-          <label>품목명<input type="text" id="d-itemName" maxlength="40" /></label>
-          <label>금액(원)<input type="number" id="d-price" min="0" step="1" inputmode="numeric" /></label>
-          <label>구매일<input type="date" id="d-boughtAt" /></label>
+          <label>품목명<input type="text" id="d-itemName" maxlength="15" /></label>
+          <label>금액(원)
+            <input type="text" id="d-price" inputmode="numeric" autocomplete="off" />
+          </label>
+          <label>산 날 (선택)<input type="date" id="d-boughtAt" /></label>
           <label>가맹점<input type="text" id="d-merchant" maxlength="40" /></label>
           <label>분류
             <select id="d-category"></select>
           </label>
+          <label>사용 현황
+            <select id="d-usage">
+              <option value="often">자주 씁니다</option>
+              <option value="rare">가끔 씁니다</option>
+              <option value="unopened">아직 안 뜯었습니다</option>
+              <option value="">모르겠소</option>
+            </select>
+          </label>
           <label>한 줄 사연 (선택)<input type="text" id="d-story" maxlength="60" placeholder="예: 할인해서" /></label>
         </form>
-        <button class="btn-primary" id="btn-open-trial">재판을 시작하오</button>
-      </div>
+      </article>
+      <button class="btn-primary" id="btn-open-trial">기소를 확정하오</button>
+      <button class="btn-ghost" id="btn-retry-intake">증거를 다시 제출하겠소</button>
     </section>
 
     <!-- 4. 법정(심문) -->

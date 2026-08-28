@@ -380,16 +380,53 @@ function goToDossier(dossier) {
   showScreen("dossier");
 }
 
+/* 금액 콤마 표기 유틸 */
+function digitsOnly(s) {
+  return String(s == null ? "" : s).replace(/[^\d]/g, "");
+}
+function commaify(s) {
+  const d = digitsOnly(s);
+  return d ? Number(d).toLocaleString("ko-KR") : "";
+}
+
 /* 조서 폼 채우기 */
 function fillDossierForm(d) {
   document.getElementById("d-itemName").value = d.itemName || "";
-  document.getElementById("d-price").value = d.price != null && d.price !== "" ? d.price : "";
+  document.getElementById("d-price").value =
+    d.price != null && d.price !== "" ? Number(d.price).toLocaleString("ko-KR") : "";
   document.getElementById("d-boughtAt").value = d.boughtAt || "";
   document.getElementById("d-merchant").value = d.merchant || "";
   const storyEl = document.getElementById("d-story");
   if (storyEl) storyEl.value = d.story || "";
   const catEl = document.getElementById("d-category");
   if (catEl) catEl.value = d.category && CATEGORY_LABELS[d.category] ? d.category : "OTHER";
+  const usageEl = document.getElementById("d-usage");
+  if (usageEl) usageEl.value = d.usage || "";
+  renderDossierThumb(d.category);
+}
+
+/* 증거물 썸네일: photoUrl/objectURL 우선, 없으면 카테고리 이모지 */
+const CATEGORY_EMOJI = {
+  FASHION_BEAUTY: "👗",
+  FOOD_DINING: "🍽️",
+  DIGITAL_APPLIANCE: "💻",
+  HOBBY_LEISURE: "🎨",
+  LIVING_GROCERY: "🧺",
+  OTHER: "📦",
+};
+function renderDossierThumb(category) {
+  const img = document.getElementById("dossier-thumb");
+  const emo = document.getElementById("dossier-thumb-emoji");
+  if (!img || !emo) return;
+  if (state.photoUrl) {
+    img.src = state.photoUrl;
+    img.hidden = false;
+    emo.hidden = true;
+  } else {
+    emo.textContent = CATEGORY_EMOJI[category] || CATEGORY_EMOJI.OTHER;
+    emo.hidden = false;
+    img.hidden = true;
+  }
 }
 
 document.getElementById("btn-manual-entry").addEventListener("click", () => {
@@ -397,37 +434,104 @@ document.getElementById("btn-manual-entry").addEventListener("click", () => {
   startManualEntry();
 });
 
-/* 조서 확인 → 폼 값으로 최종 dossier 구성 후 다음(F303/F304에서 재판 시작) */
-document.getElementById("btn-open-trial").addEventListener("click", () => {
-  const priceRaw = document.getElementById("d-price").value;
-  const price = parseInt(priceRaw, 10);
+/* ══════════════════════════════════════════════════════════
+ *  조서 확인(dossier) — 인라인 수정 + 기소 확정
+ * ══════════════════════════════════════════════════════════ */
+
+/* 금액 입력 콤마 실시간 표기 */
+const priceInput = document.getElementById("d-price");
+if (priceInput) {
+  priceInput.addEventListener("input", () => {
+    const caretFromEnd = priceInput.value.length - priceInput.selectionStart;
+    priceInput.value = commaify(priceInput.value);
+    const pos = Math.max(0, priceInput.value.length - caretFromEnd);
+    try { priceInput.setSelectionRange(pos, pos); } catch (_e) { /* 무시 */ }
+  });
+}
+
+/* 폼 값 → dossier 객체 (계약 형태) */
+function buildDossierFromForm() {
   const itemName = document.getElementById("d-itemName").value.trim();
-  if (!itemName) {
-    toast("품목명을 적으시오.");
-    return;
-  }
-  if (!Number.isInteger(price) || price < 0) {
-    toast("금액을 숫자로 적으시오.");
-    return;
-  }
-  state.dossier = {
+  const price = parseInt(digitsOnly(document.getElementById("d-price").value), 10);
+  const usageRaw = (document.getElementById("d-usage") || {}).value;
+  const storyEl = document.getElementById("d-story");
+  return {
     itemName: itemName,
-    price: price,
+    price: Number.isInteger(price) ? price : NaN,
     boughtAt: document.getElementById("d-boughtAt").value || null,
     merchant: document.getElementById("d-merchant").value.trim() || null,
     category: document.getElementById("d-category").value || "OTHER",
-    usage: null,
-    story: (document.getElementById("d-story") || {}).value
-      ? document.getElementById("d-story").value.trim() || null
-      : null,
+    usage: usageRaw || null, // "often"/"rare"/"unopened"/null — 점수화 안 함
+    story: storyEl && storyEl.value.trim() ? storyEl.value.trim() : null,
     photoKey: state.intakeDossier ? state.intakeDossier.photoKey || null : null,
   };
-  // 재판 시작 자체는 F304. 여기선 상태만 확정하고 알린다.
-  if (window.tribunal && typeof window.tribunal.onDossierReady === "function") {
-    window.tribunal.onDossierReady();
-  } else {
-    toast("조서가 확정되었소. (재판은 다음 단계에서)", { judge: false });
+}
+
+const openTrialBtn = document.getElementById("btn-open-trial");
+
+async function confirmIndictment() {
+  const dossier = buildDossierFromForm();
+  if (!dossier.itemName) {
+    toast("품목명을 적으시오.");
+    return;
   }
+  if (!Number.isInteger(dossier.price) || dossier.price < 0) {
+    toast("금액을 숫자로 적으시오.");
+    return;
+  }
+  state.dossier = dossier;
+
+  await withBusy(openTrialBtn, "판사님 입장 중...", async () => {
+    try {
+      const data = await api("/api/trial/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dossier: dossier }),
+      });
+      state.trial = data; // {opening, questions, source}
+      state.answers = [];
+      // 법정 진행은 F304. 훅이 있으면 넘기고, 없으면 화면만 전환.
+      if (window.tribunal && typeof window.tribunal.onTrialStarted === "function") {
+        window.tribunal.onTrialStarted();
+      } else {
+        showScreen("courtroom");
+        const op = document.getElementById("trial-opening");
+        if (op) op.textContent = data.opening || "";
+      }
+    } catch (err) {
+      handleError(err);
+      // 재시도 버튼 노출 (dossier 유지)
+      showRetryStart();
+    }
+  });
+}
+
+openTrialBtn.addEventListener("click", confirmIndictment);
+
+/* 시작 실패 시 재시도 버튼 (dossier 유지) */
+function showRetryStart() {
+  if (document.getElementById("btn-retry-start")) return;
+  const btn = document.createElement("button");
+  btn.className = "btn-ghost";
+  btn.id = "btn-retry-start";
+  btn.textContent = "다시 시도하오";
+  btn.addEventListener("click", () => {
+    btn.remove();
+    confirmIndictment();
+  });
+  openTrialBtn.insertAdjacentElement("afterend", btn);
+}
+
+/* 증거를 다시 제출하겠소 → 기소 화면으로, 조서 상태 초기화 */
+document.getElementById("btn-retry-intake").addEventListener("click", () => {
+  state.dossier = null;
+  state.intakeDossier = null;
+  state.trial = null;
+  state.answers = [];
+  const retry = document.getElementById("btn-retry-start");
+  if (retry) retry.remove();
+  document.getElementById("candidate-picker").hidden = true;
+  showScreen("intake");
 });
 
 document.getElementById("btn-to-records").addEventListener("click", () => {
