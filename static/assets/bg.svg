@@ -93,6 +93,8 @@
     <line x1="650" y1="512" x2="670" y2="556"/>
   </g>
 
+  <!-- ===== 판사석(+판사) 전체 50px 아래로 이동 ===== -->
+  <g transform="translate(0,50)">
   <!-- judge bench: upper tier (keep top edge simple for character) -->
   <g stroke="#1a120c" stroke-linejoin="round">
     <!-- bench top slab -->
@@ -107,7 +109,10 @@
     <rect x="460" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
     <!-- center parchment plaque -->
     <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
-    <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
+    <rect x="358" y="366" width="84" height="58" rx="7" fill="none" stroke="#d4af37" stroke-width="2"/>
+    <!-- 플라크 엠블럼: 빨간 봉인 → 금화 (흰 바탕+빨간 원이 일장기처럼 보여서 교체) -->
+    <circle cx="400" cy="384" r="12" fill="#d4af37" stroke-width="3"/>
+    <circle cx="400" cy="384" r="6" fill="none" stroke="#e8c96a" stroke-width="2.5"/>
     <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
     <!-- gold molding (중간 띠) -->
     <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
@@ -126,4 +131,6 @@
     <rect x="262" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
     <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
   </g>
+  </g>
+  <!-- ===== /50px 이동 끝 ===== -->
 </svg>
