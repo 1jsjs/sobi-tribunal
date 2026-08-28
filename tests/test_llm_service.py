@@ -72,3 +72,44 @@ def test_gemini_without_api_key_raises_runtimeerror(monkeypatch):
         llm.call_text("system", "user")
     with pytest.raises(RuntimeError, match="GOOGLE_API_KEY not set"):
         llm.call_vision("system", "user", b"\x00\x01", "image/jpeg")
+
+
+# ── B308: thinking 비활성 인자 분기 (bedrock body 검사, 실호출 없음) ──
+def _capture_body(monkeypatch):
+    """provider를 bedrock로 두고 _invoke를 가로채 마지막 body를 반환하는 캡처를 설치."""
+    monkeypatch.delenv("MOCK_AI", raising=False)
+    monkeypatch.setenv("AI_PROVIDER", "bedrock")
+    captured = {}
+
+    def fake_invoke(body):
+        captured["body"] = body
+        return '{"ok": true}'
+
+    monkeypatch.setattr(llm, "_invoke", fake_invoke)
+    return captured
+
+
+def test_call_text_default_keeps_thinking(monkeypatch):
+    cap = _capture_body(monkeypatch)
+    llm.call_text("sys", "usr")  # 기본 use_thinking=True
+    assert "thinking" not in cap["body"]
+
+
+def test_call_text_use_thinking_false_disables(monkeypatch):
+    cap = _capture_body(monkeypatch)
+    llm.call_text("sys", "usr", use_thinking=False)
+    assert cap["body"]["thinking"] == {"type": "disabled"}
+
+
+def test_call_vision_use_thinking_false_disables(monkeypatch):
+    cap = _capture_body(monkeypatch)
+    llm.call_vision("sys", "usr", b"\x00\x01", "image/jpeg", use_thinking=False)
+    assert cap["body"]["thinking"] == {"type": "disabled"}
+    # 기존 필드 불변 확인 (이미지 블록 존재)
+    assert cap["body"]["messages"][0]["content"][0]["type"] == "image"
+
+
+def test_call_vision_default_keeps_thinking(monkeypatch):
+    cap = _capture_body(monkeypatch)
+    llm.call_vision("sys", "usr", b"\x00\x01", "image/jpeg")
+    assert "thinking" not in cap["body"]

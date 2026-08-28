@@ -105,7 +105,7 @@ def style_questions(dossier: dict) -> dict:
             + json.dumps(_bank_for_prompt(), ensure_ascii=False)
             + "\n이 사건에 맞게 재작성하라."
         )
-        raw = llm.call_text(STYLE_SYSTEM, user)
+        raw = llm.call_text(STYLE_SYSTEM, user, use_thinking=False)
     except llm.MockAIError:
         return {"opening": _opening_template(dossier), "questions": base, "source": "mock"}
     except Exception as e:

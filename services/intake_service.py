@@ -7,6 +7,7 @@
 """
 import logging
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 
 from constants import CATEGORIES
 from services import llm_service as llm
@@ -17,6 +18,19 @@ logger = logging.getLogger("bedrock")
 S3_BUCKET = "hackathon-e1-t07-docs"
 S3_ENDPOINT_URL = "https://s3.eu-west-2.amazonaws.com"
 PRESIGN_TTL = 12 * 60 * 60  # 12시간
+
+# s3 클라이언트 — 모듈 전역 lazy 싱글톤 (커넥션 재사용).
+# 로컬(자격증명 없음)에서 임포트만으로 예외가 나면 안 되므로 첫 호출 시점에 생성한다.
+_s3_client = None
+
+
+def _s3():
+    global _s3_client
+    if _s3_client is None:
+        import boto3
+
+        _s3_client = boto3.client("s3", endpoint_url=S3_ENDPOINT_URL)
+    return _s3_client
 
 # ── 비전 프롬프트 (docs/03 §1 그대로) ────────────────────────────────
 VISION_SYSTEM = """너는 소비 재판소의 서기다. 증거 사진에서 구매 정보를 추출해 조서를 작성한다.
@@ -99,7 +113,9 @@ def _extract_candidates(image_bytes: bytes, media_type: str):
     실패(파싱 불가·AI 오류)해도 예외를 던지지 않고 ([], source)로 돌려준다.
     """
     try:
-        raw = llm.call_vision(VISION_SYSTEM, VISION_USER, image_bytes, media_type)
+        raw = llm.call_vision(
+            VISION_SYSTEM, VISION_USER, image_bytes, media_type, use_thinking=False
+        )
         source = "bedrock"
     except llm.MockAIError:
         cleaned = [c for c in (_clean_candidate(x) for x in MOCK_CANDIDATES) if c]
@@ -125,9 +141,7 @@ def _upload_to_s3(image_bytes: bytes, media_type: str):
     ext = MEDIA_TYPES.get(media_type, "jpg")
     key = f"evidence/{uuid.uuid4().hex}.{ext}"
     try:
-        import boto3
-
-        s3 = boto3.client("s3", endpoint_url=S3_ENDPOINT_URL)
+        s3 = _s3()
         s3.put_object(
             Bucket=S3_BUCKET, Key=key, Body=image_bytes, ContentType=media_type
         )
@@ -146,9 +160,15 @@ def process_intake(image_bytes: bytes, media_type: str) -> dict:
     """사진 1장 → intake 응답 data (api-contract §POST /api/intake).
 
     {"dossier": {...}, "candidates": [...], "photoUrl": ..., "source": ...}
+
+    비전 추출과 S3 업로드는 서로 독립적이므로 동시에 실행한다(지연 단축).
+    각 함수가 실패를 자체 흡수하므로(([],src)·(None,None)) 병렬로 돌려도 동작 불변.
     """
-    candidates, source = _extract_candidates(image_bytes, media_type)
-    photo_key, photo_url = _upload_to_s3(image_bytes, media_type)
+    with ThreadPoolExecutor(max_workers=2) as ex:
+        vision_future = ex.submit(_extract_candidates, image_bytes, media_type)
+        s3_future = ex.submit(_upload_to_s3, image_bytes, media_type)
+        candidates, source = vision_future.result()
+        photo_key, photo_url = s3_future.result()
 
     if candidates:
         first = candidates[0]

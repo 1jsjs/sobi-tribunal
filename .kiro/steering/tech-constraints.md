@@ -62,6 +62,13 @@ thinking 블록·temperature 거부는 Bedrock에서만 터진다(실측 2회). 
 ①MOCK_AI=1(룰·계약, pytest) → ②AI_PROVIDER=gemini(프롬프트·비전·JSON 거동, 로컬) →
 ③배포 후 Bedrock 실측 + `app.log` "Bedrock 호출 실패" 카운트 0 확인. ③까지 가야 완료다.
 
+③ 실측 시 추가로 확인할 것 (B308 지연 단축):
+- **thinking 비활성**(`"thinking":{"type":"disabled"}`, 스타일링·비전 호출): temperature와 같은 클래스다.
+  모델이 거부하면 조용히 폴백 → AI 실종(화면은 멀쩡). 기소·재판 시작에서 `source`가 `bedrock`으로
+  나오는지, `app.log`에 "Bedrock 호출 실패"가 안 찍히는지 실측 확인. 거부되면 use_thinking 인자를 되돌린다.
+- **boto3 싱글톤**(bedrock-runtime·s3): 첫 호출 이후 재사용된다. 연속 요청 지연이 실제로 줄었는지,
+  커넥션 재사용으로 인한 이상(만료·스레드 경합)이 없는지 확인.
+
 ### 6. 비전 오독을 전제로 설계할 것
 영수증 실측에서 금액·날짜는 정확했지만 **품목명 오독**이 있었다(브로콜리→보로커피).
 조서는 반드시 사용자 확인·수정 단계를 거친 뒤에만 재판에 쓴다.

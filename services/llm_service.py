@@ -97,11 +97,19 @@ def _gemini_vision(system: str, user: str, image_bytes: bytes, media_type: str) 
         raise
 
 
+# bedrock-runtime 클라이언트 — 모듈 전역 lazy 싱글톤 (커넥션 재사용).
+# 로컬(자격증명 없음)에서 임포트만으로 예외가 나면 안 되므로 첫 호출 시점에 생성한다.
+_bedrock_client = None
+
+
 def _client():
     # region_name 지정 금지 — 서버 env(AWS_DEFAULT_REGION)를 따른다.
-    import boto3
+    global _bedrock_client
+    if _bedrock_client is None:
+        import boto3
 
-    return boto3.client("bedrock-runtime")
+        _bedrock_client = boto3.client("bedrock-runtime")
+    return _bedrock_client
 
 
 def _extract_text(response_body: dict) -> str:
@@ -119,8 +127,22 @@ def _invoke(body: dict) -> str:
     return _extract_text(payload)
 
 
-def call_text(system: str, user: str) -> str:
-    """텍스트 프롬프트 호출. 실패 시 로깅 후 예외 재발생(폴백은 호출자 몫)."""
+def _maybe_disable_thinking(body: dict, use_thinking: bool) -> dict:
+    """use_thinking=False면 bedrock body에 thinking 비활성 블록을 추가한다.
+
+    ⚠️ temperature 사건과 같은 클래스의 파라미터다 — 모델이 거부하면 조용히 폴백(AI 실종).
+    로컬로 검증 불가. 배포 후 app.log 실측 필요(tech-constraints §5 사다리 ③).
+    """
+    if not use_thinking:
+        body["thinking"] = {"type": "disabled"}
+    return body
+
+
+def call_text(system: str, user: str, use_thinking: bool = True) -> str:
+    """텍스트 프롬프트 호출. 실패 시 로깅 후 예외 재발생(폴백은 호출자 몫).
+
+    use_thinking=False → bedrock에 thinking 비활성(스타일링·비전용). gemini 경로는 무시.
+    """
     p = provider()
     if p == "mock":
         raise MockAIError("mock 제공자: call_text 미호출")
@@ -133,6 +155,7 @@ def call_text(system: str, user: str) -> str:
         "system": system,
         "messages": [{"role": "user", "content": [{"type": "text", "text": user}]}],
     }
+    body = _maybe_disable_thinking(body, use_thinking)
     try:
         return _invoke(body)
     except Exception as e:
@@ -140,8 +163,13 @@ def call_text(system: str, user: str) -> str:
         raise
 
 
-def call_vision(system: str, user: str, image_bytes: bytes, media_type: str) -> str:
-    """비전 프롬프트 호출(이미지 1장 base64 첨부). 실패 시 로깅 후 예외 재발생."""
+def call_vision(
+    system: str, user: str, image_bytes: bytes, media_type: str, use_thinking: bool = True
+) -> str:
+    """비전 프롬프트 호출(이미지 1장 base64 첨부). 실패 시 로깅 후 예외 재발생.
+
+    use_thinking=False → bedrock에 thinking 비활성. gemini 경로는 무시.
+    """
     p = provider()
     if p == "mock":
         raise MockAIError("mock 제공자: call_vision 미호출")
@@ -170,6 +198,7 @@ def call_vision(system: str, user: str, image_bytes: bytes, media_type: str) -> 
             }
         ],
     }
+    body = _maybe_disable_thinking(body, use_thinking)
     try:
         return _invoke(body)
     except Exception as e:
