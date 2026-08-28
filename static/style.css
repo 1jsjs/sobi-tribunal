@@ -215,8 +215,51 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 .gauge-label { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-dim); }
 
+.gauge-suspect { margin: 4px 0 0; color: var(--gold); }
+
+/* 판사 말풍선 */
+.judge-bubble {
+  position: relative;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--paper);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin: 0 0 14px;
+}
+.judge-bubble::before {
+  content: "⚖ 판사";
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.reaction { margin: 10px 0 0; color: var(--gold); font-style: italic; }
+.choice.selected { border-color: var(--gold); background: rgba(212, 175, 55, 0.18); }
+.choice:disabled { opacity: 0.55; cursor: default; }
+
 .opening { font-size: 1.02rem; color: var(--gold); margin: 0 0 14px; }
 .question-text { font-size: 1.12rem; margin: 0 0 14px; }
+
+/* 최후 변론 */
+textarea#plea-text {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 8px;
+  background: rgba(245, 233, 208, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  outline: none;
+  resize: vertical;
+  font-family: var(--sans);
+}
+textarea#plea-text:focus { border-color: var(--gold); }
+.counter { text-align: right; margin: 4px 0 0; }
 .choices { display: flex; flex-direction: column; gap: 10px; }
 .choice {
   text-align: left;

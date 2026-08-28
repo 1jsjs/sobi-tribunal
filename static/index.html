@@ -103,17 +103,39 @@
         </figure>
       </div>
 
-      <!-- 심증 게이지 (F304에서 채움) -->
+      <!-- 심증 게이지 -->
       <div class="gauge-wrap">
         <div class="gauge-track"><div class="gauge-fill" id="gauge-fill" style="width:15%"></div></div>
         <p class="gauge-label" id="gauge-label">심증이 굳어가고 있소…</p>
+        <p class="gauge-suspect muted small" id="gauge-suspect" hidden></p>
       </div>
 
       <div class="card question-card">
-        <p class="opening serif" id="trial-opening"></p>
-        <p class="question-text" id="question-text"></p>
-        <div class="choices" id="choice-list"></div>
-        <p class="progress muted small" id="trial-progress"></p>
+        <!-- 판사 말풍선 -->
+        <p class="judge-bubble serif" id="judge-bubble"></p>
+
+        <!-- 개정 선언 후 시작 버튼 -->
+        <button class="btn-primary" id="btn-begin-trial" hidden>심문을 받겠소</button>
+
+        <!-- 질문 진행 영역 -->
+        <div id="question-area" hidden>
+          <div class="choices" id="choice-list"></div>
+          <p class="reaction muted small" id="judge-reaction" hidden></p>
+          <p class="progress muted small" id="trial-progress"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4b. 최후 변론 -->
+    <section class="screen" data-screen="plea" hidden>
+      <div class="card">
+        <p class="eyebrow">최후 변론</p>
+        <h2 class="serif">피고인, 할 말이 있소?</h2>
+        <p class="muted small">정상참작을 원하면 사정을 적으시오. 판결문에 인용되오.</p>
+        <textarea id="plea-text" maxlength="200" rows="4" placeholder="예: 월급날이었단 말입니다"></textarea>
+        <p class="counter muted small"><span id="plea-count">0</span> / 200</p>
+        <button class="btn-primary" id="btn-plea-done">변론을 마치오</button>
+        <button class="btn-ghost" id="btn-plea-skip">할 말 없소</button>
       </div>
     </section>
 

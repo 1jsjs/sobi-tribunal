@@ -7,7 +7,7 @@
  */
 
 /* ── 화면 전환 ─────────────────────────────────────────── */
-const SCREENS = ["summon", "intake", "dossier", "courtroom", "verdict", "records"];
+const SCREENS = ["summon", "intake", "dossier", "courtroom", "plea", "verdict", "records"];
 
 function showScreen(name) {
   SCREENS.forEach((s) => {
@@ -129,14 +129,67 @@ function won(n) {
   return v.toLocaleString("ko-KR") + "원";
 }
 
-/* ── 음소거 토글 (자리만 — F304에서 speechSynthesis 연결) ── */
+/* ── 판사 TTS (speechSynthesis, ko-KR / rate 0.95 / pitch 0.7) ── */
+const MUTE_KEY = "tribunalMuted";
+const tts = {
+  muted: false,
+  voice: null,
+  supported: typeof window.speechSynthesis !== "undefined",
+};
+
+function pickKoVoice() {
+  if (!tts.supported) return;
+  const voices = window.speechSynthesis.getVoices() || [];
+  tts.voice =
+    voices.find((v) => v.lang === "ko-KR") ||
+    voices.find((v) => /^ko/i.test(v.lang)) ||
+    null;
+}
+if (tts.supported) {
+  pickKoVoice();
+  // 보이스 목록은 비동기 로드 → voiceschanged 후 다시 고른다
+  window.speechSynthesis.onvoiceschanged = pickKoVoice;
+}
+
+/* speak는 반드시 사용자 제스처(클릭) 흐름에서 호출된다 */
+function speak(text) {
+  if (!tts.supported || tts.muted || !text) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ko-KR";
+    u.rate = 0.95;
+    u.pitch = 0.7;
+    if (tts.voice) u.voice = tts.voice;
+    window.speechSynthesis.speak(u);
+  } catch (_e) {
+    /* 낭독 실패는 조용히 무시 — 재판은 계속된다 */
+  }
+}
+function stopSpeaking() {
+  if (tts.supported) {
+    try { window.speechSynthesis.cancel(); } catch (_e) { /* 무시 */ }
+  }
+}
+
 const muteBtn = document.getElementById("btn-mute");
-const audio = { muted: false };
+function applyMuteUi() {
+  if (!muteBtn) return;
+  muteBtn.textContent = tts.muted ? "🔇" : "🔊";
+  muteBtn.setAttribute("aria-pressed", String(tts.muted));
+}
+try {
+  tts.muted = localStorage.getItem(MUTE_KEY) === "1";
+} catch (_e) {
+  /* 무시 */
+}
+applyMuteUi();
 if (muteBtn) {
   muteBtn.addEventListener("click", () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
-    muteBtn.setAttribute("aria-pressed", String(audio.muted));
+    tts.muted = !tts.muted;
+    if (tts.muted) stopSpeaking();
+    try { localStorage.setItem(MUTE_KEY, tts.muted ? "1" : "0"); } catch (_e) { /* 무시 */ }
+    applyMuteUi();
   });
 }
 
@@ -534,6 +587,291 @@ document.getElementById("btn-retry-intake").addEventListener("click", () => {
   showScreen("intake");
 });
 
+/* ══════════════════════════════════════════════════════════
+ *  법정(courtroom) — 질문 진행 + 심증 게이지 + TTS
+ *  진행 로직은 전부 로컬. 서버 호출 없음. 판정은 서버 몫.
+ * ══════════════════════════════════════════════════════════ */
+
+/* 16유형 표 — constants.py의 표시 전용 사본 (판정 아님, 게이지 유력 유형명만) */
+const CONSUMER_TYPES = {
+  ERFQ: { name: "차분하고 엄격한 자기관리 끝판왕", emoji: "📒" },
+  ERFD: { name: "절제를 할 줄 아는 멋진 활동가", emoji: "🏃" },
+  ERSQ: { name: "관리형, 쇼핑도 즐기는 멋쟁이", emoji: "🛍️" },
+  ERSD: { name: "절제할 줄 알며 패션과 스타일을 중시하는 활동가", emoji: "👔" },
+  EIFQ: { name: "변화와 도전을 꿈꾸는 차분한 관리자", emoji: "🌱" },
+  EIFD: { name: "절제가 쉽지 않아 고민 중인 활동가", emoji: "🎢" },
+  EISQ: { name: "절제가 쉽지 않지만 노력 중인 멋쟁이", emoji: "💄" },
+  EISD: { name: "패션과 스타일을 중시하는 외향형의 활동가", emoji: "🕶️" },
+  GRFQ: { name: "절제할 줄 아는, 만남을 즐기는 차분한 스타일", emoji: "🍵" },
+  GRFD: { name: "절제할 줄 아는, 만남을 즐기는 활동가", emoji: "🍻" },
+  GRSQ: { name: "자유로운 성향의, 쇼핑도 즐기는 멋쟁이", emoji: "🎁" },
+  GRSD: { name: "자유로운 영혼의, 패션과 스타일을 중시하는 활동가", emoji: "👗" },
+  GIFQ: { name: "낭만과 감성을 아는 자유로운 영혼의 소유자", emoji: "🌙" },
+  GIFD: { name: "낭만과 감성을 아는 기분파 활동가", emoji: "🎪" },
+  GISQ: { name: "차분하고 조용한 자유로운 영혼의 소유자", emoji: "🎧" },
+  GISD: { name: "패션과 낭만 감성을 중시하는 외향형의 활동가", emoji: "🕺" },
+};
+const AXIS_ORDER = ["EG", "RI", "FS", "QD"];
+const AXIS_POLES = {
+  EG: { front: "E", back: "G" },
+  RI: { front: "R", back: "I" },
+  FS: { front: "F", back: "S" },
+  QD: { front: "Q", back: "D" },
+};
+const POLE_SIGN = { E: 1, G: -1, R: 1, I: -1, F: 1, S: -1, Q: 1, D: -1 };
+const GAUGE_STEPS = [15, 35, 55, 75, 95]; // 확정 축 0~4개
+
+// 재판 진행 상태
+const trial = {
+  questions: [],
+  index: 0,
+  locked: false,
+};
+
+// 게이지 계산용: 축별 pole 합(±2). 표시 전용 — 판정 아님.
+function axisSums() {
+  const sums = { EG: 0, RI: 0, FS: 0, QD: 0 };
+  for (const a of state.answers) {
+    const q = trial.questions.find((x) => x.id === a.questionId);
+    if (!q || !(q.axis in sums)) continue;
+    const choice = q.choices[a.choiceIndex];
+    if (choice && choice.pole && POLE_SIGN[choice.pole] != null) {
+      sums[q.axis] += POLE_SIGN[choice.pole] * 2;
+    }
+  }
+  return sums;
+}
+
+// askIf 판정: 특정 축 pole 합이 whenScore와 같은지 (현재까지 answers 기준)
+function shouldAsk(q) {
+  if (!q.askIf) return true;
+  const sums = axisSums();
+  return (sums[q.askIf.axis] || 0) === q.askIf.whenScore;
+}
+
+/* onTrialStarted: 조서 확정 후 F303이 호출 */
+function onTrialStarted() {
+  trial.questions = (state.trial && state.trial.questions) || [];
+  trial.index = 0;
+  trial.locked = false;
+  state.answers = [];
+
+  // 증거물 액자
+  const evImg = document.getElementById("evidence-img");
+  if (evImg) {
+    if (state.photoUrl) {
+      evImg.src = state.photoUrl;
+      evImg.style.visibility = "visible";
+    } else {
+      evImg.removeAttribute("src");
+      evImg.style.visibility = "hidden";
+    }
+  }
+
+  // 초기화면: 개정 선언 + 시작 버튼
+  const bubble = document.getElementById("judge-bubble");
+  const beginBtn = document.getElementById("btn-begin-trial");
+  const area = document.getElementById("question-area");
+  bubble.textContent = (state.trial && state.trial.opening) || "개정하오.";
+  area.hidden = true;
+  beginBtn.hidden = false;
+  updateGauge();
+  showScreen("courtroom");
+
+  // opening 낭독은 시작 버튼 클릭(사용자 제스처)에서 — 자동재생 정책 준수
+  beginBtn.onclick = () => {
+    beginBtn.hidden = true;
+    area.hidden = false;
+    speak((state.trial && state.trial.opening) || "");
+    // opening을 이미 읽었으니 첫 질문으로
+    presentNext();
+  };
+}
+
+/* 다음 질문 제시 (askIf 건너뛰기 반영) */
+function presentNext() {
+  trial.locked = false;
+  const reactionEl = document.getElementById("judge-reaction");
+  if (reactionEl) reactionEl.hidden = true;
+
+  // askIf를 만족하는 다음 질문을 찾는다
+  while (trial.index < trial.questions.length && !shouldAsk(trial.questions[trial.index])) {
+    trial.index += 1;
+  }
+  if (trial.index >= trial.questions.length) {
+    goToPlea();
+    return;
+  }
+
+  const q = trial.questions[trial.index];
+  const bubble = document.getElementById("judge-bubble");
+  bubble.textContent = q.text;
+  speak(q.text); // 질문만 낭독, 선택지는 낭독 안 함
+
+  renderChoices(q);
+  updateProgress();
+}
+
+function renderChoices(q) {
+  const list = document.getElementById("choice-list");
+  list.innerHTML = "";
+  q.choices.forEach((c, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice";
+    btn.textContent = c.label;
+    btn.addEventListener("click", () => selectChoice(q, i));
+    list.appendChild(btn);
+  });
+}
+
+function selectChoice(q, choiceIndex) {
+  if (trial.locked) return;
+  trial.locked = true;
+
+  // 선택지 잠금
+  document.querySelectorAll("#choice-list .choice").forEach((el, i) => {
+    el.disabled = true;
+    if (i === choiceIndex) el.classList.add("selected");
+  });
+
+  // 답 누적
+  state.answers.push({ questionId: q.id, choiceIndex: choiceIndex });
+  updateGauge();
+
+  // 판사 리액션 0.8초 후 다음
+  const reactionEl = document.getElementById("judge-reaction");
+  if (reactionEl) {
+    reactionEl.textContent = pickReaction();
+    reactionEl.hidden = false;
+  }
+  trial.index += 1;
+  setTimeout(presentNext, 800);
+}
+
+const REACTIONS = ["…기록하겠소.", "그렇군. 기록하겠소.", "…흥미롭소. 기록하겠소.", "본 법정, 이를 접수하오."];
+function pickReaction() {
+  return REACTIONS[Math.floor(Math.random() * REACTIONS.length)];
+}
+
+function updateProgress() {
+  const el = document.getElementById("trial-progress");
+  if (!el) return;
+  const answered = state.answers.length;
+  el.textContent = `${answered + 1}번째 질문`;
+}
+
+/* 심증 게이지: 확정 축 수(합≠0) → 15/35/55/75/95% + 유력 유형명 */
+function updateGauge() {
+  const sums = axisSums();
+  const decided = AXIS_ORDER.filter((ax) => sums[ax] !== 0).length;
+  const pct = GAUGE_STEPS[decided];
+
+  const fill = document.getElementById("gauge-fill");
+  const label = document.getElementById("gauge-label");
+  const suspect = document.getElementById("gauge-suspect");
+  if (fill) fill.style.width = pct + "%";
+  if (label) {
+    label.textContent = decided >= 4 ? "판사의 심증이 섰소." : "심증이 굳어가고 있소…";
+  }
+
+  // 확정 축 2개부터 유력 유형명 노출 (미확정 축은 앞 글자로 채워 조회)
+  if (suspect) {
+    if (decided >= 2) {
+      let code = "";
+      for (const ax of AXIS_ORDER) {
+        const s = sums[ax];
+        code += s >= 0 ? AXIS_POLES[ax].front : AXIS_POLES[ax].back;
+      }
+      const t = CONSUMER_TYPES[code];
+      suspect.textContent = t ? `유력 용의 유형: ${t.emoji} ${t.name}` : "";
+      suspect.hidden = !t;
+    } else {
+      suspect.hidden = true;
+    }
+  }
+}
+
+/* ── 최후 변론 → 판결 ─────────────────────────────────── */
+function goToPlea() {
+  stopSpeaking();
+  const ta = document.getElementById("plea-text");
+  const count = document.getElementById("plea-count");
+  if (ta) ta.value = "";
+  if (count) count.textContent = "0";
+  showScreen("plea");
+}
+
+const pleaText = document.getElementById("plea-text");
+if (pleaText) {
+  pleaText.addEventListener("input", () => {
+    const c = document.getElementById("plea-count");
+    if (c) c.textContent = String(pleaText.value.length);
+  });
+}
+
+async function submitVerdict(plea) {
+  await withBusy(null, "판결문 작성 중...", async () => {
+    try {
+      const payload = {
+        email: state.email,
+        dossier: state.dossier,
+        answers: state.answers,
+      };
+      if (plea) payload.plea = plea;
+      const data = await api("/api/trial/verdict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      state.verdict = data;
+      // 판결 렌더는 F305. 훅이 있으면 넘기고, 없으면 최소 표시.
+      if (window.tribunal && typeof window.tribunal.onVerdict === "function") {
+        window.tribunal.onVerdict();
+      } else {
+        renderVerdictMinimal(data);
+      }
+    } catch (err) {
+      handleError(err);
+    }
+  });
+}
+
+/* F305 전까지 최소 렌더 (완전 렌더는 F305) */
+function renderVerdictMinimal(v) {
+  showScreen("verdict");
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  set("verdict-label", v.guiltLabel || "");
+  set("verdict-text", v.verdictText || "");
+  set("verdict-sentence", v.sentence || "");
+  set("type-emoji", v.typeEmoji || "");
+  set("type-name", v.typeName || "");
+  set("type-code", v.axisCode || "");
+  const stamp = document.getElementById("verdict-stamp");
+  if (stamp) {
+    const map = { GUILTY: "guilty", PROBATION: "probation", INNOCENT: "innocent" };
+    stamp.src = `/static/assets/stamp-${map[v.guilt] || "guilty"}.svg`;
+    stamp.hidden = false;
+  }
+}
+
+document.getElementById("btn-plea-done").addEventListener("click", () => {
+  const raw = (pleaText && pleaText.value.trim()) || "";
+  if (raw.length > 200) {
+    toast("최후 변론은 200자 이내로 하시오.");
+    return;
+  }
+  state.plea = raw || null;
+  submitVerdict(state.plea);
+});
+document.getElementById("btn-plea-skip").addEventListener("click", () => {
+  state.plea = null;
+  submitVerdict(null);
+});
+
 document.getElementById("btn-to-records").addEventListener("click", () => {
   if (state.email) loadRecords();
   else showScreen("summon");
@@ -557,7 +895,11 @@ function boot() {
   showScreen(state.email ? "intake" : "summon");
 }
 
-// 외부(F302~F305) 연결용으로 최소한만 노출
-window.tribunal = { state, api, showScreen, showLoading, hideLoading, withBusy, toast, handleError, won, escapeHtml, loadRecords, fillCategorySelect, audio };
+// 외부(F305) 연결용으로 최소한만 노출
+window.tribunal = {
+  state, api, showScreen, showLoading, hideLoading, withBusy, toast, handleError,
+  won, escapeHtml, loadRecords, fillCategorySelect, tts, speak,
+  onTrialStarted, // F303 → 법정 진입
+};
 
 boot();
