@@ -1,0 +1,17 @@
+[B309] 비전 정크 품목명 필터 — "알 수 없음"을 실패로 취급
+
+실측: 까만 이미지를 올리면 비전 모델이 candidates를 비우는 대신 itemName "알 수 없음",
+price 0을 지어낸다 → 프론트 실패 분기(F310)가 영영 안 터진다. 서버에서 걸러야 한다.
+
+1. services/intake_service.py `_clean_candidate`:
+   - itemName 정규화(strip) 후 다음이면 후보 기각(None 반환):
+     정크 목록 {"알 수 없음", "알수없음", "미상", "없음", "unknown", "n/a", "-", "확인 불가",
+     "물품", "상품"} (대소문자 무시, 공백 제거 비교)
+   - 추가 휴리스틱: itemName이 정크가 아니어도 **price가 0이고 merchant·boughtAt이 모두
+     null**이면 기각 (아무 정보도 못 읽은 케이스)
+2. 결과적으로 유효 후보 0건이면 기존 계약대로 candidates []·빈 조서 응답 (이미 구현돼 있음 —
+   필터만 추가하면 프론트 F310 실패 분기가 동작한다)
+3. tests: _clean_candidate 유닛 — "알 수 없음" 기각, "알수없음  " 기각, 정상 후보 통과,
+   price 0+merchant null 기각, price 0이어도 merchant 있으면 통과. 기존 스위트 회귀 유지.
+
+완료 기준: MOCK_AI=1 pytest green. 응답 계약·필드 무변경.

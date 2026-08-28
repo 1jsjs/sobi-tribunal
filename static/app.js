@@ -454,6 +454,7 @@ const JPEG_QUALITY = 0.8;
 const fileInput = document.getElementById("intake-file");
 const uploadPreview = document.getElementById("upload-preview");
 const submitEvidenceBtn = document.getElementById("btn-submit-evidence");
+const removePhotoBtn = document.getElementById("btn-remove-photo");
 const intakeNotice = document.getElementById("intake-notice");
 let pickedFile = null; // 원본 File
 let pickedObjectUrl = null; // 원본 미리보기 URL (세션 보관)
@@ -470,9 +471,29 @@ fileInput.addEventListener("change", () => {
   pickedObjectUrl = URL.createObjectURL(f);
   uploadPreview.src = pickedObjectUrl;
   uploadPreview.hidden = false;
+  if (removePhotoBtn) removePhotoBtn.hidden = false;
   intakeNotice.hidden = true;
   submitEvidenceBtn.disabled = false;
 });
+
+/* 사진 제거 — 선택 상태 초기화. 제거 후 재선택도 정상 동작해야 한다. */
+function clearPickedPhoto() {
+  pickedFile = null;
+  if (pickedObjectUrl) {
+    URL.revokeObjectURL(pickedObjectUrl);
+    pickedObjectUrl = null;
+  }
+  fileInput.value = ""; // 같은 파일 재선택 시에도 change 이벤트가 나도록
+  uploadPreview.removeAttribute("src");
+  uploadPreview.hidden = true;
+  if (removePhotoBtn) removePhotoBtn.hidden = true;
+  intakeNotice.hidden = true;
+  submitEvidenceBtn.disabled = true;
+}
+
+if (removePhotoBtn) {
+  removePhotoBtn.addEventListener("click", clearPickedPhoto);
+}
 
 /* canvas 리사이즈 → JPEG Blob (최대 변 1568, 품질 0.8) */
 function resizeImage(file) {
@@ -543,10 +564,11 @@ function handleIntakeResult(data) {
   // 1건(또는 0건이어도 서버가 빈 조서를 준다)
   const hasItem = data.dossier && data.dossier.itemName;
   if (!hasItem) {
-    // 판독 실패 → 수동 입력 유도
+    // 상품 처리 실패 → 자동 진입하지 않고 기소 화면에 남는다. 사용자가 스스로 고른다.
     intakeNotice.hidden = false;
-    intakeNotice.textContent = "증거를 판독하지 못했소. 직접 적어 자수하시오.";
-    startManualEntry();
+    intakeNotice.textContent =
+      "상품 처리 실패 — 증거에서 상품을 찾지 못했소. 사진을 제거하고 다른 사진을 올리거나, [자수하겠소]로 직접 적으시오.";
+    showScreen("intake");
     return;
   }
   goToDossier(data.dossier);
