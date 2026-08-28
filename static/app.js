@@ -16,6 +16,7 @@ function showScreen(name) {
   });
   // 배경 2단계: 재판(법정~판결) 동안은 판사가 판사석에 앉은 배경으로 (팀 피드백 8/29)
   document.body.classList.toggle("with-judge", ["courtroom", "plea", "verdict"].includes(name));
+  if (name !== "verdict") resumeBgm(); // 판결 선고 동안만 브금 정지, 그 외엔 계속
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
 
@@ -237,13 +238,23 @@ function applyBgmMute() {
   } catch (_e) { /* 무시 */ }
 }
 
-/* 판결 도장 순간: 1.5초 덕킹 후 복귀 (판사봉·TTS가 안 묻히게) */
-function duckBgm() {
-  if (!bgm.el || !bgm.started || tts.muted) return;
+/* 판결 선고: 브금을 페이드아웃 후 정지 — 판사봉·낭독이 정적 속에 울린다 */
+function stopBgmForVerdict() {
+  if (!bgm.el || !bgm.started) return;
   try {
-    bgm.el.volume = BGM_DUCK_VOL;
-    setTimeout(() => { if (bgm.el && !tts.muted) bgm.el.volume = BGM_BASE_VOL; }, 1500);
+    const el = bgm.el;
+    const step = el.volume / 8;
+    const fade = setInterval(() => {
+      if (el.volume > step) { el.volume = Math.max(0, el.volume - step); }
+      else { el.volume = 0; el.pause(); clearInterval(fade); }
+    }, 100);
   } catch (_e) { /* 무시 */ }
+}
+
+/* 판결 화면을 벗어나면 브금 재개 */
+function resumeBgm() {
+  if (!bgm.el || !bgm.started || tts.muted) return;
+  try { bgm.el.volume = BGM_BASE_VOL; bgm.el.play().catch(() => {}); } catch (_e) { /* 무시 */ }
 }
 
 /* 첫 사용자 제스처(아무 클릭) 후에만 AudioContext resume + BGM 시작 */
@@ -1126,7 +1137,7 @@ function clearVerdictTimers() {
 
 function playVerdict(v) {
   clearVerdictTimers();
-  duckBgm(); // 도장·낭독이 묻히지 않게 BGM 1.5초 덕킹
+  stopBgmForVerdict(); // 판결 선고 — 브금 멈추고 판사봉·낭독만 (재개는 화면 이탈 시)
   showScreen("verdict");
 
   const gavel = document.getElementById("verdict-gavel");
