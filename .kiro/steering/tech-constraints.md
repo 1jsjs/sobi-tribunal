@@ -23,15 +23,12 @@ inclusion: always
 - 로컬에는 AWS 자격증명이 없다. 로컬 확인은 `MOCK_AI=1` (Bedrock 로컬 실패가 정상)
 - S3 presigned URL은 `endpoint_url="https://s3.eu-west-2.amazonaws.com"` 지정 필수(안 하면 403)
 
-## TTS / STT (음성)
-- **TTS(판사 음성) = `speechSynthesis` (Web Speech API), P0.**
-  - ko-KR 보이스 선택, rate 0.95 / pitch 0.7 (낮고 근엄하게). 로봇 티가 나는 건 컨셉으로 안는다.
-  - 보이스 목록은 비동기 로드 → `voiceschanged` 이벤트 후 고를 것. 음소거 토글 필수.
-  - 자동재생 정책: 첫 사용자 제스처(버튼 클릭) 이후에만 speak 호출.
-- **STT(음성 답변) = P1, 기본은 선택지 탭.**
-  - `SpeechRecognition`은 마이크라서 **secure context 필수** → `http://18.135.105.80:8501`에서는
-    브라우저가 차단한다(로컬 localhost는 됨). HTTP 배포에서 STT를 P0로 잡지 말 것.
-  - 구현은 최후 변론(plea) 입력에만 붙이고, `window.isSecureContext` false면 버튼 자체를 숨긴다.
+## TTS (판사 음성)
+- **TTS = `speechSynthesis` (Web Speech API), P0.** STT(음성 인식)는 **쓰지 않는다** —
+  마이크는 secure context 필수라 HTTP 배포에서 차단되고, 답변은 선택지 탭으로 충분하다.
+- ko-KR 보이스 선택, rate 0.95 / pitch 0.7 (낮고 근엄하게). 로봇 티가 나는 건 컨셉으로 안는다.
+- 보이스 목록은 비동기 로드 → `voiceschanged` 이벤트 후 고를 것. 음소거 토글 필수.
+- 자동재생 정책: 첫 사용자 제스처(버튼 클릭) 이후에만 speak 호출.
 
 ## 실측으로 당한 함정 (같은 실수 반복 금지)
 

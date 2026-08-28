@@ -18,9 +18,7 @@ api-contract.md §questions·§프론트가 하면 안 되는 것, tech-constrai
    - opening과 각 질문 text를 낭독. 선택지는 낭독하지 않는다
    - 헤더 음소거 토글과 연동(localStorage 기억). speak는 반드시 클릭 핸들러 흐름에서 시작
 5. 마지막 질문(RETURN) 답변 후: 최후 변론 화면 —
-   textarea(200자 카운터) + [변론을 마치오]/[할 말 없소]
-   - window.isSecureContext && SpeechRecognition 있으면 🎤 버튼 노출(음성→textarea),
-     아니면 버튼 자체를 렌더하지 않는다 (HTTP 배포에선 안 뜨는 게 정상)
+   textarea(200자 카운터) + [변론을 마치오]/[할 말 없소] (음성 입력 없음 — 타이핑만)
    → POST /api/trial/verdict (로딩 "판결문 작성 중...") → 판결 화면으로
 
 완료 기준: 6문(중립 답 없음)·8문(중립 답 2개) 경로 모두 진행, 게이지 단조 증가,
