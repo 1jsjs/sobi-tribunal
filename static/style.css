@@ -470,10 +470,11 @@ textarea#plea-text:focus { border-color: var(--gold); }
 .eyebrow.dark { color: #8a5a1c; }
 .dossier-evidence { display: flex; justify-content: center; margin: 8px 0 14px; }
 .dossier-evidence img {
-  width: 42%;
-  max-width: 160px;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  width: auto;
+  max-width: min(440px, 100%);
+  max-height: 48vh;
+  aspect-ratio: auto;
+  object-fit: contain;
   border: 5px solid var(--wood);
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
