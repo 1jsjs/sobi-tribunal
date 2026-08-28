@@ -138,7 +138,7 @@ def render_and_save(email: str, dossier: dict, answers: list, plea) -> dict:
     j = decide(dossier, answers, plea)
     verdict_text = _verdict_text(dossier, answers, j, plea)
 
-    record_id = _save(email, dossier, j, verdict_text, plea)
+    record_id = _save(email, dossier, j, verdict_text, plea, answers)
 
     return {
         "recordId": record_id,
@@ -155,7 +155,9 @@ def render_and_save(email: str, dossier: dict, answers: list, plea) -> dict:
     }
 
 
-def _save(email, dossier, j, verdict_text, plea) -> int:
+def _save(email, dossier, j, verdict_text, plea, answers) -> int:
+    # 심문 기록은 서버 원본 뱅크 문구로 구성한다(클라이언트 텍스트 불신)
+    interrogation = _interrogation_log(answers)
     conn = get_conn()
     try:
         cur = conn.execute(
@@ -163,8 +165,8 @@ def _save(email, dossier, j, verdict_text, plea) -> int:
             INSERT INTO verdicts
               (email, itemName, price, boughtAt, merchant, category, photoKey,
                axisCode, typeName, guilt, guiltScore, sentence, verdictText,
-               plea, evidenceJson, costPerUse)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+               plea, evidenceJson, costPerUse, interrogationJson)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 email,
@@ -183,6 +185,7 @@ def _save(email, dossier, j, verdict_text, plea) -> int:
                 plea,
                 json.dumps(j["evidence"], ensure_ascii=False),
                 j["costPerUse"],
+                json.dumps(interrogation, ensure_ascii=False),
             ),
         )
         conn.commit()

@@ -528,6 +528,28 @@ textarea#plea-text:focus { border-color: var(--gold); }
 .modal-paper { font-size: 0.95rem; }
 .modal-plea { margin-top: 12px; font-style: italic; }
 
+/* 심문 기록 (접이식) */
+.interrogation {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.interrogation summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-family: var(--serif);
+  list-style: none;
+}
+.interrogation summary::-webkit-details-marker { display: none; }
+.interrogation summary::before { content: "▸ "; }
+.interrogation[open] summary::before { content: "▾ "; }
+.qa-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.qa-item { padding: 10px 0; border-top: 1px dashed var(--line); }
+.qa-item:first-child { border-top: none; }
+.qa-q { color: var(--ink); font-family: var(--serif); }
+.qa-a { color: var(--gold); margin-top: 4px; font-size: 0.9rem; }
+.qa-a::before { content: "— "; color: var(--ink-dim); }
+
 /* ── 로딩 오버레이 ───────────────────────────────────── */
 .overlay {
   position: fixed;

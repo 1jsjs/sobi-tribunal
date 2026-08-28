@@ -122,12 +122,18 @@ def get_record(record_id: int):
         evidence = json.loads(row["evidenceJson"]) if row["evidenceJson"] else []
     except (ValueError, TypeError):
         evidence = []
+    raw_intr = row["interrogationJson"] if "interrogationJson" in row.keys() else None
+    try:
+        interrogation = json.loads(raw_intr) if raw_intr else []
+    except (ValueError, TypeError):
+        interrogation = []
     data.update(
         {
             "verdictText": row["verdictText"],
             "plea": row["plea"],
             "guiltScore": row["guiltScore"],
             "evidence": evidence,
+            "interrogation": interrogation,
         }
     )
     return _ok(data)

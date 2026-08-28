@@ -89,6 +89,10 @@ def test_e2e_start_verdict_records():
     assert detail["guiltScore"] == 11
     assert isinstance(detail["evidence"], list)
     assert isinstance(detail["verdictText"], str)
+    # 심문 기록: 답변 수만큼, 각 항목은 {q, a}
+    assert isinstance(detail["interrogation"], list)
+    assert len(detail["interrogation"]) == len(GUILTY_ANSWERS)
+    assert all("q" in x and "a" in x for x in detail["interrogation"])
 
 
 def test_email_uppercase_normalized_to_lowercase():

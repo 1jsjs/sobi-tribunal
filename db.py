@@ -23,6 +23,7 @@ COLUMNS = [
     ("plea", "TEXT"),
     ("evidenceJson", "TEXT"),
     ("costPerUse", "INTEGER"),
+    ("interrogationJson", "TEXT"),
     ("createdAt", "TEXT DEFAULT (datetime('now'))"),
 ]
 

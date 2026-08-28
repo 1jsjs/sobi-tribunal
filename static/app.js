@@ -306,6 +306,29 @@ async function openRecordModal(id) {
     } else {
       pleaEl.hidden = true;
     }
+
+    // 심문 기록: 있으면 접이식 섹션, 빈 배열(구버전·시드)이면 숨김
+    const intr = Array.isArray(d.interrogation) ? d.interrogation : [];
+    const intrEl = document.getElementById("modal-interrogation");
+    const qaList = document.getElementById("modal-qa-list");
+    qaList.innerHTML = "";
+    if (intr.length) {
+      document.getElementById("modal-interrogation-summary").textContent =
+        `심문 기록 ${intr.length}문`;
+      intr.forEach((qa) => {
+        const li = document.createElement("li");
+        li.className = "qa-item";
+        li.innerHTML = `
+          <div class="qa-q">${escapeHtml(qa.q || "")}</div>
+          <div class="qa-a">${escapeHtml(qa.a || "")}</div>`;
+        qaList.appendChild(li);
+      });
+      intrEl.open = false; // 접힌 상태로 시작
+      intrEl.hidden = false;
+    } else {
+      intrEl.hidden = true;
+    }
+
     document.getElementById("record-modal").hidden = false;
   } catch (err) {
     handleError(err);
