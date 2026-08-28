@@ -1,0 +1,335 @@
+:root {
+  --bg: #0f1420;
+  --wood: #2a1f18;
+  --gold: #d4af37;
+  --paper: #f5e9d0;
+  --stamp: #b3261e;
+
+  --ink: #e8e3d6;
+  --ink-dim: #9a927f;
+  --line: rgba(212, 175, 55, 0.28);
+  --serif: "Nanum Myeongjo", "Apple SD Gothic Neo", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+  --radius: 14px;
+  --col: 480px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image: url("/static/assets/bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: var(--serif); letter-spacing: -0.01em; }
+.muted { color: var(--ink-dim); }
+.small { font-size: 0.82rem; }
+
+/* ── 헤더 문패 ───────────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0));
+  padding-top: calc(12px + env(safe-area-inset-top, 0));
+  background: linear-gradient(180deg, rgba(42, 31, 24, 0.96), rgba(42, 31, 24, 0.82));
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.brand {
+  flex: 1;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--gold);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+.topbar-right { display: flex; gap: 4px; }
+.icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--gold);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.icon-btn:hover { border-color: var(--line); }
+.icon-btn:active { transform: scale(0.94); }
+
+/* ── 무대(화면 컨테이너) ─────────────────────────────── */
+.stage {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 18px 16px 48px;
+}
+.screen { animation: fade 0.28s ease; }
+.screen[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ── 카드 ────────────────────────────────────────────── */
+.card {
+  background: rgba(20, 16, 12, 0.72);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+h2.serif { margin: 0 0 6px; font-size: 1.4rem; }
+
+/* ── 폼·입력 ─────────────────────────────────────────── */
+input, select, button, textarea { font: inherit; }
+input[type="email"],
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  background: rgba(245, 233, 208, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  outline: none;
+}
+input:focus, select:focus { border-color: var(--gold); }
+.dossier-form label,
+#summon-form label { display: block; margin-bottom: 12px; font-size: 0.9rem; color: var(--ink-dim); }
+#summon-form { margin-top: 14px; }
+
+/* ── 버튼 ────────────────────────────────────────────── */
+.btn-primary, .btn-ghost {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--gold), #b8952c);
+  color: #241a06;
+  border: none;
+}
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-primary:not(:disabled):active { transform: translateY(1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+}
+
+/* ── 업로드 ──────────────────────────────────────────── */
+.upload-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 28px 16px;
+  margin: 14px 0;
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.upload-drop:hover { border-color: var(--gold); }
+.upload-icon { font-size: 2rem; }
+.upload-preview {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+
+/* ── 법정 ────────────────────────────────────────────── */
+.courtroom-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.judge { width: 40%; max-width: 170px; }
+.evidence-frame { margin: 0; width: 46%; text-align: center; }
+.evidence-frame img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 6px solid var(--wood);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+.evidence-frame figcaption {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+/* 심증 게이지 */
+.gauge-wrap { margin: 6px 0 14px; }
+.gauge-track {
+  height: 10px;
+  background: rgba(245, 233, 208, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.gauge-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7a1d16, var(--stamp));
+  transition: width 0.5s ease;
+}
+.gauge-label { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-dim); }
+
+.opening { font-size: 1.02rem; color: var(--gold); margin: 0 0 14px; }
+.question-text { font-size: 1.12rem; margin: 0 0 14px; }
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice {
+  text-align: left;
+  padding: 14px;
+  background: rgba(245, 233, 208, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.choice:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.08); }
+.choice:active { transform: scale(0.99); }
+.progress { margin-top: 14px; text-align: right; }
+
+/* ── 판결 ────────────────────────────────────────────── */
+.verdict-stage { text-align: center; margin: 10px 0 18px; position: relative; }
+.stamp {
+  width: 160px;
+  animation: slam 0.4s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+@keyframes slam {
+  0% { transform: scale(2.4) rotate(-14deg); opacity: 0; }
+  60% { transform: scale(0.92) rotate(-6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-6deg); }
+}
+.verdict-label { font-size: 1.6rem; color: var(--gold); margin: 8px 0 0; }
+
+.paper {
+  background: var(--paper);
+  color: #2a2117;
+  border-radius: 8px;
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  font-family: var(--serif);
+  line-height: 1.8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  background-image: linear-gradient(rgba(120, 90, 40, 0.05) 1px, transparent 1px);
+  background-size: 100% 1.8em;
+}
+.paper h2 { margin: 0 0 12px; color: #5a3d12; font-size: 1.2rem; }
+.paper .sentence { font-weight: 700; margin-top: 14px; }
+
+.type-card { text-align: center; }
+.type-emoji { font-size: 3rem; }
+.type-name { font-size: 1.25rem; color: var(--gold); margin: 4px 0; }
+.type-code { letter-spacing: 0.3em; color: var(--ink-dim); font-size: 0.85rem; }
+.type-source { margin-top: 12px; }
+
+/* ── 전과 기록 ───────────────────────────────────────── */
+.record-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.record-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+}
+.record-item .r-emoji { font-size: 1.6rem; }
+.record-item .r-main { flex: 1; min-width: 0; }
+.record-item .r-item { font-weight: 600; }
+.record-item .r-sub { font-size: 0.8rem; color: var(--ink-dim); }
+.badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.badge.GUILTY { color: #ff9a90; border-color: rgba(179, 38, 30, 0.6); }
+.badge.PROBATION { color: var(--gold); }
+.badge.INNOCENT { color: #9fd6a0; border-color: rgba(120, 190, 120, 0.5); }
+
+/* ── 로딩 오버레이 ───────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 10, 16, 0.82);
+  backdrop-filter: blur(3px);
+}
+.overlay[hidden] { display: none; }
+.overlay-inner { text-align: center; color: var(--gold); }
+.gavel-spin {
+  width: 64px;
+  animation: knock 0.9s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+@keyframes knock {
+  0%, 100% { transform: rotate(-18deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* ── 토스트 ──────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 50;
+  max-width: calc(var(--col) - 32px);
+  width: max-content;
+  padding: 12px 18px;
+  background: var(--stamp);
+  color: #fff;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  font-size: 0.9rem;
+  animation: rise 0.24s ease;
+}
+.toast[hidden] { display: none; }
+@keyframes rise { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+@media (min-width: 481px) {
+  .stage { padding-top: 28px; }
+}

@@ -1,1 +1,151 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>소비 재판소</title></head><body>법정은 열려 있다.</body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>소비 재판소</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- 헤더 문패 -->
+  <header class="topbar">
+    <button class="icon-btn" id="btn-home" title="처음으로" aria-label="처음으로">⚖️</button>
+    <h1 class="brand">소비 재판소</h1>
+    <div class="topbar-right">
+      <button class="icon-btn" id="btn-records" title="전과 기록" aria-label="전과 기록">📜</button>
+      <button class="icon-btn" id="btn-mute" title="음소거" aria-label="음소거" aria-pressed="false">🔊</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <!-- 1. 소환장 -->
+    <section class="screen" data-screen="summon" hidden>
+      <div class="card summons">
+        <p class="eyebrow">소환장</p>
+        <h2 class="serif">피고인은 출석하시오</h2>
+        <p class="muted">이메일로 출석을 확인하오. 비밀번호는 없소.</p>
+        <form id="summon-form" autocomplete="off">
+          <input type="email" id="summon-email" placeholder="you@example.com" inputmode="email" required />
+          <button type="submit" class="btn-primary">출석합니다</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. 기소 -->
+    <section class="screen" data-screen="intake" hidden>
+      <div class="card">
+        <p class="eyebrow">기소</p>
+        <h2 class="serif">후회 소비 한 건을 제출하시오</h2>
+        <p class="muted">결제내역 캡처·영수증·제품 사진 중 한 장.</p>
+
+        <label class="upload-drop" id="upload-drop">
+          <input type="file" id="intake-file" accept="image/jpeg,image/png,image/webp" hidden />
+          <span class="upload-icon">📷</span>
+          <span class="upload-text">사진 올리기</span>
+          <span class="muted small">jpg · png · webp / 5MB 이하</span>
+        </label>
+        <img class="upload-preview" id="upload-preview" alt="증거 미리보기" hidden />
+
+        <button class="btn-primary" id="btn-submit-evidence" disabled>증거 제출</button>
+        <button class="btn-ghost" id="btn-manual-entry">사진 없이 직접 적겠소</button>
+      </div>
+    </section>
+
+    <!-- 3. 조서 확인 -->
+    <section class="screen" data-screen="dossier" hidden>
+      <div class="card">
+        <p class="eyebrow">조서 확인</p>
+        <h2 class="serif">이 물건이 맞소?</h2>
+        <p class="muted">서기가 읽은 내용이오. 틀린 곳은 고치시오.</p>
+
+        <!-- 결제내역 여러 건일 때 선택 UI (F303에서 채움) -->
+        <div id="candidate-picker" hidden></div>
+
+        <form id="dossier-form" class="dossier-form">
+          <label>품목명<input type="text" id="d-itemName" maxlength="40" /></label>
+          <label>금액(원)<input type="number" id="d-price" min="0" step="1" inputmode="numeric" /></label>
+          <label>구매일<input type="date" id="d-boughtAt" /></label>
+          <label>가맹점<input type="text" id="d-merchant" maxlength="40" /></label>
+          <label>분류
+            <select id="d-category"></select>
+          </label>
+        </form>
+        <button class="btn-primary" id="btn-open-trial">재판을 시작하오</button>
+      </div>
+    </section>
+
+    <!-- 4. 법정(심문) -->
+    <section class="screen" data-screen="courtroom" hidden>
+      <div class="courtroom-top">
+        <img class="judge" id="judge-img" src="/static/assets/judge.svg" alt="판사" />
+        <figure class="evidence-frame">
+          <img id="evidence-img" alt="증거물 제1호" />
+          <figcaption>증거물 제1호</figcaption>
+        </figure>
+      </div>
+
+      <!-- 심증 게이지 (F304에서 채움) -->
+      <div class="gauge-wrap">
+        <div class="gauge-track"><div class="gauge-fill" id="gauge-fill" style="width:15%"></div></div>
+        <p class="gauge-label" id="gauge-label">심증이 굳어가고 있소…</p>
+      </div>
+
+      <div class="card question-card">
+        <p class="opening serif" id="trial-opening"></p>
+        <p class="question-text" id="question-text"></p>
+        <div class="choices" id="choice-list"></div>
+        <p class="progress muted small" id="trial-progress"></p>
+      </div>
+    </section>
+
+    <!-- 5. 판결 -->
+    <section class="screen" data-screen="verdict" hidden>
+      <div class="verdict-stage">
+        <img class="stamp" id="verdict-stamp" alt="판결 도장" hidden />
+        <p class="verdict-label serif" id="verdict-label"></p>
+      </div>
+
+      <article class="paper" id="verdict-paper">
+        <h2 class="serif">판결문</h2>
+        <p id="verdict-text"></p>
+        <p class="sentence" id="verdict-sentence"></p>
+      </article>
+
+      <div class="card type-card" id="type-card">
+        <div class="type-emoji" id="type-emoji"></div>
+        <div class="type-name serif" id="type-name"></div>
+        <div class="type-code" id="type-code"></div>
+        <p class="muted small type-source">유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)</p>
+      </div>
+
+      <button class="btn-primary" id="btn-to-records">전과 기록 보기</button>
+      <button class="btn-ghost" id="btn-new-trial">다른 소비를 기소하오</button>
+    </section>
+
+    <!-- 6. 전과 기록 -->
+    <section class="screen" data-screen="records" hidden>
+      <div class="card">
+        <p class="eyebrow">전과 기록</p>
+        <h2 class="serif">피고인의 소비 이력</h2>
+        <p class="muted small">본 법정은 피고인의 양심을 믿소.</p>
+        <ul class="record-list" id="record-list"></ul>
+        <p class="muted small" id="records-empty" hidden>아직 전과가 없소.</p>
+      </div>
+      <button class="btn-ghost" id="btn-records-new">새 재판을 여시오</button>
+    </section>
+  </main>
+
+  <!-- 로딩 오버레이 -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="overlay-inner">
+      <img class="gavel-spin" src="/static/assets/gavel.svg" alt="" />
+      <p id="overlay-text">잠시 기다리시오…</p>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div class="toast" id="toast" role="alert" hidden></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
