@@ -81,9 +81,9 @@
           </label>
           <label>사용 현황
             <select id="d-usage">
-              <option value="often">자주 씁니다</option>
+              <option value="often">잘 쓰고 있습니다</option>
               <option value="rare">가끔 씁니다</option>
-              <option value="unopened">아직 안 뜯었습니다</option>
+              <option value="unopened">산 뒤로 손도 안 댔습니다</option>
               <option value="">모르겠소</option>
             </select>
           </label>
@@ -151,7 +151,16 @@
         <p class="verdict-label serif" id="verdict-label" hidden></p>
       </div>
 
-      <!-- ③ 판결문 양피지 — 라벨 섹션 조립 -->
+      <!-- ③ 유형 카드 (판결문보다 먼저) (axisCode 표기 제거, 한글명 한 줄) -->
+      <div class="type-card reveal" id="type-card" hidden>
+        <div class="type-frame">
+          <div class="type-emoji" id="type-emoji"></div>
+          <div class="type-name serif" id="type-name"></div>
+        </div>
+        <p class="muted small type-source">유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)</p>
+      </div>
+
+      <!-- ④ 판결문 양피지 — 라벨 섹션 조립 -->
       <article class="paper verdict-doc reveal" id="verdict-paper" hidden>
         <h2 class="serif">판결문</h2>
 
@@ -185,15 +194,6 @@
           <p class="vval" id="v-typename"></p>
         </section>
       </article>
-
-      <!-- ④ 유형 카드 (axisCode 표기 제거, 한글명 한 줄) -->
-      <div class="type-card reveal" id="type-card" hidden>
-        <div class="type-frame">
-          <div class="type-emoji" id="type-emoji"></div>
-          <div class="type-name serif" id="type-name"></div>
-        </div>
-        <p class="muted small type-source">유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)</p>
-      </div>
 
       <!-- ⑤ 회당 단가 딱지 (있을 때만) -->
       <div class="cost-strip reveal" id="cost-strip" hidden>

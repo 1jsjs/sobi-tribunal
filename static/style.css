@@ -388,7 +388,7 @@ textarea#plea-text:focus { border-color: var(--gold); }
 
 /* 유형 카드 프레임 — SVG(360x520)의 원형 홀·텍스트 자리에 HTML을 겹친다 */
 .type-frame {
-  width: min(260px, 72vw);
+  width: min(440px, 92%);
   aspect-ratio: 360 / 520;
   margin: 0 auto 8px;
   position: relative;
@@ -659,7 +659,7 @@ textarea#plea-text:focus { border-color: var(--gold); }
   .judge { max-width: 340px; }
   .evidence-frame { max-width: 300px; }
   .gavel-spin { width: 190px; }
-  .type-frame { width: min(320px, 72vw); }
+  .type-frame { width: min(480px, 92%); }
 }
 @media (min-width: 1400px) {
   html { font-size: 21px; }
@@ -724,3 +724,13 @@ body.with-judge .courtroom-top { justify-content: flex-end; }
 
 /* hidden 속성이 display:grid/flex 지정에 지지 않게 (조서 이모지 타일 이중 표시 버그) */
 .thumb-emoji[hidden], .dossier-evidence img[hidden] { display: none !important; }
+
+
+/* 연출 건너뛰기: 도장·연출 레이어가 클릭을 막지 않게 최상단 고정 */
+.btn-skip {
+  position: relative;
+  z-index: 40;
+  pointer-events: auto;
+}
+.verdict-stage { pointer-events: none; }
+.verdict-stage img, .verdict-stage p { pointer-events: none; }

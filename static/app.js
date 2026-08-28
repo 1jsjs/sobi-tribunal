@@ -1202,17 +1202,16 @@ function playVerdict(v) {
     label.hidden = false;
   });
 
-  // ③ 판결문 라벨 섹션 (2.0s) + TTS(전문 낭독)
+  // ③ 유형 카드 먼저 (2.0s) — 순서 교체 (사용자 지시 8/29)
   at(2000, () => {
-    fillVerdictDoc(v);
-    paper.hidden = false;
-    // 판결문은 낭독하지 않는다 (사용자 지시 8/29) — 판사봉·도장 효과음만
-  });
-
-  // ④ 유형 카드 (2.5s)
-  at(2500, () => {
     fillTypeCard(v);
     typeCard.hidden = false;
+  });
+
+  // ④ 판결문 라벨 섹션 (2.6s) — 낭독 없음
+  at(2600, () => {
+    fillVerdictDoc(v);
+    paper.hidden = false;
   });
 
   // ⑤ 회당 단가 + 액션 (3.0s)
