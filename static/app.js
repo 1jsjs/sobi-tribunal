@@ -1184,7 +1184,7 @@ function playVerdict(v) {
   at(2000, () => {
     fillVerdictDoc(v);
     paper.hidden = false;
-    speak(v.verdictText || "");
+    // 판결문은 낭독하지 않는다 (사용자 지시 8/29) — 판사봉·도장 효과음만
   });
 
   // ④ 유형 카드 (2.5s)
