@@ -84,17 +84,22 @@ OTHER              기타
 
 ## 판결 (POST /api/trial/verdict 응답 data, 201)
 ```
-{"recordId": 7, "axisCode": "GISD", "typeName": "패션과 낭만 감성을 중시하는 외향형의 활동가",
+{"recordId": 7, "axisCode": "GISD", "typeName": "패션과 낭만을 중시하는 외향형 활동가",
  "typeEmoji": "🕺", "guilt": "GUILTY" | "PROBATION" | "INNOCENT",
  "guiltLabel": "유죄" | "집행유예" | "무죄", "guiltScore": 8,
+ "crime": "고가 물품 방치죄" (죄명 — LLM 생성, 실패 시 요인별 템플릿. 무죄면 "죄명 없음"),
+ "reasoning": "재판부 판단 산문 2~3문장 (plea 인용·기각 포함. LLM, 실패 시 템플릿)",
  "sentence": "선고한다. 피고인은 7일 이내 위 물건을 1회 이상 사용하거나 중고 장터에 등록할 것.",
- "verdictText": "판결문 산문 (Bedrock 생성, 실패 시 템플릿)",
+ "verdictText": "(구버전 호환용 전체 산문 — 신규 화면은 아래 구성으로 조립한다)",
  "evidence": ["구매 후 사용 0회", "회당 단가 219,000원", "가격 비교 없이 즉시 결제"],
  "costPerUse": 219000 | null}
 ```
 - 프론트는 재계산 금지 — guiltScore·axisCode를 다시 구하지 않는다.
-- 유형 카드: axisCode + typeName + typeEmoji로 렌더. 카드 하단에 유형 분류 출처 표기:
-  "유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)".
+- **판결문 화면은 자유 산문이 아니라 라벨 섹션으로 조립한다** (기획 확정 8/28 밤):
+  `피고인`(이메일 @ 앞부분) / `죄명`(crime) / `주요 증거`(evidence 불릿) /
+  `재판부 판단`(reasoning) / `최종 판결`(guiltLabel + sentence) / `최종 소비 유형`(typeName).
+- 유형 카드: **axisCode는 표기하지 않는다.** typeEmoji + typeName(한 줄 맞춤 한글명)으로 렌더.
+  카드 하단에 출처 표기: "유형 분류: 소비 MBTI 16 (MPiA · blog.naver.com/ezpbill)".
 
 ## 전과 기록
 - `GET /api/records?email=` — email 없거나 형식 위반 400. data = 배열:

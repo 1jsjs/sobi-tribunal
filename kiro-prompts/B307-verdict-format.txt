@@ -1,0 +1,21 @@
+[B307] 판결문 구조 개편 + 16유형명 단축판 교체 (기획 확정 8/28 밤)
+
+docs/01 §2(새 유형명 16종)·docs/03 §3(개편된 프롬프트)·api-contract §판결을 다시 읽어라.
+문서가 이미 새 구성으로 갱신돼 있다 — 코드를 문서에 맞춘다.
+
+1. constants.py CONSUMER_TYPES 16종의 name을 docs/01 §2 표의 **단축판으로 전부 교체**
+   (이모지·코드는 그대로). 시드가 옛 이름을 저장하고 있어도 놔둔다(기록은 역사).
+2. verdict_service:
+   - LLM 출력을 {"crime","reasoning"}으로 변경 (docs/03 §3 v2 프롬프트 그대로, crime 12자
+     검증 — 넘으면 잘라내기, 무죄인데 crime이 오면 "죄명 없음"으로 강제)
+   - 폴백 룰: crime = 최다 기여 요인별 템플릿(docs/03 §3 폴백 표), reasoning = 기존 템플릿
+     문단 2 + plea 참작 문장
+   - verdictText = 서버에서 섹션 조립한 전문(피고인/죄명/주요 증거/재판부 판단/최종 판결/
+     최종 소비 유형 — 줄바꿈 구분)으로 저장·응답 (records 상세 호환)
+   - 응답에 crime·reasoning 필드 추가
+3. db.py COLUMNS에 crime TEXT, reasoning TEXT 추가 (ALTER 마이그레이션, 비상수 DEFAULT 금지)
+4. GET /api/records/{id} 응답에 crime·reasoning 추가 (없는 구 기록은 null)
+5. tests 갱신: MOCK verdict 응답에 crime·reasoning 존재, 무죄 케이스 crime=="죄명 없음",
+   기존 34개 회귀 유지
+
+완료 기준: MOCK_AI=1 pytest 전체 green. 판정 값(guilt·axisCode·sentence)은 한 글자도 변하면 안 된다.
