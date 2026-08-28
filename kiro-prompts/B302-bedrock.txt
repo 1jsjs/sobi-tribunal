@@ -1,19 +1,29 @@
-[B302] Bedrock 공통 서비스
+[B302] LLM 공통 서비스 (Bedrock 기본 + 로컬 Gemini + MOCK)
 
-.kiro/steering/tech-constraints.md의 함정 1·2·5를 다시 읽어라. docs/03-프롬프트.md 공통 규칙 참조.
+.kiro/steering/tech-constraints.md의 §AI 제공자 분기와 함정 1·2·5를 다시 읽어라.
+docs/03-프롬프트.md 공통 규칙 참조.
 
-만들 것: services/bedrock_service.py
+만들 것: services/llm_service.py
+0. 제공자 결정: provider() → env AI_PROVIDER("bedrock" 기본 | "gemini" | "mock"),
+   단 MOCK_AI=1이면 무조건 "mock". gemini는 로컬 검증 전용(서버 배포 금지 — steering 참조).
 1. call_text(system: str, user: str) -> str
-   - boto3 bedrock-runtime invoke_model, 모델 "global.anthropic.claude-sonnet-5"
-   - body: anthropic_version, max_tokens=2048, system, messages. temperature/top_p 절대 금지
-   - 응답 content 배열에서 type=="text"인 블록을 찾아 반환 (content[0] 직접 접근 금지)
-   - 실패 시 logger.error("Bedrock 호출 실패: ...") 후 예외 재발생 (폴백은 호출자 몫)
+   - bedrock: boto3 bedrock-runtime invoke_model, 모델 "global.anthropic.claude-sonnet-5"
+     body: anthropic_version, max_tokens=2048, system, messages. temperature/top_p 절대 금지
+     응답 content 배열에서 type=="text"인 블록을 찾아 반환 (content[0] 직접 접근 금지)
+   - gemini: google-genai 패키지, 모델 env GEMINI_MODEL(기본 "gemini-2.5-flash"),
+     GOOGLE_API_KEY 필요. system_instruction + user 텍스트로 호출, 응답 text 반환.
+     Bedrock과 같은 프롬프트·같은 파싱 경로를 타야 한다(별도 JSON 모드 쓰지 말 것)
+   - 실패 시 logger.error("LLM 호출 실패(provider): ...") 후 예외 재발생 (폴백은 호출자 몫)
 2. call_vision(system: str, user: str, image_bytes: bytes, media_type: str) -> str
-   - 위와 동일 + messages에 image 블록(base64) 첨부
+   - bedrock: messages에 image 블록(base64) 첨부 / gemini: 이미지 파트 첨부. 나머지 동일
 3. extract_json(raw: str) -> dict — 첫 "{"부터 마지막 "}"까지 잘라 json.loads, 실패 시 ValueError
-4. MOCK_AI=1이면 call_text/call_vision은 호출자에게 MockAIError를 던진다
+4. provider()=="mock"이면 call_text/call_vision은 MockAIError를 던진다
    (각 서비스가 자기 목 응답을 쓰도록 — 목 데이터는 이 파일에 두지 않는다)
-5. tests/test_bedrock_service.py — thinking 블록이 낀 가짜 응답에서 text 블록을 찾는지,
-   extract_json이 마크다운 펜스 낀 응답을 파싱하는지 (Bedrock 실호출 없이 파싱 함수만)
+5. requirements.txt에 google-genai 추가 (주석: 로컬 Gemini 검증용, 서버에선 미사용)
+6. tests/test_llm_service.py — Bedrock 실호출 없이:
+   - thinking 블록이 낀 가짜 응답에서 text 블록을 찾는지 (파싱 함수 분리해서 테스트)
+   - extract_json이 마크다운 펜스 낀 응답을 파싱하는지
+   - MOCK_AI=1에서 MockAIError가 나는지 / AI_PROVIDER 우선순위(MOCK_AI가 이김)
 
-완료 기준: pytest 통과. 코드에 temperature라는 글자가 없어야 한다.
+완료 기준: pytest 통과. Bedrock 경로 코드에 temperature라는 글자가 없어야 한다.
+GOOGLE_API_KEY·API 키 문자열을 코드/리포 어디에도 하드코딩하지 말 것.

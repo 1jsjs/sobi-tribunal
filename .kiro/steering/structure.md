@@ -13,7 +13,7 @@ routes/
   trial.py               # POST /api/trial/start, POST /api/trial/verdict
   records.py             # GET /api/records, GET /api/records/{id}
 services/
-  bedrock_service.py     # Bedrock 공통(텍스트+비전, thinking 안전, MOCK_AI 분기)
+  llm_service.py         # LLM 공통(텍스트+비전): bedrock(서버 기본)/gemini(로컬 전용)/mock 분기
   intake_service.py      # 사진→조서 (비전 프롬프트, S3 업로드)
   trial_service.py       # 질문 플랜·스타일링·축/유죄 채점 룰
   verdict_service.py     # 판정 확정 + 판결문 생성 + 저장

@@ -20,7 +20,12 @@ inclusion: always
 - AWS는 **Bedrock과 S3만** 사용 가능. Polly/Transcribe/DynamoDB/Lambda/Textract 등 제안 금지
 - Bedrock 모델 ID: `global.anthropic.claude-sonnet-5` (global. 접두사 필수)
 - region_name 하드코딩 금지(서버 env AWS_DEFAULT_REGION=eu-west-2), Access Key 발급 금지
-- 로컬에는 AWS 자격증명이 없다. 로컬 확인은 `MOCK_AI=1` (Bedrock 로컬 실패가 정상)
+- 로컬에는 AWS 자격증명이 없다(Bedrock 로컬 실패가 정상). **AI 제공자는 env `AI_PROVIDER`로 분기**:
+  - `bedrock` (기본, 서버) / `gemini` (로컬 검증 전용 — GOOGLE_API_KEY 필요, 무료 티어) /
+    `mock` (pytest 기본, `MOCK_AI=1`도 mock으로 취급)
+  - **Gemini는 로컬 개발 검증 전용이다. 서버·데모에 절대 올리지 않는다** —
+    심사가 AWS Bedrock 활용을 본다. 서버 env에 GOOGLE_API_KEY를 두지 말 것.
+  - GOOGLE_API_KEY는 로컬 셸 env로만 주입한다. 코드·리포·.env 커밋 금지.
 - S3 presigned URL은 `endpoint_url="https://s3.eu-west-2.amazonaws.com"` 지정 필수(안 하면 403)
 
 ## TTS (판사 음성)
@@ -48,9 +53,11 @@ main.py에 전역 RequestValidationError 핸들러(422→400 변환)를 처음�
 ### 4. 라우트 등록 순서
 경로 변수 라우트는 고정 경로보다 뒤에. 업로드류 경로는 하위에 두지 말고 `/api/intake`처럼 평평하게.
 
-### 5. 로컬 MOCK 통과를 신뢰하지 말 것
-MOCK은 Bedrock 요청 형식 오류도, Bedrock의 판단도 흉내 못 낸다(temperature 사건·분류 불일치 실증).
-Bedrock 관여 기능은 배포 후 `app.log`의 "Bedrock 호출 실패" 카운트까지 확인해야 완료다.
+### 5. 로컬 통과(MOCK이든 Gemini든)를 Bedrock 검증으로 치지 말 것
+MOCK은 LLM 거동 자체를 흉내 못 내고, **Gemini 통과도 Bedrock 요청 형식 검증이 아니다** —
+thinking 블록·temperature 거부는 Bedrock에서만 터진다(실측 2회). 검증 사다리:
+①MOCK_AI=1(룰·계약, pytest) → ②AI_PROVIDER=gemini(프롬프트·비전·JSON 거동, 로컬) →
+③배포 후 Bedrock 실측 + `app.log` "Bedrock 호출 실패" 카운트 0 확인. ③까지 가야 완료다.
 
 ### 6. 비전 오독을 전제로 설계할 것
 영수증 실측에서 금액·날짜는 정확했지만 **품목명 오독**이 있었다(브로콜리→보로커피).
