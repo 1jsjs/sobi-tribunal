@@ -636,3 +636,18 @@ textarea#plea-text:focus { border-color: var(--gold); }
 @media (min-width: 481px) {
   .stage { padding-top: 28px; }
 }
+
+/* ── 발표·데스크톱 확대 (팀 피드백 8/29 심야: 큰 화면에서 글씨가 너무 작음) ──
+   전 컴포넌트가 rem 기반이라 루트 폰트만 키우면 함께 스케일된다. 칼럼도 넓힘. */
+@media (min-width: 900px) {
+  html { font-size: 19px; }
+  :root { --col: 760px; }
+  .judge { max-width: 340px; }
+  .evidence-frame { max-width: 300px; }
+  .gavel-spin { width: 190px; }
+  .type-frame { width: min(320px, 72vw); }
+}
+@media (min-width: 1400px) {
+  html { font-size: 21px; }
+  :root { --col: 840px; }
+}
