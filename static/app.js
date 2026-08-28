@@ -190,8 +190,140 @@ if (muteBtn) {
     if (tts.muted) stopSpeaking();
     try { localStorage.setItem(MUTE_KEY, tts.muted ? "1" : "0"); } catch (_e) { /* 무시 */ }
     applyMuteUi();
+    applyBgmMute(); // BGM도 함께 온오프
   });
 }
+
+/* ══════════════════════════════════════════════════════════
+ *  법정 BGM — Web Audio 합성 앰비언스 (에셋 0, 외부 음원 0)
+ *  드론 2성부(55Hz·82.4Hz, 3센트 디튠) + 8초 사인 LFO + 12~16초 랜덤 단음
+ *  → lowpass 600Hz → master gain 0.05. 음소거 키(MUTE_KEY) 공유.
+ * ══════════════════════════════════════════════════════════ */
+const bgm = { ctx: null, master: null, started: false, noteTimer: null };
+const BGM_BASE_GAIN = 0.05;
+const BGM_DUCK_GAIN = 0.02;
+
+function centsToRatio(cents) {
+  return Math.pow(2, cents / 1200);
+}
+
+function startBgm() {
+  if (bgm.started || tts.muted) return; // 음소거면 시작 안 함
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return; // Web Audio 미지원 — 조용히 포기
+  try {
+    const ctx = bgm.ctx || new AC();
+    bgm.ctx = ctx;
+
+    // 마스터 gain → lowpass → 스피커
+    const master = ctx.createGain();
+    master.gain.value = BGM_BASE_GAIN;
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = 600;
+    master.connect(lp);
+    lp.connect(ctx.destination);
+    bgm.master = master;
+
+    // 드론 2성부 (삼각파, 55Hz·82.4Hz, 서로 3센트 디튠)
+    [55, 82.4].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      osc.detune.value = i === 0 ? -1.5 : 1.5; // 합 3센트
+      const g = ctx.createGain();
+      g.gain.value = 0.6;
+      osc.connect(g);
+      g.connect(master);
+      osc.start();
+    });
+
+    // gain에 주기 8초 사인 LFO (±20%)
+    const lfo = ctx.createOscillator();
+    lfo.type = "sine";
+    lfo.frequency.value = 1 / 8; // 8초
+    const lfoGain = ctx.createGain();
+    lfoGain.gain.value = BGM_BASE_GAIN * 0.2; // ±20%
+    lfo.connect(lfoGain);
+    lfoGain.connect(master.gain);
+    lfo.start();
+
+    bgm.started = true;
+    scheduleBgmNote();
+  } catch (_e) {
+    /* BGM 실패는 조용히 무시 — 앱 동작에 영향 없음 */
+  }
+}
+
+/* 12~16초마다 부드러운 단음 (사인, A3~E4 랜덤, attack 0.4s/release 2s) */
+function scheduleBgmNote() {
+  if (!bgm.started) return;
+  const delay = 12000 + Math.random() * 4000; // 12~16초
+  bgm.noteTimer = setTimeout(() => {
+    playBgmNote();
+    scheduleBgmNote();
+  }, delay);
+}
+const BGM_NOTES = [220.0, 246.94, 261.63, 293.66, 329.63]; // A3 B3 C4 D4 E4
+function playBgmNote() {
+  const ctx = bgm.ctx;
+  if (!ctx || tts.muted) return;
+  try {
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    osc.type = "sine";
+    osc.frequency.value = BGM_NOTES[Math.floor(Math.random() * BGM_NOTES.length)];
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.linearRampToValueAtTime(0.12, now + 0.4); // attack 0.4s
+    g.gain.linearRampToValueAtTime(0.0001, now + 2.4); // release 2s
+    osc.connect(g);
+    g.connect(bgm.master);
+    osc.start(now);
+    osc.stop(now + 2.6);
+  } catch (_e) {
+    /* 무시 */
+  }
+}
+
+/* 음소거 상태를 BGM에 반영 (마스터 gain 즉시 0 / 복귀) */
+function applyBgmMute() {
+  if (!bgm.ctx || !bgm.master) {
+    if (!tts.muted) startBgm(); // 켜는 순간이면 시작 시도
+    return;
+  }
+  const now = bgm.ctx.currentTime;
+  const target = tts.muted ? 0.0001 : BGM_BASE_GAIN;
+  try {
+    bgm.master.gain.cancelScheduledValues(now);
+    bgm.master.gain.setValueAtTime(bgm.master.gain.value, now);
+    bgm.master.gain.linearRampToValueAtTime(target, now + 0.3);
+  } catch (_e) { /* 무시 */ }
+}
+
+/* 판결 도장 순간: 1.5초 덕킹 후 복귀 (도장·TTS가 안 묻히게) */
+function duckBgm() {
+  if (!bgm.ctx || !bgm.master || tts.muted) return;
+  const now = bgm.ctx.currentTime;
+  try {
+    bgm.master.gain.cancelScheduledValues(now);
+    bgm.master.gain.setValueAtTime(bgm.master.gain.value, now);
+    bgm.master.gain.linearRampToValueAtTime(BGM_DUCK_GAIN, now + 0.15);
+    bgm.master.gain.linearRampToValueAtTime(BGM_BASE_GAIN, now + 1.5);
+  } catch (_e) { /* 무시 */ }
+}
+
+/* 첫 사용자 제스처(아무 클릭) 후에만 AudioContext resume + BGM 시작 */
+function bgmFirstGesture() {
+  if (bgm.ctx && bgm.ctx.state === "suspended") {
+    bgm.ctx.resume().catch(() => {});
+  }
+  startBgm();
+  if (bgm.ctx && bgm.ctx.state === "suspended") {
+    bgm.ctx.resume().catch(() => {});
+  }
+}
+document.addEventListener("click", bgmFirstGesture, { once: true });
 
 /* ── 헤더 내비게이션 ───────────────────────────────────── */
 document.getElementById("btn-home").addEventListener("click", () => {
@@ -1061,6 +1193,7 @@ function clearVerdictTimers() {
 
 function playVerdict(v) {
   clearVerdictTimers();
+  duckBgm(); // 도장·낭독이 묻히지 않게 BGM 1.5초 덕킹
   showScreen("verdict");
 
   const gavel = document.getElementById("verdict-gavel");
@@ -1084,9 +1217,16 @@ function playVerdict(v) {
 
   const at = (ms, fn) => verdictTimers.push(setTimeout(fn, ms));
 
-  // ① 의사봉 쿵쿵쿵
+  // ① 의사봉 쿵쿵쿵 (효과음: 팀 제공 판사봉 3.2초, 음소거 시 무음)
   gavel.hidden = false;
   gavel.classList.remove("go"); void gavel.offsetWidth; gavel.classList.add("go");
+  if (!tts.muted) {
+    try {
+      const knock = new Audio("/static/assets/gavel-knock.m4a");
+      knock.volume = 0.8;
+      knock.play().catch(() => { /* 자동재생 거부 등은 조용히 무시 */ });
+    } catch (_e) { /* 효과음 실패해도 연출은 계속 */ }
+  }
 
   // ② 도장 쾅 (1.1s 후)
   at(1100, () => {
