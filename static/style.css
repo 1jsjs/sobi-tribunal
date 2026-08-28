@@ -656,8 +656,8 @@ textarea#plea-text:focus { border-color: var(--gold); }
    액자 내부 투명창 = viewBox(300x380)의 x38..262 / y38..342 → 12.6%/10%, 74.7%x80% */
 .evidence-frame {
   position: relative;
-  width: 52%;
-  max-width: 230px;
+  width: 56%;
+  max-width: 270px;
   aspect-ratio: 300 / 380;
 }
 /* 액자를 사진 "앞" 레이어로 — 리본(증거물 제1호)·금테가 사진 가장자리를 덮는다 */
@@ -686,9 +686,9 @@ textarea#plea-text:focus { border-color: var(--gold); }
 @media (min-width: 1350px) {
   .evidence-frame {
     position: fixed;
-    right: 2vw;
-    top: 120px;
-    width: 320px;
+    right: 1.5vw;
+    top: 96px;
+    width: clamp(340px, 24vw, 460px);
     max-width: none;
     margin: 0;
     z-index: 5;
