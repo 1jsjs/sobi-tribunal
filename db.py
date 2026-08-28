@@ -44,9 +44,10 @@ def _migrate(conn):
     for name, decl in COLUMNS:
         if name in existing:
             continue
-        # PK/AUTOINCREMENT/제약은 ALTER로 못 붙이므로 표시성 기본만 추가
+        # PK/NOT NULL 제약과 비상수 DEFAULT(datetime('now') 등)는 SQLite가
+        # ALTER ADD COLUMN에서 거부하므로 타입만 남긴다
         add_decl = decl
-        if "PRIMARY KEY" in add_decl or "NOT NULL" in add_decl:
+        if "PRIMARY KEY" in add_decl or "NOT NULL" in add_decl or "DEFAULT (" in add_decl:
             add_decl = add_decl.split()[0]  # 타입만
         conn.execute(f"ALTER TABLE verdicts ADD COLUMN {name} {add_decl}")
 

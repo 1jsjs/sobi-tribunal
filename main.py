@@ -53,17 +53,17 @@ def health():
     return ok({"message": "법정은 열려 있다"})
 
 
-# ── 스캐폴드 검증용 엔드포인트: 본문 검증 실패가 400 봉투로 나오는지 확인 ──
-# (실 기능 라우트는 B303~B305에서 routes/ 에 붙는다. 이 경로는 검증 전용.)
-@app.post("/api/_echo")
-def _echo(body: dict):
-    return ok(body)
-
-
 # ── 라우터 include (경로 변수 라우트는 각 라우터 내부에서 뒤로) ───────
 app.include_router(intake.router)
 app.include_router(trial.router)
 app.include_router(records.router)
+
+
+# ── /api 미정의 경로: 정적 마운트로 새지 않게 404 봉투로 잡는다 ───────
+# (라우터 include 뒤에 등록 — 정의된 /api 라우트가 항상 먼저 매칭된다)
+@app.api_route("/api/{_rest:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
+def api_not_found(_rest: str):
+    return fail("NOT_FOUND", "그런 절차는 본 법정에 없소.", status=404)
 
 
 # ── static 서빙: /static 마운트 + 루트에서 index.html ────────────────
