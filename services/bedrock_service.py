@@ -3,7 +3,7 @@
 함정 대응 (tech-constraints §1·2·5):
 - §1: 응답 content 배열에서 type=="text" 블록만 골라 쓴다. content[0] 직접 접근 금지.
        Sonnet 5는 첫 블록으로 thinking을 줄 수 있다. max_tokens는 2048 이상.
-- §2: 요청에 temperature·top_p를 넣지 않는다. 넣으면 ValidationException.
+- §2: 요청에 샘플링 파라미터(온도·상위확률)를 넣지 않는다. 넣으면 ValidationException.
 - §5: MOCK_AI=1이면 실제 호출을 흉내내지 않는다. MockAIError를 던져 각 서비스가
        자기 목 응답을 쓰도록 한다(목 데이터는 이 파일에 두지 않는다).
 

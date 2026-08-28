@@ -1,0 +1,29 @@
+[B302b] LLM 서비스에 로컬 검증용 Gemini 제공자 추가 (B302 후속)
+
+.kiro/steering/tech-constraints.md §AI 제공자 분기·함정 §5(검증 사다리)를 다시 읽어라.
+B302에서 만든 services/bedrock_service.py는 잘 됐다. 여기에 제공자 분기를 얹는다.
+
+할 일:
+1. services/bedrock_service.py → **services/llm_service.py로 리네임** (아직 임포트하는
+   곳이 없어 지금이 유일하게 안전한 시점). 공개 API(call_text, call_vision, extract_json,
+   MockAIError)는 시그니처 그대로 유지.
+2. provider() 함수: env AI_PROVIDER("bedrock" 기본 | "gemini" | "mock").
+   **MOCK_AI=1이면 무조건 "mock"** (기존 _is_mock 동작 보존).
+3. call_text/call_vision을 provider로 분기:
+   - "mock" → MockAIError (기존과 동일)
+   - "bedrock" → 기존 _invoke 경로 그대로 (로그 문구 "Bedrock 호출 실패: ..."도 그대로 —
+     서버 운영 grep이 이 문자열에 걸려 있다)
+   - "gemini" → google-genai 패키지, 모델 env GEMINI_MODEL(기본 "gemini-2.5-flash"),
+     GOOGLE_API_KEY 없으면 즉시 RuntimeError("GOOGLE_API_KEY not set").
+     system_instruction=system, contents=user(비전은 이미지 파트+텍스트)로 호출해
+     response.text 반환. **JSON 모드·response_schema 쓰지 말 것** — Bedrock과 같은
+     프롬프트가 같은 extract_json 파싱을 타야 로컬 검증이 Bedrock 프롬프트 검증이 된다.
+     실패 로그는 "LLM 호출 실패(gemini): ..." (Bedrock 문구와 구분).
+4. requirements.txt에 google-genai 추가 (주석: 로컬 Gemini 검증용, 서버에선 미사용).
+5. tests/test_bedrock_service.py → tests/test_llm_service.py로 리네임하고 추가:
+   - MOCK_AI=1 + AI_PROVIDER=gemini여도 MockAIError (mock 우선)
+   - AI_PROVIDER=gemini + GOOGLE_API_KEY 미설정 → RuntimeError (실호출 없이)
+   - 기존 thinking 블록·extract_json 테스트는 그대로 유지
+6. 키·모델명 외 어떤 자격증명 문자열도 코드에 하드코딩 금지.
+
+완료 기준: MOCK_AI=1 pytest 전체 green. Bedrock 경로 코드는 한 글자도 안 바뀐 diff.
