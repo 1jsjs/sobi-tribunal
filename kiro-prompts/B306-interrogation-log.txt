@@ -1,0 +1,23 @@
+[B306] 심문 기록(Q&A) 저장 + 전과 상세에서 재열람
+
+전과 기록이 회고 아카이브가 되려면 그날의 문답이 남아야 한다. 현재 answers는 채점에만
+쓰고 버린다. 백엔드+프론트 한 번에 간다 (작은 태스크).
+
+백엔드:
+1. db.py COLUMNS에 `interrogationJson TEXT` 추가 (ALTER 마이그레이션이 알아서 붙는다 —
+   비상수 DEFAULT 금지 규칙 유지).
+2. verdict_service: 이미 있는 `_interrogation_log(answers)` 결과([{"q","a"}])를
+   json.dumps(ensure_ascii=False)로 저장. (원본 뱅크 문구 기준 — 클라이언트 텍스트는
+   신뢰하지 않는다.)
+3. GET /api/records/{id} 응답에 `interrogation` 배열 추가 (json.loads, 없으면 []).
+   목록(GET /api/records)에는 넣지 않는다 — 무거워진다.
+4. tests: verdict 후 records 상세에 interrogation이 답변 수만큼 오는지 1케이스.
+
+프론트:
+5. 전과 상세 모달의 판결문 아래에 접이식 "심문 기록" 섹션:
+   <details> 스타일 — 접힌 제목 "심문 기록 {n}문", 펼치면 Q(판사 말투)/A(선택 답) 목록.
+   interrogation이 빈 배열(구버전 기록·시드)이면 섹션 자체를 숨긴다.
+6. 시드 5건은 그대로 둔다(심문 기록 없음 → 섹션 숨김이 정상 동작 확인 케이스가 된다).
+
+완료 기준: MOCK_AI=1 pytest green, 새 판결 1건 후 상세 모달에서 문답 재열람,
+구 기록에선 섹션 미표시, 콘솔 에러 0.

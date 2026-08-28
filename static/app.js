@@ -322,6 +322,24 @@ document.getElementById("btn-records-empty-go").addEventListener("click", () => 
   showScreen("intake");
 });
 
+/* ── 퇴정(로그아웃) — 피고인 교체 ──────────────────────── */
+document.getElementById("btn-logout").addEventListener("click", () => {
+  stopSpeaking();
+  resetTrialState();
+  state.email = null;
+  state.photoUrl = null;
+  try {
+    localStorage.removeItem(EMAIL_KEY);
+  } catch (_e) {
+    /* 무시 */
+  }
+  closeRecordModal();
+  const emailInput = document.getElementById("summon-email");
+  if (emailInput) emailInput.value = "";
+  showScreen("summon");
+  toast("퇴정하였소. 다음 피고인은 출석하시오.", { judge: false });
+});
+
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
