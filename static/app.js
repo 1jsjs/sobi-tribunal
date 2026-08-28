@@ -600,6 +600,7 @@ function renderCandidatePicker(candidates, baseDossier) {
       picker.querySelectorAll(".candidate").forEach((el) => el.classList.remove("selected"));
       btn.classList.add("selected");
       fillDossierForm(merged);
+      updateAccuseStamp();
       fireSpeculativeTrial(); // dossier 통째로 바뀜 → 재발사
     });
     listWrap.appendChild(btn);
@@ -629,9 +630,30 @@ function startManualEntry() {
 function goToDossier(dossier) {
   fillCategorySelect();
   fillDossierForm(dossier);
+  updateAccuseStamp();
   showScreen("dossier");
   fireSpeculativeTrial(); // 조서 보는 동안 재판 미리 준비
 }
+
+/* 기소 대상 도장: 사진 위에 "기소 대상 · {금액} {품목}" (선택·수정 즉시 반영) */
+function updateAccuseStamp() {
+  const el = document.getElementById("accuse-stamp");
+  if (!el) return;
+  const name = (document.getElementById("d-itemName") || {}).value || "";
+  const priceDigits = digitsOnly((document.getElementById("d-price") || {}).value);
+  const hasPhoto = !!state.photoUrl;
+  if (!hasPhoto || !name.trim()) {
+    el.hidden = true;
+    return;
+  }
+  const priceTxt = priceDigits ? "-" + Number(priceDigits).toLocaleString("ko-KR") + "원 " : "";
+  el.textContent = "기소 대상 · " + priceTxt + name.trim();
+  el.hidden = false;
+}
+["d-itemName", "d-price"].forEach((id) => {
+  const f = document.getElementById(id);
+  if (f) f.addEventListener("input", updateAccuseStamp);
+});
 
 /* 금액 콤마 표기 유틸 */
 function digitsOnly(s) {

@@ -468,7 +468,7 @@ textarea#plea-text:focus { border-color: var(--gold); }
 /* ── 조서(양피지 폼) ─────────────────────────────────── */
 .dossier-paper h2 { color: #3b2a12; }
 .eyebrow.dark { color: #8a5a1c; }
-.dossier-evidence { display: flex; justify-content: center; margin: 8px 0 14px; }
+.dossier-evidence { position: relative; display: flex; justify-content: center; margin: 8px 0 14px; }
 .dossier-evidence img {
   width: auto;
   max-width: min(440px, 100%);
@@ -735,3 +735,27 @@ body.with-judge .courtroom-top { justify-content: flex-end; }
 }
 .verdict-stage { pointer-events: none; }
 .verdict-stage img, .verdict-stage p { pointer-events: none; }
+
+
+/* 기소 대상 도장 오버레이 — 선택한 거래를 사진 위에 쾅 (좌표 추정 없이 안전) */
+.accuse-stamp {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%) rotate(-7deg);
+  max-width: 92%;
+  padding: 8px 16px;
+  border: 3px solid var(--stamp);
+  border-radius: 10px;
+  background: rgba(245, 233, 208, 0.88);
+  color: var(--stamp);
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+.accuse-stamp[hidden] { display: none !important; }
