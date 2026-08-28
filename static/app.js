@@ -16,7 +16,9 @@ function showScreen(name) {
   });
   // 배경 2단계: 재판(법정~판결) 동안은 판사가 판사석에 앉은 배경으로 (팀 피드백 8/29)
   document.body.classList.toggle("with-judge", ["courtroom", "plea", "verdict"].includes(name));
-  if (name !== "verdict") resumeBgm(); // 판결 선고 동안만 브금 정지, 그 외엔 계속
+  bgmScreen = name; // BGM은 재판 진행(법정·최후 변론) 중에만 (사용자 지시 8/29)
+  if (name === "courtroom" || name === "plea") resumeBgm();
+  else fadeOutBgm();
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
 
@@ -202,11 +204,13 @@ if (muteBtn) {
  *  첫 사용자 제스처 후 시작 · 음소거 키(MUTE_KEY) 공유 · 판결 도장 덕킹
  * ══════════════════════════════════════════════════════════ */
 const bgm = { el: null, started: false };
+let bgmScreen = null; // 현재 화면 (재판 화면에서만 재생)
 const BGM_BASE_VOL = 0.32;
 const BGM_DUCK_VOL = 0.08;
 
 function startBgm() {
   if (bgm.started || tts.muted) return;
+  if (bgmScreen !== "courtroom" && bgmScreen !== "plea") return; // 재판 중에만
   try {
     if (!bgm.el) {
       bgm.el = new Audio("/static/assets/The_Weighted_Scale.mp3");
@@ -238,8 +242,8 @@ function applyBgmMute() {
   } catch (_e) { /* 무시 */ }
 }
 
-/* 판결 선고: 브금을 페이드아웃 후 정지 — 판사봉·낭독이 정적 속에 울린다 */
-function stopBgmForVerdict() {
+/* 브금 페이드아웃 정지 — 판결 선고·재판 밖 화면 공용 */
+function fadeOutBgm() {
   if (!bgm.el || !bgm.started) return;
   try {
     const el = bgm.el;
@@ -253,7 +257,8 @@ function stopBgmForVerdict() {
 
 /* 판결 화면을 벗어나면 브금 재개 */
 function resumeBgm() {
-  if (!bgm.el || !bgm.started || tts.muted) return;
+  if (tts.muted) return;
+  if (!bgm.el || !bgm.started) { startBgm(); return; }
   try { bgm.el.volume = BGM_BASE_VOL; bgm.el.play().catch(() => {}); } catch (_e) { /* 무시 */ }
 }
 
@@ -1184,7 +1189,7 @@ function clearVerdictTimers() {
 
 function playVerdict(v) {
   clearVerdictTimers();
-  stopBgmForVerdict(); // 판결 선고 — 브금 멈추고 판사봉·낭독만 (재개는 화면 이탈 시)
+  fadeOutBgm(); // 판결 선고 — 브금 멈추고 판사봉·낭독만
   showScreen("verdict");
 
   const gavel = document.getElementById("verdict-gavel");
