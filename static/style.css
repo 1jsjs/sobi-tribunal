@@ -790,3 +790,10 @@ body.with-judge .courtroom-top { justify-content: flex-end; }
   object-fit: cover;
   border-radius: 50%;
 }
+
+
+/* 전과 상세 모달의 미니 유형 카드 */
+.modal-type-frame {
+  width: min(280px, 82%) !important;
+  margin: 10px auto 14px;
+}

@@ -359,8 +359,11 @@ async function openRecordModal(id) {
     const date = (d.createdAt || "").slice(0, 10);
     document.getElementById("modal-meta").textContent =
       `${d.guiltLabel || ""}${date ? " · " + date : ""}`;
-    document.getElementById("modal-type").textContent =
-      `${d.typeEmoji || ""} ${d.typeName || ""} (${d.axisCode || ""})`;
+    fillTypeVisual({
+      emojiEl: document.getElementById("modal-type-emoji"),
+      imgEl: document.getElementById("modal-type-img"),
+      nameEl: document.getElementById("modal-type-name"),
+    }, d);
 
     const vt = document.getElementById("modal-verdict-text");
     vt.innerHTML = "";
@@ -1271,27 +1274,38 @@ function fillVerdictDoc(v) {
 }
 
 /* 유형 카드: 한글명 한 줄, 길이 기반 폰트 자동 축소 (줄바꿈 금지) */
-function fillTypeCard(v) {
-  const emojiEl = document.getElementById("type-emoji");
-  emojiEl.textContent = v.typeEmoji || "";
-  // 카드 홀 이미지 우선순위: 유형별 AI 이미지({CODE}.png) → 판결별 캐릭터(verdict-{GUILT}.svg) → 이모지
-  const holeImg = document.getElementById("type-img");
-  if (holeImg) {
+/* 유형 카드 비주얼 공용 채움: 이미지 체인({CODE}.png → {CODE}.svg → verdict-{GUILT}.svg → 이모지) */
+function fillTypeVisual(els, v) {
+  const { emojiEl, imgEl, nameEl } = els;
+  if (emojiEl) { emojiEl.textContent = v.typeEmoji || ""; emojiEl.hidden = false; }
+  if (imgEl) {
     const tryList = [];
-    if (v.axisCode) tryList.push(`/static/assets/types/${v.axisCode}.png`);
+    if (v.axisCode) {
+      tryList.push(`/static/assets/types/${v.axisCode}.png`);
+      tryList.push(`/static/assets/types/${v.axisCode}.svg`);
+    }
     if (v.guilt) tryList.push(`/static/assets/types/verdict-${v.guilt}.svg`);
     let ti = 0;
-    holeImg.onload = () => { holeImg.hidden = false; emojiEl.hidden = true; };
-    holeImg.onerror = () => {
-      if (ti < tryList.length) { holeImg.src = tryList[ti++]; }
-      else { holeImg.hidden = true; emojiEl.hidden = false; }
+    imgEl.onload = () => { imgEl.hidden = false; if (emojiEl) emojiEl.hidden = true; };
+    imgEl.onerror = () => {
+      if (ti < tryList.length) { imgEl.src = tryList[ti++]; }
+      else { imgEl.hidden = true; if (emojiEl) emojiEl.hidden = false; }
     };
-    if (tryList.length) { holeImg.src = tryList[ti++]; }
-    else { holeImg.hidden = true; emojiEl.hidden = false; }
+    if (tryList.length) { imgEl.src = tryList[ti++]; }
+    else { imgEl.hidden = true; }
   }
-  const nameEl = document.getElementById("type-name");
-  nameEl.textContent = v.typeName || "";
-  nameEl.style.fontSize = typeNameFontSize(v.typeName || "");
+  if (nameEl) {
+    nameEl.textContent = v.typeName || "";
+    nameEl.style.fontSize = typeNameFontSize(v.typeName || "");
+  }
+}
+
+function fillTypeCard(v) {
+  fillTypeVisual({
+    emojiEl: document.getElementById("type-emoji"),
+    imgEl: document.getElementById("type-img"),
+    nameEl: document.getElementById("type-name"),
+  }, v);
 }
 
 /* 길이 기반 축소 램프. 최장 "절제하며 패션과 스타일을 중시하는 활동가"(공백 포함 22자)가
