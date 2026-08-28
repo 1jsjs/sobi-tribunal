@@ -759,3 +759,34 @@ body.with-judge .courtroom-top { justify-content: flex-end; }
   pointer-events: none;
 }
 .accuse-stamp[hidden] { display: none !important; }
+
+
+/* 판결문 접힌 프리뷰 — 클릭하면 전문 */
+.verdict-doc { cursor: pointer; }
+.verdict-doc.collapsed {
+  max-height: 330px;
+  overflow: hidden;
+  position: relative;
+}
+.verdict-doc.collapsed::after {
+  content: "판결문 전문 보기 ▼";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 44px 0 12px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--stamp);
+  background: linear-gradient(rgba(245, 233, 208, 0), #f5e9d0 62%);
+}
+
+/* AI 생성 유형 이미지 — 카드 원형 홀 안 (이모지 대체) */
+.type-frame .type-img {
+  position: absolute;
+  left: 50%;
+  top: 42.3%;
+  transform: translate(-50%, -50%);
+  width: 38%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+}

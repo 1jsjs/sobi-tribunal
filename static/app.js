@@ -1120,7 +1120,7 @@ function updateGauge() {
         code += s >= 0 ? AXIS_POLES[ax].front : AXIS_POLES[ax].back;
       }
       const t = CONSUMER_TYPES[code];
-      suspect.textContent = t ? `유력 용의 유형: ${t.emoji} ${t.name}` : "";
+      suspect.textContent = t ? `유력 용의 유형: ${t.name}` : "";
       suspect.hidden = !t;
     } else {
       suspect.hidden = true;
@@ -1230,9 +1230,10 @@ function playVerdict(v) {
     typeCard.hidden = false;
   });
 
-  // ④ 판결문 라벨 섹션 (2.6s) — 낭독 없음
+  // ④ 판결문 라벨 섹션 (2.6s) — 접힌 프리뷰로 시작, 클릭하면 전문 (낭독 없음)
   at(2600, () => {
     fillVerdictDoc(v);
+    paper.classList.add("collapsed");
     paper.hidden = false;
   });
 
@@ -1271,7 +1272,15 @@ function fillVerdictDoc(v) {
 
 /* 유형 카드: 한글명 한 줄, 길이 기반 폰트 자동 축소 (줄바꿈 금지) */
 function fillTypeCard(v) {
-  document.getElementById("type-emoji").textContent = v.typeEmoji || "";
+  const emojiEl = document.getElementById("type-emoji");
+  emojiEl.textContent = v.typeEmoji || "";
+  // AI 생성 유형 이미지가 있으면 이모지 대신 사용 (static/assets/types/{CODE}.png, 없으면 폴백)
+  const holeImg = document.getElementById("type-img");
+  if (holeImg && v.axisCode) {
+    holeImg.src = `/static/assets/types/${v.axisCode}.png`;
+    holeImg.onload = () => { holeImg.hidden = false; emojiEl.hidden = true; };
+    holeImg.onerror = () => { holeImg.hidden = true; emojiEl.hidden = false; };
+  }
   const nameEl = document.getElementById("type-name");
   nameEl.textContent = v.typeName || "";
   nameEl.style.fontSize = typeNameFontSize(v.typeName || "");
@@ -1285,15 +1294,15 @@ function typeNameFontSize(name) {
   if (n <= 12) return "1.25rem";
   if (n <= 15) return "1.05rem";
   if (n <= 18) return "0.9rem";
-  if (n <= 21) return "0.78rem";
-  return "0.68rem";
+  if (n <= 21) return "0.74rem";
+  return "0.6rem";
 }
 
 function fillCostStrip(v) {
   const strip = document.getElementById("cost-strip");
   const tag = document.getElementById("cost-tag");
   if (v.costPerUse != null) {
-    tag.textContent = `회당 단가 ${won(v.costPerUse)}`;
+    tag.textContent = `회당 단가(추정) ${won(v.costPerUse)}`;
     strip.hidden = false;
   } else {
     strip.hidden = true;
@@ -1385,3 +1394,12 @@ window.tribunal = {
 };
 
 boot();
+
+
+/* 판결문 접기/펼치기 토글 */
+(() => {
+  const paper = document.getElementById("verdict-paper");
+  if (paper) {
+    paper.addEventListener("click", () => paper.classList.toggle("collapsed"));
+  }
+})();
