@@ -22,11 +22,11 @@
     <section class="screen" data-screen="summon" hidden>
       <div class="card summons">
         <p class="eyebrow">소환장</p>
-        <h2 class="serif">피고인은 출석하시오</h2>
-        <p class="muted">이메일로 출석을 확인하오. 비밀번호는 없소.</p>
+        <h2 class="serif">피고인 출석 확인</h2>
+        <p class="muted">본 법정은 비밀번호를 요구하지 않소. 피고인의 양심을 믿소.</p>
         <form id="summon-form" autocomplete="off">
           <input type="email" id="summon-email" placeholder="you@example.com" inputmode="email" required />
-          <button type="submit" class="btn-primary">출석합니다</button>
+          <button type="submit" class="btn-primary">출석하겠소</button>
         </form>
       </div>
     </section>
@@ -35,19 +35,21 @@
     <section class="screen" data-screen="intake" hidden>
       <div class="card">
         <p class="eyebrow">기소</p>
-        <h2 class="serif">후회 소비 한 건을 제출하시오</h2>
-        <p class="muted">결제내역 캡처·영수증·제품 사진 중 한 장.</p>
+        <h2 class="serif">증거를 제출하시오</h2>
+        <p class="muted">결제내역 캡처·영수증·가격이 보이는 제품 사진 중 한 장.</p>
 
         <label class="upload-drop" id="upload-drop">
-          <input type="file" id="intake-file" accept="image/jpeg,image/png,image/webp" hidden />
+          <input type="file" id="intake-file" accept="image/*" hidden />
           <span class="upload-icon">📷</span>
-          <span class="upload-text">사진 올리기</span>
-          <span class="muted small">jpg · png · webp / 5MB 이하</span>
+          <span class="upload-text">증거를 제출하시오</span>
+          <span class="muted small">사진 한 장 (자동으로 크기를 줄여 올리오)</span>
         </label>
         <img class="upload-preview" id="upload-preview" alt="증거 미리보기" hidden />
 
+        <p class="muted small notice" id="intake-notice" hidden></p>
+
         <button class="btn-primary" id="btn-submit-evidence" disabled>증거 제출</button>
-        <button class="btn-ghost" id="btn-manual-entry">사진 없이 직접 적겠소</button>
+        <button class="btn-ghost" id="btn-manual-entry">자수하겠소 (직접 입력)</button>
       </div>
     </section>
 
@@ -69,6 +71,7 @@
           <label>분류
             <select id="d-category"></select>
           </label>
+          <label>한 줄 사연 (선택)<input type="text" id="d-story" maxlength="60" placeholder="예: 할인해서" /></label>
         </form>
         <button class="btn-primary" id="btn-open-trial">재판을 시작하오</button>
       </div>

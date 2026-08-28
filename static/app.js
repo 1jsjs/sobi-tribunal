@@ -154,12 +154,12 @@ document.getElementById("btn-records").addEventListener("click", () => {
 });
 
 /* ── 소환장: 이메일 출석 (localStorage 기억) ──────────── */
-const EMAIL_KEY = "tribunal_email";
+const EMAIL_KEY = "defendantEmail";
 
 document.getElementById("summon-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const raw = document.getElementById("summon-email").value.trim().toLowerCase();
-  if (!raw || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(raw)) {
+  if (!raw || !raw.includes("@") || !raw.includes(".")) {
     toast("이메일 형식이 올바르지 않소.");
     return;
   }
@@ -216,11 +216,220 @@ function escapeHtml(s) {
   );
 }
 
-/* ── 화면 전환 버튼(뼈대 수준 — 각 흐름은 F302~F305에서) ── */
-document.getElementById("btn-manual-entry").addEventListener("click", () => {
-  fillCategorySelect();
-  showScreen("dossier");
+/* ══════════════════════════════════════════════════════════
+ *  기소(intake) — 사진 업로드 / 수동 입력
+ * ══════════════════════════════════════════════════════════ */
+const MAX_EDGE = 1568; // 리사이즈 최대 변
+const JPEG_QUALITY = 0.8;
+
+const fileInput = document.getElementById("intake-file");
+const uploadPreview = document.getElementById("upload-preview");
+const submitEvidenceBtn = document.getElementById("btn-submit-evidence");
+const intakeNotice = document.getElementById("intake-notice");
+let pickedFile = null; // 원본 File
+let pickedObjectUrl = null; // 원본 미리보기 URL (세션 보관)
+
+fileInput.addEventListener("change", () => {
+  const f = fileInput.files && fileInput.files[0];
+  if (!f) return;
+  if (!/^image\//.test(f.type)) {
+    toast("사진 파일만 제출할 수 있소.");
+    return;
+  }
+  pickedFile = f;
+  if (pickedObjectUrl) URL.revokeObjectURL(pickedObjectUrl);
+  pickedObjectUrl = URL.createObjectURL(f);
+  uploadPreview.src = pickedObjectUrl;
+  uploadPreview.hidden = false;
+  intakeNotice.hidden = true;
+  submitEvidenceBtn.disabled = false;
 });
+
+/* canvas 리사이즈 → JPEG Blob (최대 변 1568, 품질 0.8) */
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      const longest = Math.max(width, height);
+      if (longest > MAX_EDGE) {
+        const scale = MAX_EDGE / longest;
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("이미지를 변환하지 못했소."));
+        },
+        "image/jpeg",
+        JPEG_QUALITY
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("이미지를 읽지 못했소."));
+    };
+    img.src = url;
+  });
+}
+
+submitEvidenceBtn.addEventListener("click", () => {
+  if (!pickedFile) {
+    toast("먼저 증거 사진을 고르시오.");
+    return;
+  }
+  withBusy(submitEvidenceBtn, "증거물 감식 중...", async () => {
+    try {
+      const blob = await resizeImage(pickedFile);
+      const form = new FormData();
+      form.append("file", blob, "evidence.jpg");
+      const data = await api("/api/intake", { method: "POST", body: form });
+      // 증거물 액자: presigned photoUrl 우선, 없으면 원본 objectURL
+      state.photoUrl = data.photoUrl || pickedObjectUrl;
+      handleIntakeResult(data);
+    } catch (err) {
+      handleError(err);
+    }
+  });
+});
+
+/* intake 응답 처리: candidates 개수에 따라 분기 */
+function handleIntakeResult(data) {
+  const candidates = Array.isArray(data.candidates) ? data.candidates : [];
+  if (candidates.length >= 2) {
+    renderCandidatePicker(candidates, data.dossier);
+    goToDossier(data.dossier); // 폼도 첫 후보로 채워둔다
+    return;
+  }
+  // 서버 조서(photoKey 등)를 보관 — 최종 확정 시 photoKey 계승
+  state.intakeDossier = data.dossier || null;
+  // 1건(또는 0건이어도 서버가 빈 조서를 준다)
+  const hasItem = data.dossier && data.dossier.itemName;
+  if (!hasItem) {
+    // 판독 실패 → 수동 입력 유도
+    intakeNotice.hidden = false;
+    intakeNotice.textContent = "증거를 판독하지 못했소. 직접 적어 자수하시오.";
+    startManualEntry();
+    return;
+  }
+  goToDossier(data.dossier);
+}
+
+/* candidates 2건 이상: "어느 건으로 기소하시겠소?" 리스트 */
+function renderCandidatePicker(candidates, baseDossier) {
+  const picker = document.getElementById("candidate-picker");
+  picker.hidden = false;
+  picker.innerHTML = '<p class="muted small">어느 건으로 기소하시겠소?</p>';
+  const listWrap = document.createElement("div");
+  listWrap.className = "candidate-list";
+  candidates.forEach((c, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice candidate";
+    const date = c.boughtAt ? ` · ${c.boughtAt}` : "";
+    const merch = c.merchant ? ` · ${escapeHtml(c.merchant)}` : "";
+    btn.innerHTML = `<strong>${escapeHtml(c.itemName || "물건")}</strong> · ${won(c.price)}<span class="muted small">${date}${merch}</span>`;
+    btn.addEventListener("click", () => {
+      // 고른 후보를 dossier에 병합해 폼 갱신
+      const merged = Object.assign({}, baseDossier, {
+        itemName: c.itemName,
+        price: c.price,
+        boughtAt: c.boughtAt || null,
+        merchant: c.merchant || null,
+        category: c.category || baseDossier.category || "OTHER",
+      });
+      picker.querySelectorAll(".candidate").forEach((el) => el.classList.remove("selected"));
+      btn.classList.add("selected");
+      fillDossierForm(merged);
+    });
+    listWrap.appendChild(btn);
+  });
+  picker.appendChild(listWrap);
+}
+
+/* 수동 입력: 서버 없이 빈 조서로 조서 확인 화면 진입 */
+function startManualEntry() {
+  fillCategorySelect();
+  fillDossierForm({
+    itemName: "",
+    price: "",
+    boughtAt: null,
+    merchant: null,
+    category: "OTHER",
+    story: null,
+    photoKey: null,
+  });
+  document.getElementById("candidate-picker").hidden = true;
+  // 사진 없이 왔다면 액자는 원본(있으면)만
+  if (!state.photoUrl && pickedObjectUrl) state.photoUrl = pickedObjectUrl;
+  showScreen("dossier");
+}
+
+/* 조서 확인 화면으로: 폼 채우고 전환 */
+function goToDossier(dossier) {
+  fillCategorySelect();
+  fillDossierForm(dossier);
+  showScreen("dossier");
+}
+
+/* 조서 폼 채우기 */
+function fillDossierForm(d) {
+  document.getElementById("d-itemName").value = d.itemName || "";
+  document.getElementById("d-price").value = d.price != null && d.price !== "" ? d.price : "";
+  document.getElementById("d-boughtAt").value = d.boughtAt || "";
+  document.getElementById("d-merchant").value = d.merchant || "";
+  const storyEl = document.getElementById("d-story");
+  if (storyEl) storyEl.value = d.story || "";
+  const catEl = document.getElementById("d-category");
+  if (catEl) catEl.value = d.category && CATEGORY_LABELS[d.category] ? d.category : "OTHER";
+}
+
+document.getElementById("btn-manual-entry").addEventListener("click", () => {
+  intakeNotice.hidden = true;
+  startManualEntry();
+});
+
+/* 조서 확인 → 폼 값으로 최종 dossier 구성 후 다음(F303/F304에서 재판 시작) */
+document.getElementById("btn-open-trial").addEventListener("click", () => {
+  const priceRaw = document.getElementById("d-price").value;
+  const price = parseInt(priceRaw, 10);
+  const itemName = document.getElementById("d-itemName").value.trim();
+  if (!itemName) {
+    toast("품목명을 적으시오.");
+    return;
+  }
+  if (!Number.isInteger(price) || price < 0) {
+    toast("금액을 숫자로 적으시오.");
+    return;
+  }
+  state.dossier = {
+    itemName: itemName,
+    price: price,
+    boughtAt: document.getElementById("d-boughtAt").value || null,
+    merchant: document.getElementById("d-merchant").value.trim() || null,
+    category: document.getElementById("d-category").value || "OTHER",
+    usage: null,
+    story: (document.getElementById("d-story") || {}).value
+      ? document.getElementById("d-story").value.trim() || null
+      : null,
+    photoKey: state.intakeDossier ? state.intakeDossier.photoKey || null : null,
+  };
+  // 재판 시작 자체는 F304. 여기선 상태만 확정하고 알린다.
+  if (window.tribunal && typeof window.tribunal.onDossierReady === "function") {
+    window.tribunal.onDossierReady();
+  } else {
+    toast("조서가 확정되었소. (재판은 다음 단계에서)", { judge: false });
+  }
+});
+
 document.getElementById("btn-to-records").addEventListener("click", () => {
   if (state.email) loadRecords();
   else showScreen("summon");
