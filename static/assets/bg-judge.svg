@@ -111,42 +111,8 @@
     <line x1="650" y1="512" x2="670" y2="556"/>
   </g>
 
-  <!-- judge bench: upper tier (keep top edge simple for character) -->
-  <g stroke="#1a120c" stroke-linejoin="round">
-    <!-- bench top slab -->
-    <rect x="228" y="316" width="344" height="26" rx="10" fill="#3d2b1f" stroke-width="6"/>
-    <rect x="216" y="308" width="368" height="18" rx="9" fill="#d4af37" stroke-width="5"/>
-    <!-- bench front body: 캔버스 바닥까지 — 판사 아래가 끊기지 않고 말풍선 뒤까지 이어진다 -->
-    <rect x="236" y="338" width="328" height="266" rx="12" fill="url(#woodFront)" stroke-width="6"/>
-    <!-- paneling -->
-    <rect x="258" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
-    <rect x="460" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
-    <rect x="258" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
-    <rect x="460" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
-    <!-- center parchment plaque -->
-    <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
-    <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
-    <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
-    <!-- gold molding (중간 띠) -->
-    <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
-    <!-- 하단 패널 2열 (몰딩 아래 몸통 장식) -->
-    <rect x="258" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
-    <rect x="460" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
-    <rect x="258" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
-    <rect x="460" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
-  </g>
-
-  <!-- gold trim line across bench front -->
-  <line x1="252" y1="348" x2="548" y2="348" stroke="#e8c96a" stroke-width="3" opacity="0.8"/>
-
-  <!-- gavel block accents on bench top, off-center to keep middle clear -->
-  <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
-    <rect x="262" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
-    <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
-  </g>
-
-  <!-- 합성: 돼지 판사가 판사석에 착석 (재판 중 배경) -->
-  <g transform="translate(280,190) scale(0.6)">
+  <!-- 합성: 돼지 판사 — 판사석 뒤에 앉아 상판이 허리를 가린다 -->
+  <g transform="translate(280,128) scale(0.6)">
   
 
   <!-- 배경 없음: 투명 — 판사가 배경의 판사석에 직접 앉는다 (팀 피드백 8/29) -->
@@ -257,12 +223,39 @@
   <!-- 오른손 발굽이 손잡이를 감쌈 -->
   <circle cx="314" cy="216" r="17" fill="url(#pigGrad)" stroke="#1a120c" stroke-width="5"/>
 
-  <!-- ===== 판사석 벤치 ===== -->
-  <rect x="24" y="352" width="352" height="48" rx="8" fill="url(#benchGrad)" stroke="#1a120c" stroke-width="6"/>
-  <rect x="24" y="346" width="352" height="14" rx="7" fill="#3d2b1f" stroke="#1a120c" stroke-width="6"/>
-  <line x1="34" y1="360" x2="366" y2="360" stroke="#d4af37" stroke-width="4"/>
-  <!-- 명패 -->
-  <rect x="146" y="366" width="108" height="28" rx="6" fill="#f5e9d0" stroke="#1a120c" stroke-width="5"/>
-  <text x="200" y="387" text-anchor="middle" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="17" font-weight="700" fill="#2a1f18">판사</text>
-</g>
+  </g>
+
+  <!-- judge bench: upper tier (keep top edge simple for character) -->
+  <g stroke="#1a120c" stroke-linejoin="round">
+    <!-- bench top slab -->
+    <rect x="228" y="316" width="344" height="26" rx="10" fill="#3d2b1f" stroke-width="6"/>
+    <rect x="216" y="308" width="368" height="18" rx="9" fill="#d4af37" stroke-width="5"/>
+    <!-- bench front body: 캔버스 바닥까지 — 판사 아래가 끊기지 않고 말풍선 뒤까지 이어진다 -->
+    <rect x="236" y="338" width="328" height="266" rx="12" fill="url(#woodFront)" stroke-width="6"/>
+    <!-- paneling -->
+    <rect x="258" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="460" y="358" width="82" height="108" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="258" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <rect x="460" y="358" width="82" height="108" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <!-- center parchment plaque -->
+    <rect x="352" y="360" width="96" height="70" rx="10" fill="#f5e9d0" stroke-width="5"/>
+    <circle cx="400" cy="384" r="11" fill="#b3261e" stroke-width="3"/>
+    <text x="400" y="418" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#2a1f18">소비 재판소</text>
+    <!-- gold molding (중간 띠) -->
+    <rect x="224" y="482" width="352" height="20" rx="10" fill="#d4af37" stroke-width="5"/>
+    <!-- 하단 패널 2열 (몰딩 아래 몸통 장식) -->
+    <rect x="258" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="460" y="514" width="82" height="72" rx="8" fill="#2a1f18" stroke-width="4"/>
+    <rect x="258" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+    <rect x="460" y="514" width="82" height="72" rx="8" fill="none" stroke="#d4af37" stroke-width="3"/>
+  </g>
+
+  <!-- gold trim line across bench front -->
+  <line x1="252" y1="348" x2="548" y2="348" stroke="#e8c96a" stroke-width="3" opacity="0.8"/>
+
+  <!-- gavel block accents on bench top, off-center to keep middle clear -->
+  <g stroke="#1a120c" stroke-width="4" stroke-linejoin="round">
+    <rect x="262" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+    <rect x="486" y="296" width="52" height="14" rx="7" fill="#3d2b1f"/>
+  </g>
 </svg>
