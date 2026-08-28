@@ -1302,7 +1302,11 @@ function fillCostStrip(v) {
   const strip = document.getElementById("cost-strip");
   const tag = document.getElementById("cost-tag");
   if (v.costPerUse != null) {
-    tag.textContent = `회당 단가(추정) ${won(v.costPerUse)}`;
+    const useAns = (state.answers || []).find((x) => x.questionId === "USE");
+    const rule = useAns && useAns.choiceIndex === 2
+      ? " (미개봉 → 사용 0회, 전액)"
+      : " (가끔 사용 → 3회 가정)";
+    tag.textContent = `회당 단가 ${won(v.costPerUse)}${rule}`;
     strip.hidden = false;
   } else {
     strip.hidden = true;

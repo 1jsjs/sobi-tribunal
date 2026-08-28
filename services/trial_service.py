@@ -298,13 +298,13 @@ def _build_evidence(dossier, answers, use_idx, price, cost_per_use) -> list:
     if use_idx == 0:
         ev.append("구매 후 거의 매일 사용 중")
     elif use_idx == 1:
-        ev.append("구매 후 가끔만 사용")
+        ev.append("구매 후 가끔만 사용 (사용 3회로 추정)")
     elif use_idx == 2:
-        ev.append("구매 후 사용 0회 — 포장 미개봉")
+        ev.append("구매 후 사용 0회 — 포장 미개봉 (회당 단가 = 전액)")
 
     # 회당 단가
     if cost_per_use:
-        ev.append(f"회당 단가 {cost_per_use:,}원")
+        ev.append(f"회당 단가 {cost_per_use:,}원 (가격 ÷ 추정 사용 횟수)")
 
     # 답변에서 드러난 정황
     for a in answers or []:
