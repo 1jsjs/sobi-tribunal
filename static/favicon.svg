@@ -1,0 +1,9 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="소비 재판소">
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#1c1a15"/>
+  <!-- 판사봉 머리 (손잡이와 직각) -->
+  <rect x="9" y="16.5" width="30" height="15" rx="5" fill="#d2ac58" transform="rotate(-45 24 24)"/>
+  <!-- 손잡이 -->
+  <rect x="24" y="34.75" width="27" height="6.5" rx="3.25" fill="#d2ac58" transform="rotate(45 37.5 38)"/>
+  <!-- 받침대 -->
+  <rect x="35" y="53" width="20" height="5.5" rx="2.75" fill="#d2ac58"/>
+</svg>
